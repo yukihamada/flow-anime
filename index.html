@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/">
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- OGP -->
+<meta property="og:title" content="FLOW — BJJ x AI Original Anime">
+<meta property="og:description" content="AIが格闘技を支配する2030年。左腕が壊れた少年が、予測不能の柔術で世界の頂点を目指す。全60話のオリジナルアニメ企画。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://flow-anime.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FLOW">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flow_bjj">
+<meta name="twitter:creator" content="@flow_bjj">
+<meta name="twitter:title" content="FLOW — BJJ x AI Anime | 60 Episodes">
+<meta name="twitter:description" content="What if BJJ had its own anime? AI controls fighting in 2030. One boy fights with something AI can't predict. 60 episodes, original soundtrack.">
+<meta name="twitter:image" content="https://flow-anime.com/images/og_image.png">
+<!-- SEO -->
+<meta name="description" content="FLOW — AIが格闘技を支配する2030年。左腕が壊れた少年が、AIに読めない柔術で世界の頂点を目指す。全60話のオリジナルアニメ企画。">
+<meta name="keywords" content="FLOW, BJJ, anime, jiu-jitsu, AI, 柔術, アニメ, martial arts, original anime">
+<meta name="theme-color" content="#08080d">
+<title>FLOW — BJJ x AI Anime</title>
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "FLOW",
+  "url": "https://flow-anime.com",
+  "description": "Original BJJ x AI anime project. 60 episodes, 5 seasons, original soundtrack.",
+  "inLanguage": ["ja","en","pt"],
+  "author": {"@type": "Organization", "name": "FLOW Project", "url": "https://x.com/flow_bjj"},
+  "potentialAction": {"@type": "SearchAction", "target": "https://flow-anime.com/?q={search_term_string}", "query-input": "required name=search_term_string"}
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Dela+Gothic+One&family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08080d;--s1:#111119;--s2:#1a1a26;--s3:#222233;
+  --ac:#4a9eff;--ac2:#00d4ff;--ac3:#7c5cff;
+  --tx:#e8e8f0;--dim:#7777aa;
+  --nagare:#3366cc;--rio:#99bbee;--luciano:#cc8844;--rin:#cc3344;--sage:#44ddff
+}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+a{color:var(--ac);text-decoration:none}a:hover{color:var(--ac2)}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,0);backdrop-filter:blur(0px);
+  border-bottom:1px solid transparent;display:flex;align-items:center;height:60px;padding:0 1.2rem;
+  transition:all .4s}
+nav.scrolled{background:rgba(8,8,13,.97);backdrop-filter:blur(16px);border-bottom-color:rgba(255,255,255,.04)}
+.nav-logo{font-family:'Dela Gothic One',sans-serif;font-size:1.3rem;letter-spacing:.2em;
+  background:linear-gradient(90deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  flex-shrink:0;cursor:pointer}
+.nav-links{display:flex;gap:0;flex:1;margin-left:1.5rem;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-links::-webkit-scrollbar{display:none}
+nav a.nav-link{color:var(--dim);font-size:.72rem;letter-spacing:.06em;padding:0 .6rem;line-height:60px;
+  border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+nav a.nav-link:hover,nav a.nav-link.active{color:var(--tx);border-bottom-color:var(--ac)}
+.nav-right{display:flex;align-items:center;gap:.5rem;margin-left:auto;flex-shrink:0}
+
+/* Language Switcher */
+.lang-sw{display:flex;gap:2px;background:rgba(255,255,255,.04);border-radius:100px;padding:2px}
+.lang-btn{padding:4px 8px;border-radius:100px;border:none;background:transparent;color:var(--dim);
+  font-size:.6rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--ac);color:#000}
+.lang-btn:hover:not(.active){color:var(--tx)}
+
+.nav-x{display:flex;align-items:center;gap:.3rem;color:var(--dim);font-size:.7rem;transition:all .2s;
+  padding:.35rem .7rem;border:1px solid rgba(255,255,255,.1);border-radius:100px}
+.nav-x:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.nav-x svg{width:14px;height:14px;fill:currentColor}
+
+/* Mobile hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;z-index:200}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(8,8,13,.98);backdrop-filter:blur(20px);
+  z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:1.1rem;color:var(--tx);padding:.9rem 2rem;letter-spacing:.1em;transition:color .2s;
+  border-bottom:1px solid rgba(255,255,255,.04);width:100%;text-align:center}
+.mobile-menu a:hover{color:var(--ac2)}
+.mobile-menu .mobile-cta{margin-top:1.5rem;display:flex;flex-direction:column;gap:.8rem;align-items:center;width:100%;padding:0 2rem}
+.mobile-lang{display:flex;gap:.5rem;margin-top:1rem}
+.mobile-lang .lang-btn{padding:6px 16px;font-size:.75rem}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-x span{display:none}
+  .nav-x{padding:.35rem .5rem}
+}
+
+/* Hero */
+.hero{height:100vh;min-height:600px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('images/keyvisual/kv_main.png') center/cover;
+  transform:scale(1.1);transition:transform 20s linear}
+.hero-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(8,8,13,.5) 0%,rgba(8,8,13,.25) 40%,rgba(8,8,13,.9) 100%)}
+.hero *:not(.hero-bg):not(.hero-bg *){position:relative;z-index:2}
+canvas#particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-eyebrow{font-size:clamp(.65rem,1.2vw,.8rem);color:var(--ac2);letter-spacing:.5em;font-weight:300;
+  text-transform:uppercase;opacity:0;transform:translateY(20px);animation:fadeUp .8s .3s ease forwards}
+.hero-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(4.5rem,14vw,11rem);letter-spacing:.25em;
+  background:linear-gradient(135deg,#fff 0%,var(--ac2) 40%,var(--ac) 70%,var(--ac3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 60px rgba(0,212,255,.3));
+  opacity:0;transform:scale(.9);animation:heroIn 1.2s .5s cubic-bezier(.16,1,.3,1) forwards}
+.hero-tag{font-family:'Zen Antique Soft',serif;font-size:clamp(.95rem,2.2vw,1.4rem);color:rgba(255,255,255,.7);
+  margin-top:.8rem;letter-spacing:.15em;opacity:0;animation:fadeUp .8s 1s ease forwards;max-width:600px;padding:0 1rem}
+.hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+  opacity:0;animation:fadeUp .8s 1.3s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes heroIn{to{opacity:1;transform:scale(1)}}
+
+.btn{padding:.85rem 2.2rem;border-radius:100px;border:none;font-family:inherit;font-size:.88rem;font-weight:700;
+  cursor:pointer;transition:all .3s;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.5rem;
+  -webkit-tap-highlight-color:transparent}
+.btn-p{background:linear-gradient(135deg,var(--ac),var(--ac3));color:#fff;box-shadow:0 4px 20px rgba(74,158,255,.3)}
+.btn-p:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 40px rgba(74,158,255,.5)}
+.btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transform:translateX(-100%);transition:transform .6s}
+.btn-p:hover::after{transform:translateX(100%)}
+.btn-g{background:rgba(255,255,255,.06);color:var(--tx);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+.btn-g:hover{border-color:var(--ac);background:rgba(74,158,255,.08);transform:translateY(-2px)}
+.btn-x{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.2)}
+.btn-x svg{width:18px;height:18px;fill:currentColor}
+.btn-x:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+.scroll-hint{position:absolute;bottom:2.5rem;color:rgba(255,255,255,.3);font-size:.7rem;letter-spacing:.2em;z-index:2}
+.scroll-arrow{width:20px;height:20px;border-right:1px solid rgba(255,255,255,.3);border-bottom:1px solid rgba(255,255,255,.3);
+  transform:rotate(45deg);margin:8px auto 0;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+
+/* Sections */
+section{padding:6rem 2rem;max-width:1200px;margin:0 auto;position:relative}
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.stitle{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);
+  background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ssub{color:var(--dim);margin-bottom:2.5rem;font-size:.85rem;margin-top:.5rem;line-height:1.7}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,255,.12),transparent);margin:0 auto;max-width:600px}
+
+/* Intro / Logline */
+.intro{text-align:center;padding:8rem 2rem}
+.intro-text{font-family:'Zen Antique Soft',serif;font-size:clamp(1rem,2.2vw,1.5rem);color:rgba(255,255,255,.6);
+  line-height:2.2;max-width:700px;margin:0 auto}
+.intro-text strong{color:var(--ac2);font-weight:400}
+.intro-year{font-family:'Dela Gothic One',sans-serif;font-size:clamp(3.5rem,10vw,8rem);
+  color:rgba(255,255,255,.03);letter-spacing:.3em;margin-bottom:-2rem}
+
+/* Inline CTA */
+.inline-cta{text-align:center;padding:4rem 2rem;position:relative}
+.inline-cta::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(74,158,255,.04) 0%,transparent 70%)}
+.inline-cta-inner{max-width:500px;margin:0 auto;position:relative;z-index:1}
+.inline-cta-text{color:var(--dim);font-size:.9rem;margin-bottom:1.2rem;line-height:1.6}
+.inline-cta-text strong{color:var(--tx);font-weight:700}
+
+/* Opening */
+.opening-section{text-align:center;padding:6rem 2rem}
+.opening-card{max-width:800px;margin:2rem auto 0;border-radius:20px;overflow:hidden;
+  background:var(--s1);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .4s;position:relative;display:block}
+.opening-card:hover{transform:translateY(-4px);border-color:var(--ac);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(74,158,255,.1)}
+.opening-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.opening-overlay{position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;transition:background .3s}
+.opening-card:hover .opening-overlay{background:rgba(0,0,0,.2)}
+.play-btn{width:80px;height:80px;border-radius:50%;background:rgba(74,158,255,.9);display:flex;align-items:center;
+  justify-content:center;box-shadow:0 0 40px rgba(74,158,255,.5);transition:all .3s}
+.opening-card:hover .play-btn{transform:scale(1.1);box-shadow:0 0 60px rgba(74,158,255,.7)}
+.play-btn svg{width:32px;height:32px;fill:#fff;margin-left:4px}
+.opening-label{margin-top:1rem;font-size:.85rem;color:rgba(255,255,255,.7);letter-spacing:.15em}
+
+/* Characters */
+.chars-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem}
+@media(max-width:900px){.chars-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.chars-grid{grid-template-columns:repeat(2,1fr)}}
+.char-card{border-radius:16px;overflow:hidden;cursor:pointer;transition:all .4s;position:relative;
+  background:var(--s1);border:2px solid transparent}
+.char-card:hover{transform:translateY(-8px) scale(1.02);border-color:var(--ac);
+  box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 30px rgba(74,158,255,.1)}
+.char-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;transition:transform .6s}
+.char-card:hover img{transform:scale(1.05)}
+.char-info{padding:.8rem 1rem;position:relative}
+.char-name{font-family:'Dela Gothic One',sans-serif;font-size:1rem;letter-spacing:.1em}
+.char-role{font-size:.7rem;color:var(--dim);margin-top:.15rem}
+.char-quote{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(8,8,13,.95) 30%);
+  padding:3rem 1rem 1rem;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.char-card:hover .char-quote{opacity:1;transform:translateY(0)}
+.char-quote p{font-family:'Zen Antique Soft',serif;font-size:.78rem;color:rgba(255,255,255,.7);
+  font-style:italic;line-height:1.6}
+
+/* Flow System */
+.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+@media(max-width:900px){.flow-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.flow-grid{grid-template-columns:1fr}}
+.flow-card{background:var(--s2);border-radius:16px;overflow:hidden;border-left:3px solid;
+  transition:all .4s;position:relative}
+.flow-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(0,0,0,.4)}
+.flow-card img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .6s}
+.flow-card:hover img{transform:scale(1.05)}
+.flow-body{padding:1rem}
+.flow-lv{font-size:.6rem;color:var(--dim);text-transform:uppercase;letter-spacing:.15em}
+.flow-nm{font-size:1.2rem;font-weight:900;margin:.15rem 0}
+.flow-fx{font-size:.78rem;color:var(--dim);line-height:1.5}
+.flow-cost{font-size:.7rem;color:#ff6666;margin-top:.3rem}
+
+/* Episodes */
+.ep-timeline{position:relative;max-width:800px;margin:0 auto}
+.ep-season{margin-bottom:3rem}
+.ep-season-header{font-family:'Dela Gothic One',sans-serif;font-size:1.3rem;color:var(--ac);
+  margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:1px solid rgba(74,158,255,.15)}
+.ep-item{display:flex;gap:1.2rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.03);transition:all .3s}
+.ep-item:hover{padding-left:.5rem;border-bottom-color:rgba(74,158,255,.15)}
+.ep-num{font-family:'Dela Gothic One',sans-serif;font-size:1.5rem;color:rgba(255,255,255,.08);
+  min-width:3rem;text-align:right;line-height:1.2;transition:color .3s}
+.ep-item:hover .ep-num{color:var(--ac)}
+.ep-body h4{font-weight:900;font-size:.95rem;margin-bottom:.3rem}
+.ep-body p{font-size:.8rem;color:var(--dim);line-height:1.6}
+.ep-tag{display:inline-block;font-size:.6rem;color:var(--ac2);background:rgba(0,212,255,.08);
+  padding:.15rem .5rem;border-radius:100px;margin-top:.3rem}
+
+/* Scenes */
+.scenes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:700px){.scenes-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.scenes-grid{grid-template-columns:1fr}}
+.scene-card{border-radius:14px;overflow:hidden;cursor:pointer;transition:all .4s;position:relative;
+  background:var(--s1);border:2px solid transparent}
+.scene-card:hover{transform:translateY(-5px);border-color:var(--ac);box-shadow:0 16px 50px rgba(0,0,0,.4)}
+.scene-card img{width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .6s}
+.scene-card:hover img{transform:scale(1.08)}
+.scene-info{padding:.8rem 1rem}
+.scene-ep{font-size:.65rem;color:var(--ac);font-weight:700;letter-spacing:.08em}
+.scene-title{font-weight:900;margin-top:.15rem;font-size:.9rem}
+.scene-desc{font-size:.72rem;color:var(--dim);margin-top:.2rem;line-height:1.4}
+
+/* Key Visuals */
+.kv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:700px){.kv-grid{grid-template-columns:1fr}}
+.kv-card{border-radius:16px;overflow:hidden;cursor:pointer;transition:all .4s;position:relative}
+.kv-card:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.kv-card img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .8s}
+.kv-card:hover img{transform:scale(1.06)}
+.kv-label{position:absolute;bottom:0;left:0;right:0;padding:2rem 1rem 1rem;
+  background:linear-gradient(transparent,rgba(0,0,0,.8));font-weight:900;font-size:.85rem}
+
+/* CTA Section */
+.cta-section{text-align:center;padding:6rem 2rem 4rem;position:relative}
+.cta-section::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(74,158,255,.06) 0%,transparent 70%)}
+.cta-box{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.cta-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:.8rem}
+.cta-desc{color:var(--dim);font-size:.9rem;margin-bottom:2rem;line-height:1.8}
+.email-form{display:flex;gap:.5rem;max-width:420px;margin:0 auto}
+.email-input{flex:1;padding:.9rem 1.2rem;border-radius:100px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;font-family:inherit;outline:none;transition:all .3s}
+.email-input:focus{border-color:var(--ac);background:rgba(255,255,255,.08);box-shadow:0 0 20px rgba(74,158,255,.1)}
+.email-input::placeholder{color:rgba(255,255,255,.25)}
+.email-submit{padding:.9rem 2rem;border-radius:100px;border:none;background:linear-gradient(135deg,var(--ac),var(--ac3));
+  color:#fff;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;transition:all .3s;white-space:nowrap}
+.email-submit:hover{transform:scale(1.05);box-shadow:0 6px 25px rgba(74,158,255,.4)}
+.email-success{display:none;color:var(--ac2);margin-top:1rem;font-size:.9rem;line-height:1.6}
+.sub-count{font-size:.72rem;color:var(--dim);margin-top:.8rem}
+.social-links{display:flex;gap:.8rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+.social-link{display:flex;align-items:center;gap:.4rem;padding:.6rem 1.4rem;border-radius:100px;
+  border:1px solid rgba(255,255,255,.1);color:var(--dim);font-size:.82rem;transition:all .3s;
+  -webkit-tap-highlight-color:transparent}
+.social-link:hover{border-color:var(--ac);color:var(--tx);background:rgba(74,158,255,.05)}
+.social-link svg{width:18px;height:18px;fill:currentColor}
+
+/* Stats counter */
+.stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-top:3rem}
+.stat{text-align:center}
+.stat-num{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2rem,5vw,3rem);
+  background:linear-gradient(135deg,var(--ac2),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.72rem;color:var(--dim);letter-spacing:.1em;margin-top:.2rem}
+
+/* Glitch */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
+.glitch::before{left:2px;text-shadow:-2px 0 var(--rin);animation:glitch1 3s infinite linear alternate-reverse;clip-path:inset(0 0 80% 0)}
+.glitch::after{left:-2px;text-shadow:2px 0 var(--ac2);animation:glitch2 2s infinite linear alternate-reverse;clip-path:inset(80% 0 0 0)}
+@keyframes glitch1{0%{clip-path:inset(0 0 85% 0)}25%{clip-path:inset(15% 0 70% 0)}50%{clip-path:inset(50% 0 30% 0)}75%{clip-path:inset(70% 0 15% 0)}100%{clip-path:inset(85% 0 0 0)}}
+@keyframes glitch2{0%{clip-path:inset(85% 0 0 0)}25%{clip-path:inset(70% 0 15% 0)}50%{clip-path:inset(30% 0 50% 0)}75%{clip-path:inset(15% 0 70% 0)}100%{clip-path:inset(0 0 85% 0)}}
+
+/* Footer */
+footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,255,255,.04)}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-logo{font-family:'Dela Gothic One',sans-serif;font-size:2rem;letter-spacing:.3em;
+  background:linear-gradient(90deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1.5rem}
+.footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:left;margin-bottom:2rem}
+.footer-col-title{font-size:.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:.15em;margin-bottom:.8rem;font-weight:700}
+.footer-col a{display:block;color:rgba(255,255,255,.5);font-size:.8rem;padding:.3rem 0;transition:color .2s}
+.footer-col a:hover{color:var(--tx)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.5rem;
+  border-top:1px solid rgba(255,255,255,.04);flex-wrap:wrap;gap:1rem}
+.footer-copy{color:rgba(255,255,255,.15);font-size:.65rem}
+.footer-social{display:flex;gap:1rem;align-items:center}
+.footer-social a{color:rgba(255,255,255,.3);transition:color .2s}
+.footer-social a:hover{color:var(--tx)}
+.footer-social svg{width:20px;height:20px;fill:currentColor}
+
+@media(max-width:600px){
+  .footer-grid{grid-template-columns:1fr;gap:1.5rem;text-align:center}
+  .footer-bottom{justify-content:center;flex-direction:column}
+}
+
+/* Modal */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+  z-index:1000;align-items:center;justify-content:center;padding:1rem}
+.mo.on{display:flex}
+.mo-c{background:var(--s1);border-radius:20px;max-width:900px;width:100%;max-height:92vh;
+  overflow-y:auto;position:relative;border:1px solid rgba(255,255,255,.08)}
+.mo-x{position:sticky;top:.8rem;float:right;margin-right:.8rem;width:34px;height:34px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.08);color:white;font-size:1rem;cursor:pointer;z-index:10}
+.mo-x:hover{background:rgba(255,255,255,.15)}
+.mo-c img.mi{width:100%;border-radius:20px 20px 0 0}
+.mo-c .mb{padding:1.5rem}
+
+/* Responsive */
+@media(max-width:500px){
+  .email-form{flex-direction:column}
+  .stats{gap:1.5rem}
+  .hero-cta{flex-direction:column;align-items:center}
+  section{padding:4rem 1.2rem}
+  .intro{padding:5rem 1.2rem}
+  .ep-num{min-width:2.5rem;font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">FLOW</div>
+  <div class="nav-links">
+    <a href="#opening" class="nav-link" data-i18n="nav_opening">Opening</a>
+    <a href="#characters" class="nav-link" data-i18n="nav_characters">Characters</a>
+    <a href="#flow-system" class="nav-link" data-i18n="nav_flowsystem">Flow System</a>
+    <a href="#episodes" class="nav-link" data-i18n="nav_episodes">Episodes</a>
+    <a href="#scenes" class="nav-link" data-i18n="nav_scenes">Scenes</a>
+    <a href="pitch.html" class="nav-link">Pitch</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-sw">
+      <button class="lang-btn active" onclick="setLang('ja')">JP</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    </div>
+    <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="nav-x">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>Follow</span>
+    </a>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#opening" onclick="closeMenu()" data-i18n="nav_opening">Opening</a>
+  <a href="#characters" onclick="closeMenu()" data-i18n="nav_characters">Characters</a>
+  <a href="#flow-system" onclick="closeMenu()" data-i18n="nav_flowsystem">Flow System</a>
+  <a href="#episodes" onclick="closeMenu()" data-i18n="nav_episodes">Episodes</a>
+  <a href="#scenes" onclick="closeMenu()" data-i18n="nav_scenes">Scenes</a>
+  <a href="pitch.html" onclick="closeMenu()">Pitch Deck</a>
+  <a href="review.html" onclick="closeMenu()" data-i18n="nav_review">Review & Vote</a>
+  <div class="mobile-lang">
+    <button class="lang-btn" onclick="setLang('ja');closeMenu()">JP</button>
+    <button class="lang-btn" onclick="setLang('en');closeMenu()">EN</button>
+    <button class="lang-btn" onclick="setLang('pt');closeMenu()">PT</button>
+  </div>
+  <div class="mobile-cta">
+    <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="btn btn-x" style="width:100%;justify-content:center">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @flow_bjj
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <canvas id="particles"></canvas>
+  <div class="hero-eyebrow">BJJ x AI ORIGINAL ANIME</div>
+  <div class="hero-title glitch" data-text="FLOW">FLOW</div>
+  <div class="hero-tag" data-i18n="hero_tag">AIに読めない柔術で、世界の頂点へ</div>
+  <div class="hero-cta">
+    <a href="opening.html" class="btn btn-p">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
+      <span data-i18n="hero_watch">Opening</span>
+    </a>
+    <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="btn btn-x">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @flow_bjj
+    </a>
+    <a href="#episodes" class="btn btn-g" data-i18n="hero_episodes">60 Episodes</a>
+  </div>
+  <div class="scroll-hint">
+    SCROLL
+    <div class="scroll-arrow"></div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro reveal">
+  <div class="intro-year">2030</div>
+  <p class="intro-text" data-i18n-html="intro_text">
+    AIが格闘技を支配する<strong>2030年</strong>。<br>
+    予測精度<strong>99.8%</strong>のAI「SAGE」が全ての試合を解析する時代。<br><br>
+    左腕が壊れた17歳の少年 <strong>流（ながれ）</strong>は、<br>
+    AIに読めない唯一の武器 ── <strong>"フロウ"</strong> で世界の頂点を目指す。
+  </p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" data-count="60">0</div><div class="stat-label">EPISODES</div></div>
+    <div class="stat"><div class="stat-num" data-count="5">0</div><div class="stat-label">SEASONS</div></div>
+    <div class="stat"><div class="stat-num" data-count="5">0</div><div class="stat-label">CHARACTERS</div></div>
+    <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">ORIGINAL SONGS</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OPENING -->
+<section id="opening" class="opening-section reveal">
+  <div class="stitle" data-i18n="sec_opening">OPENING</div>
+  <div class="ssub" data-i18n="sec_opening_sub">オリジナル主題歌付きオープニング映像を体験</div>
+  <a href="opening.html" class="opening-card">
+    <img src="images/keyvisual/kv_flow_awakening.png" alt="FLOW Opening" loading="lazy">
+    <div class="opening-overlay">
+      <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div>
+      <div class="opening-label" data-i18n="watch_opening">WATCH OPENING</div>
+    </div>
+  </a>
+</section>
+
+<div class="divider"></div>
+
+<!-- INLINE CTA -->
+<div class="inline-cta reveal">
+  <div class="inline-cta-inner">
+    <div class="inline-cta-text" data-i18n-html="inline_cta"><strong>FLOW</strong>の最新情報をいち早くお届け</div>
+    <form class="email-form" id="emailFormInline" onsubmit="return submitEmailInline(event)">
+      <input type="email" class="email-input" placeholder="your@email.com" required>
+      <button type="submit" class="email-submit" data-i18n="btn_subscribe">登録</button>
+    </form>
+    <div class="email-success" id="emailSuccessInline" data-i18n="subscribe_ok">登録完了! 最新情報をお届けします。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CHARACTERS -->
+<section id="characters" class="reveal">
+  <div class="stitle" data-i18n="sec_characters">CHARACTERS</div>
+  <div class="ssub" data-i18n="sec_characters_sub">AIが全てを予測する時代に、予測不能な者たち</div>
+  <div class="chars-grid">
+    <div class="char-card" onclick="showModal(this)" data-quote-ja="「もう一回」── 師匠の言葉だけが、俺を前に進ませる。" data-quote-en="'One more time' — my master's words are all that keep me going." data-quote-pt="'Mais uma vez' — as palavras do mestre sao tudo que me mantem de pe.">
+      <img src="images/characters/nagare_sheet_v2.png" alt="Nagare" loading="lazy">
+      <div class="char-info">
+        <div class="char-name" style="color:var(--nagare)">流 NAGARE</div>
+        <div class="char-role" data-i18n="char_nagare">17歳 / 主人公 / 左腕の感覚を失った少年</div>
+      </div>
+      <div class="char-quote"><p data-i18n="quote_nagare">"もう一回" ── 師匠の言葉だけが、俺を前に進ませる。</p></div>
+    </div>
+    <div class="char-card" onclick="showModal(this)" data-quote-ja="「感覚？ そんな曖昧なものに命を預けるのか」" data-quote-en="'Intuition? You'd trust your life to something so vague?'" data-quote-pt="'Intuicao? Voce confiaria sua vida a algo tao vago?'">
+      <img src="images/characters/rio_sheet.png" alt="Rio" loading="lazy">
+      <div class="char-info">
+        <div class="char-name" style="color:var(--rio)">理央 RIO</div>
+        <div class="char-role" data-i18n="char_rio">18歳 / ライバル / SAGE社エース</div>
+      </div>
+      <div class="char-quote"><p data-i18n="quote_rio">"感覚？ そんな曖昧なものに命を預けるのか"</p></div>
+    </div>
+    <div class="char-card" onclick="showModal(this)" data-quote-ja="「柔術は完璧な体のためのものじゃない。今の体で何ができるかだ」" data-quote-en="'Jiu-jitsu isn't for perfect bodies. It's about what you can do with yours.'" data-quote-pt="'Jiu-jitsu nao e para corpos perfeitos. E sobre o que voce pode fazer com o seu.'">
+      <img src="images/characters/marcelo_sheet.png" alt="Luciano" loading="lazy">
+      <div class="char-info">
+        <div class="char-name" style="color:var(--luciano)">ルシアーノ LUCIANO</div>
+        <div class="char-role" data-i18n="char_luciano">師匠 / 珊瑚帯の伝説</div>
+      </div>
+      <div class="char-quote"><p data-i18n="quote_luciano">"柔術は完璧な体のためのものじゃない。今の体で何ができるかだ"</p></div>
+    </div>
+    <div class="char-card" onclick="showModal(this)" data-quote-ja="「AIを使わない理由？ つまらないから。」" data-quote-en="'Why don't I use AI? It's boring.'" data-quote-pt="'Por que nao uso IA? E entediante.'">
+      <img src="images/characters/rin_sheet.png" alt="Rin" loading="lazy">
+      <div class="char-info">
+        <div class="char-name" style="color:var(--rin)">凛 RIN</div>
+        <div class="char-role" data-i18n="char_rin">19歳 / "蜘蛛" / 足関節の天才</div>
+      </div>
+      <div class="char-quote"><p data-i18n="quote_rin">"AIを使わない理由？ つまらないから。"</p></div>
+    </div>
+    <div class="char-card" onclick="showModal(this)" data-quote-ja="「最適解を選ばない人間が、なぜ勝つのですか？」" data-quote-en="'Why do humans who reject the optimal solution... win?'" data-quote-pt="'Por que humanos que rejeitam a solucao otima... vencem?'">
+      <img src="images/characters/sage_sheet.png" alt="SAGE" loading="lazy">
+      <div class="char-info">
+        <div class="char-name" style="color:var(--sage)">SAGE</div>
+        <div class="char-role" data-i18n="char_sage">AI / 予測精度99.8% / だがフロウは読めない</div>
+      </div>
+      <div class="char-quote"><p data-i18n="quote_sage">"最適解を選ばない人間が、なぜ勝つのですか？"</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FLOW SYSTEM -->
+<section id="flow-system" class="reveal">
+  <div class="stitle" data-i18n="sec_flowsystem">FLOW SYSTEM</div>
+  <div class="ssub" data-i18n="sec_flowsystem_sub">4段階の覚醒 ── 代償と引き換えに、AIの予測を超える</div>
+  <div class="flow-grid">
+    <div class="flow-card" style="border-color:#6699cc" onclick="showModal(this)">
+      <img src="images/flow_art/flow_lv1_shizuku.png" alt="Shizuku" loading="lazy">
+      <div class="flow-body">
+        <div class="flow-lv">Level 1</div>
+        <div class="flow-nm" style="color:#6699cc">滴 Shizuku</div>
+        <div class="flow-fx" data-i18n="flow_lv1">一瞬だけAI予測を外す</div>
+        <div class="flow-cost" data-i18n="flow_cost1">代償: 軽い疲労</div>
+      </div>
+    </div>
+    <div class="flow-card" style="border-color:#4488dd" onclick="showModal(this)">
+      <img src="images/flow_art/flow_lv2_nagare.png" alt="Nagare" loading="lazy">
+      <div class="flow-body">
+        <div class="flow-lv">Level 2</div>
+        <div class="flow-nm" style="color:#4488dd">流 Nagare</div>
+        <div class="flow-fx" data-i18n="flow_lv2">3〜5手が連続する水の流れ</div>
+        <div class="flow-cost" data-i18n="flow_cost2">代償: 左半身の痺れ</div>
+      </div>
+    </div>
+    <div class="flow-card" style="border-color:#2266ee" onclick="showModal(this)">
+      <img src="images/flow_art/flow_lv3_uzu.png" alt="Uzu" loading="lazy">
+      <div class="flow-body">
+        <div class="flow-lv">Level 3</div>
+        <div class="flow-nm" style="color:#2266ee">渦 Uzu</div>
+        <div class="flow-fx" data-i18n="flow_lv3">相手もフロウに引き込む。全AI停止</div>
+        <div class="flow-cost" data-i18n="flow_cost3">代償: 意識朦朧</div>
+      </div>
+    </div>
+    <div class="flow-card" style="border-color:#0044ff" onclick="showModal(this)">
+      <img src="images/flow_art/flow_lv4_umi.png" alt="Umi" loading="lazy">
+      <div class="flow-body">
+        <div class="flow-lv">Level 4</div>
+        <div class="flow-nm" style="color:#0044ff">海 Umi</div>
+        <div class="flow-fx" data-i18n="flow_lv4">海堂だけが到達した未知の領域</div>
+        <div class="flow-cost" data-i18n="flow_cost4">代償: ???</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EPISODES -->
+<section id="episodes" class="reveal">
+  <div class="stitle" data-i18n="sec_episodes">EPISODES</div>
+  <div class="ssub" data-i18n="sec_episodes_sub">全5シーズン・60話の壮大な物語</div>
+  <div class="ep-timeline">
+    <div class="ep-season">
+      <div class="ep-season-header" data-i18n="s1_title">SEASON 1 — 白帯篇「目覚め」</div>
+      <div class="ep-item"><div class="ep-num">01</div><div class="ep-body"><h4 data-i18n="ep01_t">残像</h4><p data-i18n="ep01_d">2030年ムラジアル決勝。伝説の柔術家・海堂がAI予測99.7%を覆す。翌日、海堂は消えた。</p><span class="ep-tag">SAGE ERROR</span></div></div>
+      <div class="ep-item"><div class="ep-num">02</div><div class="ep-body"><h4 data-i18n="ep02_t">珊瑚帯の男</h4><p data-i18n="ep02_d">流が海堂の師匠ルシアーノの道場を訪ねる。AIスクリーンのない、古いマットの地下道場。</p></div></div>
+      <div class="ep-item"><div class="ep-num">03</div><div class="ep-body"><h4 data-i18n="ep03_t">右手の世界</h4><p data-i18n="ep03_d">左半身が使えない分、右手の感覚が研ぎ澄まされていく。相手の体重移動が「わかる」。</p></div></div>
+      <div class="ep-item"><div class="ep-num">04</div><div class="ep-body"><h4 data-i18n="ep04_t">水面</h4><p data-i18n="ep04_d">初スパーリング。完敗するが、一瞬だけ力の方向が「見えた」。フロウの萌芽。</p></div></div>
+      <div class="ep-item"><div class="ep-num">05</div><div class="ep-body"><h4>SAGE</h4><p data-i18n="ep05_d">SAGE社が街中に予測AI端末を設置。流の動きだけ、SAGEが予測できない。</p><span class="ep-tag">SAGE vs INSTINCT</span></div></div>
+      <div class="ep-item"><div class="ep-num">06</div><div class="ep-body"><h4 data-i18n="ep06_t">蜘蛛</h4><p data-i18n="ep06_d">足関節の天才・凛が登場。AI不使用の異端者。「つまらないから」。</p></div></div>
+      <div class="ep-item"><div class="ep-num">07-09</div><div class="ep-body"><h4 data-i18n="ep07_t">白帯の意地</h4><p data-i18n="ep07_d">地区大会編。AI適応型選手との対戦。流は基礎だけで挑む。</p></div></div>
+      <div class="ep-item"><div class="ep-num">10</div><div class="ep-body"><h4 data-i18n="ep10_t">流</h4><p data-i18n="ep10_d">フロウ初発動。全AI画面にERRが表示される。観客、騒然。</p><span class="ep-tag">FLOW AWAKENING</span></div></div>
+      <div class="ep-item"><div class="ep-num">11-12</div><div class="ep-body"><h4 data-i18n="ep11_t">帰還</h4><p data-i18n="ep11_d">理央がルシアーノの道場に現れる。「僕と組んでくれませんか」。</p></div></div>
+    </div>
+    <div class="ep-season">
+      <div class="ep-season-header" data-i18n="s2_title">SEASON 2 — 青帯篇「流転」</div>
+      <div class="ep-item"><div class="ep-num">13-18</div><div class="ep-body"><h4 data-i18n="ep13_t">全国への道</h4><p data-i18n="ep13_d">理央との共同練習。ルシアーノの過去が明かされる。全国大会で本物の強さと出会う。</p></div></div>
+      <div class="ep-item"><div class="ep-num">19-24</div><div class="ep-body"><h4 data-i18n="ep19_t">渦の代償</h4><p data-i18n="ep19_d">フロウLv3「渦」に到達するが、身体への代償が深刻化。流は限界と向き合う。</p><span class="ep-tag" data-i18n="ep19_tag">DARK SIDE</span></div></div>
+    </div>
+    <div class="ep-season">
+      <div class="ep-season-header" data-i18n="s3_title">SEASON 3 — 紫帯篇「世界」</div>
+      <div class="ep-item"><div class="ep-num">25-36</div><div class="ep-body"><h4 data-i18n="ep25_t">世界大会</h4><p data-i18n="ep25_d">世界の猛者たちとの激突。各国のAI柔術・伝統柔術の頂点。流の柔術が世界に問いかける。</p><span class="ep-tag">WORLD CHAMPIONSHIP</span></div></div>
+    </div>
+    <div class="ep-season">
+      <div class="ep-season-header" data-i18n="s4_title">SEASON 4 — 茶帯篇「真実」</div>
+      <div class="ep-item"><div class="ep-num">37-48</div><div class="ep-body"><h4 data-i18n="ep37_t">SAGEの真実</h4><p data-i18n="ep37_d">SAGEの背後にある巨大な陰謀。消えた海堂の行方。全てが一つに繋がる。</p><span class="ep-tag">SAGE REVEAL</span></div></div>
+    </div>
+    <div class="ep-season">
+      <div class="ep-season-header" data-i18n="s5_title">SEASON 5 — 黒帯篇「海」</div>
+      <div class="ep-item"><div class="ep-num">49-60</div><div class="ep-body"><h4 data-i18n="ep49_t">最終決戦</h4><p data-i18n="ep49_d">人間の直感 vs 機械の最適解。流は「海」に到達できるのか。全ての答えが、マットの上に。</p><span class="ep-tag">FINAL</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCENES -->
+<section id="scenes" class="reveal">
+  <div class="stitle" data-i18n="sec_scenes">SCENES</div>
+  <div class="ssub" data-i18n="sec_scenes_sub">名シーンコンセプトアート</div>
+  <div class="scenes-grid">
+    <div class="scene-card" onclick="showModal(this)"><img src="images/scenes/scene_ep1_kaido.png" loading="lazy"><div class="scene-info"><div class="scene-ep">EP.01</div><div class="scene-title" data-i18n="sc1_t">残像</div><div class="scene-desc" data-i18n="sc1_d">海堂 vs ヴィクトル。SAGE予測99.7%を覆す</div></div></div>
+    <div class="scene-card" onclick="showModal(this)"><img src="images/scenes/scene_ep6_rin_spider.png" loading="lazy"><div class="scene-info"><div class="scene-ep">EP.06</div><div class="scene-title" data-i18n="sc2_t">蜘蛛</div><div class="scene-desc" data-i18n="sc2_d">凛の登場。足関節の蜘蛛の巣</div></div></div>
+    <div class="scene-card" onclick="showModal(this)"><img src="images/scenes/scene_ep10_awakening.png" loading="lazy"><div class="scene-info"><div class="scene-ep">EP.10</div><div class="scene-title" data-i18n="sc3_t">流</div><div class="scene-desc" data-i18n="sc3_d">フロウ初発動。全AI画面にERR</div></div></div>
+    <div class="scene-card" onclick="showModal(this)"><img src="images/scenes/scene_ep12_reunion.png" loading="lazy"><div class="scene-info"><div class="scene-ep">EP.12</div><div class="scene-title" data-i18n="sc4_t">逃亡者</div><div class="scene-desc" data-i18n="sc4_d">理央が道場に現れる</div></div></div>
+    <div class="scene-card" onclick="showModal(this)"><img src="images/scenes/scene_s4_sage_reveal.png" loading="lazy"><div class="scene-info"><div class="scene-ep">S4</div><div class="scene-title" data-i18n="sc5_t">SAGEの真実</div><div class="scene-desc" data-i18n="sc5_d">サーバー室。取り込まれた海堂</div></div></div>
+    <div class="scene-card" onclick="showModal(this)"><img src="images/keyvisual/kv_rivals.png" loading="lazy"><div class="scene-info"><div class="scene-ep">RIVALRY</div><div class="scene-title" data-i18n="sc6_t">流 vs 理央</div><div class="scene-desc" data-i18n="sc6_d">人間の直感 vs 機械の最適解</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- KEY VISUALS -->
+<section class="reveal">
+  <div class="stitle">KEY VISUALS</div>
+  <div class="ssub" data-i18n="kv_sub">クリックで拡大</div>
+  <div class="kv-grid">
+    <div class="kv-card" onclick="showModal(this)"><img src="images/keyvisual/kv_main.png" loading="lazy"><div class="kv-label">MAIN POSTER</div></div>
+    <div class="kv-card" onclick="showModal(this)"><img src="images/keyvisual/kv_flow_awakening.png" loading="lazy"><div class="kv-label">FLOW AWAKENING</div></div>
+    <div class="kv-card" onclick="showModal(this)"><img src="images/keyvisual/kv_themat.png" loading="lazy"><div class="kv-label">THE MAT</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <div class="cta-box">
+    <div class="cta-title" data-i18n="cta_title">FLOWの最新情報を受け取る</div>
+    <div class="cta-desc" data-i18n-html="cta_desc">
+      制作の進捗、新エピソード公開、限定コンテンツを<br>いち早くお届けします。
+    </div>
+    <form class="email-form" id="emailForm" onsubmit="return submitEmail(event)">
+      <input type="email" class="email-input" placeholder="your@email.com" required>
+      <button type="submit" class="email-submit" data-i18n="btn_subscribe_free">無料で登録</button>
+    </form>
+    <div class="email-success" id="emailSuccess" data-i18n-html="subscribe_ok_full">
+      登録ありがとうございます!<br><span style="font-size:.8rem;color:var(--dim)">最新情報をメールでお届けします。</span>
+    </div>
+    <div class="sub-count" id="subCount"></div>
+    <div class="social-links">
+      <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @flow_bjj
+      </a>
+      <a href="opening.html" class="social-link">
+        <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" fill="currentColor"/></svg>
+        Opening
+      </a>
+      <a href="review.html" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="currentColor"/></svg>
+        <span data-i18n="link_feedback">Feedback</span>
+      </a>
+      <a href="pitch.html" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" fill="currentColor"/></svg>
+        Pitch Deck
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">FLOW</div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="ft_content">Content</div>
+        <a href="opening.html" data-i18n="nav_opening">Opening</a>
+        <a href="#characters" data-i18n="nav_characters">Characters</a>
+        <a href="#flow-system" data-i18n="nav_flowsystem">Flow System</a>
+        <a href="#episodes" data-i18n="nav_episodes">Episodes</a>
+        <a href="#scenes" data-i18n="nav_scenes">Scenes</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="ft_project">Project</div>
+        <a href="pitch.html">Pitch Deck</a>
+        <a href="review.html" data-i18n="nav_review">Review & Vote</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="ft_follow">Follow</div>
+        <a href="https://x.com/flow_bjj" target="_blank" rel="noopener">X (@flow_bjj)</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 FLOW Project. All rights reserved.</div>
+      <div class="footer-social">
+        <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" title="X (Twitter)">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="mo" id="mo" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="mo-c">
+    <button class="mo-x" onclick="document.getElementById('mo').classList.remove('on')">&times;</button>
+    <div id="mi"></div>
+  </div>
+</div>
+
+<script>
+// ======================== i18n ========================
+var LANG = localStorage.getItem('flow_lang') || (navigator.language.startsWith('pt') ? 'pt' : navigator.language.startsWith('en') ? 'en' : 'ja');
+
+var T = {
+ja: {
+  hero_tag: "AIに読めない柔術で、世界の頂点へ",
+  hero_watch: "Opening を見る",
+  hero_episodes: "全60話を読む",
+  nav_opening: "Opening", nav_characters: "キャラクター", nav_flowsystem: "フロウシステム",
+  nav_episodes: "エピソード", nav_scenes: "シーン", nav_review: "レビュー & 投票",
+  intro_text: 'AIが格闘技を支配する<strong>2030年</strong>。<br>予測精度<strong>99.8%</strong>のAI「SAGE」が全ての試合を解析する時代。<br><br>左腕が壊れた17歳の少年 <strong>流（ながれ）</strong>は、<br>AIに読めない唯一の武器 ── <strong>"フロウ"</strong> で世界の頂点を目指す。',
+  sec_opening: "OPENING", sec_opening_sub: "オリジナル主題歌付きオープニング映像を体験",
+  watch_opening: "OPENING を見る",
+  inline_cta: '<strong>FLOW</strong>の最新情報をいち早くお届け',
+  btn_subscribe: "登録", btn_subscribe_free: "無料で登録",
+  subscribe_ok: "登録完了! 最新情報をお届けします。",
+  subscribe_ok_full: '登録ありがとうございます!<br><span style="font-size:.8rem;color:var(--dim)">最新情報をメールでお届けします。</span>',
+  sec_characters: "CHARACTERS", sec_characters_sub: "AIが全てを予測する時代に、予測不能な者たち",
+  char_nagare: "17歳 / 主人公 / 左腕の感覚を失った少年",
+  char_rio: "18歳 / ライバル / SAGE社エース",
+  char_luciano: "師匠 / 珊瑚帯の伝説",
+  char_rin: '19歳 / "蜘蛛" / 足関節の天才',
+  char_sage: "AI / 予測精度99.8% / だがフロウは読めない",
+  quote_nagare: '"もう一回" ── 師匠の言葉だけが、俺を前に進ませる。',
+  quote_rio: '"感覚？ そんな曖昧なものに命を預けるのか"',
+  quote_luciano: '"柔術は完璧な体のためのものじゃない。今の体で何ができるかだ"',
+  quote_rin: '"AIを使わない理由？ つまらないから。"',
+  quote_sage: '"最適解を選ばない人間が、なぜ勝つのですか？"',
+  sec_flowsystem: "FLOW SYSTEM", sec_flowsystem_sub: "4段階の覚醒 ── 代償と引き換えに、AIの予測を超える",
+  flow_lv1: "一瞬だけAI予測を外す", flow_cost1: "代償: 軽い疲労",
+  flow_lv2: "3〜5手が連続する水の流れ", flow_cost2: "代償: 左半身の痺れ",
+  flow_lv3: "相手もフロウに引き込む。全AI停止", flow_cost3: "代償: 意識朦朧",
+  flow_lv4: "海堂だけが到達した未知の領域", flow_cost4: "代償: ???",
+  sec_episodes: "EPISODES", sec_episodes_sub: "全5シーズン・60話の壮大な物語",
+  s1_title: 'SEASON 1 — 白帯篇「目覚め」', s2_title: 'SEASON 2 — 青帯篇「流転」',
+  s3_title: 'SEASON 3 — 紫帯篇「世界」', s4_title: 'SEASON 4 — 茶帯篇「真実」', s5_title: 'SEASON 5 — 黒帯篇「海」',
+  ep01_t: "残像", ep01_d: "2030年ムラジアル決勝。伝説の柔術家・海堂がAI予測99.7%を覆す。翌日、海堂は消えた。",
+  ep02_t: "珊瑚帯の男", ep02_d: "流が海堂の師匠ルシアーノの道場を訪ねる。AIスクリーンのない、古いマットの地下道場。",
+  ep03_t: "右手の世界", ep03_d: '左半身が使えない分、右手の感覚が研ぎ澄まされていく。相手の体重移動が「わかる」。',
+  ep04_t: "水面", ep04_d: '初スパーリング。完敗するが、一瞬だけ力の方向が「見えた」。フロウの萌芽。',
+  ep05_d: "SAGE社が街中に予測AI端末を設置。流の動きだけ、SAGEが予測できない。",
+  ep06_t: "蜘蛛", ep06_d: '足関節の天才・凛が登場。AI不使用の異端者。「つまらないから」。',
+  ep07_t: "白帯の意地", ep07_d: "地区大会編。AI適応型選手との対戦。流は基礎だけで挑む。",
+  ep10_t: "流", ep10_d: "フロウ初発動。全AI画面にERRが表示される。観客、騒然。",
+  ep11_t: "帰還", ep11_d: '理央がルシアーノの道場に現れる。「僕と組んでくれませんか」。',
+  ep13_t: "全国への道", ep13_d: "理央との共同練習。ルシアーノの過去が明かされる。全国大会で本物の強さと出会う。",
+  ep19_t: "渦の代償", ep19_d: "フロウLv3「渦」に到達するが、身体への代償が深刻化。流は限界と向き合う。", ep19_tag: "フロウの闇",
+  ep25_t: "世界大会", ep25_d: "世界の猛者たちとの激突。各国のAI柔術・伝統柔術の頂点。流の柔術が世界に問いかける。",
+  ep37_t: "SAGEの真実", ep37_d: "SAGEの背後にある巨大な陰謀。消えた海堂の行方。全てが一つに繋がる。",
+  ep49_t: "最終決戦", ep49_d: "人間の直感 vs 機械の最適解。流は「海」に到達できるのか。全ての答えが、マットの上に。",
+  sec_scenes: "SCENES", sec_scenes_sub: "名シーンコンセプトアート",
+  sc1_t: "残像", sc1_d: "海堂 vs ヴィクトル。SAGE予測99.7%を覆す",
+  sc2_t: "蜘蛛", sc2_d: "凛の登場。足関節の蜘蛛の巣",
+  sc3_t: "流", sc3_d: "フロウ初発動。全AI画面にERR",
+  sc4_t: "逃亡者", sc4_d: "理央が道場に現れる",
+  sc5_t: "SAGEの真実", sc5_d: "サーバー室。取り込まれた海堂",
+  sc6_t: "流 vs 理央", sc6_d: "人間の直感 vs 機械の最適解",
+  kv_sub: "クリックで拡大",
+  cta_title: "FLOWの最新情報を受け取る",
+  cta_desc: '制作の進捗、新エピソード公開、限定コンテンツを<br>いち早くお届けします。',
+  link_feedback: "フィードバック",
+  ft_content: "コンテンツ", ft_project: "プロジェクト", ft_follow: "フォロー",
+  sub_count_text: "人が登録済み"
+},
+en: {
+  hero_tag: "Jiu-jitsu that AI can't read. Rising to the top of the world.",
+  hero_watch: "Watch Opening", hero_episodes: "Read 60 Episodes",
+  nav_opening: "Opening", nav_characters: "Characters", nav_flowsystem: "Flow System",
+  nav_episodes: "Episodes", nav_scenes: "Scenes", nav_review: "Review & Vote",
+  intro_text: 'In <strong>2030</strong>, AI dominates fighting.<br>The AI "SAGE" analyzes every match with <strong>99.8%</strong> accuracy.<br><br>A 17-year-old boy <strong>Nagare</strong>, who lost feeling in his left arm,<br>aims for the top with the only weapon AI can\'t read — <strong>"Flow."</strong>',
+  sec_opening: "OPENING", sec_opening_sub: "Experience the opening with original theme song",
+  watch_opening: "WATCH OPENING",
+  inline_cta: 'Get the latest <strong>FLOW</strong> updates first',
+  btn_subscribe: "Subscribe", btn_subscribe_free: "Subscribe Free",
+  subscribe_ok: "Subscribed! We'll keep you updated.",
+  subscribe_ok_full: 'Thanks for subscribing!<br><span style="font-size:.8rem;color:var(--dim)">We\'ll send you the latest news.</span>',
+  sec_characters: "CHARACTERS", sec_characters_sub: "Unpredictable souls in an age where AI predicts everything",
+  char_nagare: "17 / Protagonist / Lost sensation in his left arm",
+  char_rio: "18 / Rival / SAGE Corp's ace",
+  char_luciano: "Master / Legend of the coral belt",
+  char_rin: '19 / "The Spider" / Leg lock genius',
+  char_sage: "AI / 99.8% accuracy / But can't read Flow",
+  quote_nagare: '"One more time" — my master\'s words are all that keep me going.',
+  quote_rio: '"Intuition? You\'d trust your life to something so vague?"',
+  quote_luciano: '"Jiu-jitsu isn\'t for perfect bodies. It\'s about what you can do with yours."',
+  quote_rin: '"Why don\'t I use AI? It\'s boring."',
+  quote_sage: '"Why do humans who reject the optimal solution... win?"',
+  sec_flowsystem: "FLOW SYSTEM", sec_flowsystem_sub: "4 awakening stages — surpass AI at a cost",
+  flow_lv1: "Dodge AI prediction for an instant", flow_cost1: "Cost: Mild fatigue",
+  flow_lv2: "3-5 moves flow like water", flow_cost2: "Cost: Left side numbness",
+  flow_lv3: "Pull opponent into Flow. All AI shuts down", flow_cost3: "Cost: Loss of consciousness",
+  flow_lv4: "Unknown territory only Kaido reached", flow_cost4: "Cost: ???",
+  sec_episodes: "EPISODES", sec_episodes_sub: "An epic story across 5 seasons and 60 episodes",
+  s1_title: 'SEASON 1 — White Belt "Awakening"', s2_title: 'SEASON 2 — Blue Belt "Flux"',
+  s3_title: 'SEASON 3 — Purple Belt "World"', s4_title: 'SEASON 4 — Brown Belt "Truth"', s5_title: 'SEASON 5 — Black Belt "Ocean"',
+  ep01_t: "Afterimage", ep01_d: "2030 Mundials final. Legendary fighter Kaido defies SAGE's 99.7% prediction. The next day, Kaido vanishes.",
+  ep02_t: "The Coral Belt", ep02_d: "Nagare visits Luciano's dojo — Kaido's master. An underground gym with no AI screens, just old mats.",
+  ep03_t: "Right Hand World", ep03_d: "Unable to use his left side, Nagare's right hand sharpens. He begins to 'feel' his opponent's weight shifts.",
+  ep04_t: "Surface", ep04_d: "First sparring. Complete defeat, but for one instant, he 'sees' the direction of force. The seed of Flow.",
+  ep05_d: "SAGE Corp installs prediction terminals everywhere. Nagare is the only one SAGE can't predict.",
+  ep06_t: "Spider", ep06_d: "Rin appears — a leg lock genius who refuses AI. 'Why? It's boring.'",
+  ep07_t: "White Belt Pride", ep07_d: "District tournament arc. Against AI-enhanced fighters, Nagare fights with basics alone.",
+  ep10_t: "Flow", ep10_d: "Flow activates for the first time. Every AI screen displays ERR. The crowd goes silent.",
+  ep11_t: "Return", ep11_d: 'Rio appears at Luciano\'s dojo. "Will you train with me?"',
+  ep13_t: "Road to Nationals", ep13_d: "Training with Rio. Luciano's past revealed. At nationals, Nagare meets true strength.",
+  ep19_t: "Price of the Vortex", ep19_d: "Reaching Flow Lv3 'Vortex', but the physical toll escalates. Nagare faces his limits.", ep19_tag: "DARK SIDE",
+  ep25_t: "Worlds", ep25_d: "Clashing with the world's best. AI jiu-jitsu vs traditional mastery. Nagare's jiu-jitsu challenges the world.",
+  ep37_t: "SAGE's Truth", ep37_d: "A massive conspiracy behind SAGE. The fate of the vanished Kaido. Everything connects.",
+  ep49_t: "Final Battle", ep49_d: "Human instinct vs machine optimization. Can Nagare reach 'Ocean'? All answers lie on the mat.",
+  sec_scenes: "SCENES", sec_scenes_sub: "Key scene concept art",
+  sc1_t: "Afterimage", sc1_d: "Kaido vs Viktor. Defying SAGE's 99.7%",
+  sc2_t: "Spider", sc2_d: "Rin's entrance. The spider's web of leg locks",
+  sc3_t: "Flow", sc3_d: "First Flow activation. All AI screens: ERR",
+  sc4_t: "Fugitive", sc4_d: "Rio appears at the dojo",
+  sc5_t: "SAGE's Truth", sc5_d: "Server room. Kaido absorbed",
+  sc6_t: "Nagare vs Rio", sc6_d: "Human instinct vs machine optimization",
+  kv_sub: "Click to enlarge",
+  cta_title: "Get FLOW Updates",
+  cta_desc: 'Production progress, new episodes, and exclusive content<br>delivered straight to your inbox.',
+  link_feedback: "Feedback",
+  ft_content: "Content", ft_project: "Project", ft_follow: "Follow",
+  sub_count_text: "subscribers"
+},
+pt: {
+  hero_tag: "Jiu-jitsu que a IA nao consegue ler. Rumo ao topo do mundo.",
+  hero_watch: "Assistir Opening", hero_episodes: "Ler 60 Episodios",
+  nav_opening: "Opening", nav_characters: "Personagens", nav_flowsystem: "Sistema Flow",
+  nav_episodes: "Episodios", nav_scenes: "Cenas", nav_review: "Avaliar & Votar",
+  intro_text: 'Em <strong>2030</strong>, a IA domina as lutas.<br>A IA "SAGE" analisa cada luta com <strong>99.8%</strong> de precisao.<br><br>Um garoto de 17 anos, <strong>Nagare</strong>, que perdeu a sensibilidade no braco esquerdo,<br>busca o topo com a unica arma que a IA nao consegue ler — <strong>"Flow."</strong>',
+  sec_opening: "OPENING", sec_opening_sub: "Assista ao opening com musica tema original",
+  watch_opening: "ASSISTIR OPENING",
+  inline_cta: 'Receba as novidades do <strong>FLOW</strong> em primeira mao',
+  btn_subscribe: "Inscrever", btn_subscribe_free: "Inscrever Gratis",
+  subscribe_ok: "Inscrito! Vamos mante-lo atualizado.",
+  subscribe_ok_full: 'Obrigado por se inscrever!<br><span style="font-size:.8rem;color:var(--dim)">Enviaremos as novidades por email.</span>',
+  sec_characters: "PERSONAGENS", sec_characters_sub: "Almas imprevisiveis numa era onde a IA preve tudo",
+  char_nagare: "17 anos / Protagonista / Perdeu a sensibilidade no braco esquerdo",
+  char_rio: "18 anos / Rival / Craque da SAGE Corp",
+  char_luciano: "Mestre / Lenda da faixa coral",
+  char_rin: '19 anos / "A Aranha" / Genio das chaves de perna',
+  char_sage: "IA / 99.8% de precisao / Mas nao consegue ler o Flow",
+  quote_nagare: '"Mais uma vez" — as palavras do mestre sao tudo que me mantem de pe.',
+  quote_rio: '"Intuicao? Voce confiaria sua vida a algo tao vago?"',
+  quote_luciano: '"Jiu-jitsu nao e para corpos perfeitos. E sobre o que voce pode fazer com o seu."',
+  quote_rin: '"Por que nao uso IA? E entediante."',
+  quote_sage: '"Por que humanos que rejeitam a solucao otima... vencem?"',
+  sec_flowsystem: "SISTEMA FLOW", sec_flowsystem_sub: "4 estagios de despertar — supere a IA a um custo",
+  flow_lv1: "Escapar da previsao da IA por um instante", flow_cost1: "Custo: Fadiga leve",
+  flow_lv2: "3-5 movimentos fluem como agua", flow_cost2: "Custo: Dormencia no lado esquerdo",
+  flow_lv3: "Puxa o oponente para o Flow. Toda IA para", flow_cost3: "Custo: Perda de consciencia",
+  flow_lv4: "Territorio desconhecido que so Kaido alcancou", flow_cost4: "Custo: ???",
+  sec_episodes: "EPISODIOS", sec_episodes_sub: "Uma historia epica em 5 temporadas e 60 episodios",
+  s1_title: 'TEMPORADA 1 — Faixa Branca "Despertar"', s2_title: 'TEMPORADA 2 — Faixa Azul "Fluxo"',
+  s3_title: 'TEMPORADA 3 — Faixa Roxa "Mundo"', s4_title: 'TEMPORADA 4 — Faixa Marrom "Verdade"', s5_title: 'TEMPORADA 5 — Faixa Preta "Oceano"',
+  ep01_t: "Imagem Residual", ep01_d: "Final do Mundial 2030. O lendario Kaido derruba a previsao de 99.7% do SAGE. No dia seguinte, Kaido desaparece.",
+  ep02_t: "A Faixa Coral", ep02_d: "Nagare visita o dojo de Luciano — mestre de Kaido. Um porrao subterraneo sem telas de IA, so tatames velhos.",
+  ep03_t: "Mundo da Mao Direita", ep03_d: "Sem poder usar o lado esquerdo, a mao direita de Nagare se aguza. Ele comeca a 'sentir' as transferencias de peso.",
+  ep04_t: "Superficie", ep04_d: "Primeiro sparring. Derrota total, mas por um instante, ele 've' a direcao da forca. A semente do Flow.",
+  ep05_d: "A SAGE Corp instala terminais de previsao em toda parte. Nagare e o unico que o SAGE nao consegue prever.",
+  ep06_t: "Aranha", ep06_d: "Rin aparece — genio das chaves de perna que recusa IA. 'Por que? E entediante.'",
+  ep07_t: "Orgulho da Faixa Branca", ep07_d: "Arco do torneio distrital. Contra lutadores com IA, Nagare luta so com o basico.",
+  ep10_t: "Flow", ep10_d: "Flow ativa pela primeira vez. Todas as telas de IA mostram ERR. A plateia silencia.",
+  ep11_t: "Retorno", ep11_d: 'Rio aparece no dojo de Luciano. "Voce treina comigo?"',
+  ep13_t: "Rumo ao Nacional", ep13_d: "Treinando com Rio. O passado de Luciano revelado. No nacional, Nagare encontra a forca verdadeira.",
+  ep19_t: "Preco do Vortice", ep19_d: "Alcancando Flow Lv3 'Vortice', mas o custo fisico se agrava. Nagare enfrenta seus limites.", ep19_tag: "LADO SOMBRIO",
+  ep25_t: "Mundial", ep25_d: "Confronto com os melhores do mundo. Jiu-jitsu com IA vs maestria tradicional. O jiu-jitsu de Nagare desafia o mundo.",
+  ep37_t: "A Verdade do SAGE", ep37_d: "Uma conspiracao massiva por tras do SAGE. O destino de Kaido. Tudo se conecta.",
+  ep49_t: "Batalha Final", ep49_d: "Instinto humano vs otimizacao da maquina. Nagare alcancara o 'Oceano'? Todas as respostas estao no tatame.",
+  sec_scenes: "CENAS", sec_scenes_sub: "Concept art das cenas principais",
+  sc1_t: "Imagem Residual", sc1_d: "Kaido vs Viktor. Desafiando 99.7% do SAGE",
+  sc2_t: "Aranha", sc2_d: "Entrada de Rin. A teia de aranha das chaves",
+  sc3_t: "Flow", sc3_d: "Primeira ativacao do Flow. Todas as telas: ERR",
+  sc4_t: "Fugitivo", sc4_d: "Rio aparece no dojo",
+  sc5_t: "Verdade do SAGE", sc5_d: "Sala de servidores. Kaido absorvido",
+  sc6_t: "Nagare vs Rio", sc6_d: "Instinto humano vs otimizacao da maquina",
+  kv_sub: "Clique para ampliar",
+  cta_title: "Receba Novidades do FLOW",
+  cta_desc: 'Progresso da producao, novos episodios e conteudo exclusivo<br>direto no seu email.',
+  link_feedback: "Feedback",
+  ft_content: "Conteudo", ft_project: "Projeto", ft_follow: "Seguir",
+  sub_count_text: "inscritos"
+}
+};
+
+function setLang(lang) {
+  LANG = lang;
+  localStorage.setItem('flow_lang', lang);
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+  // Update switcher buttons
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.textContent.trim() === {ja:'JP',en:'EN',pt:'PT'}[lang]);
+  });
+  // Update text
+  var t = T[lang] || T.ja;
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-html');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+}
+
+// ======================== Mobile Menu ========================
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ======================== Particles ========================
+var canvas = document.getElementById('particles');
+var ctx = canvas.getContext('2d');
+var particles = [];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function Particle() { this.reset(); }
+Particle.prototype.reset = function() {
+  this.x = Math.random() * canvas.width;
+  this.y = Math.random() * canvas.height;
+  this.size = Math.random() * 2 + 0.5;
+  this.speedY = -Math.random() * 0.5 - 0.1;
+  this.speedX = (Math.random() - 0.5) * 0.3;
+  this.opacity = Math.random() * 0.5 + 0.1;
+  this.color = Math.random() > 0.5 ? '74,158,255' : '0,212,255';
+};
+Particle.prototype.update = function() {
+  this.y += this.speedY; this.x += this.speedX;
+  if (this.y < -10) { this.reset(); this.y = canvas.height + 10; }
+};
+Particle.prototype.draw = function() {
+  ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(' + this.color + ',' + this.opacity + ')'; ctx.fill();
+};
+for (var i = 0; i < 60; i++) particles.push(new Particle());
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(function(p) { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ======================== Nav ========================
+var nav = document.getElementById('nav');
+var sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', function() {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+  var current = '';
+  sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  document.querySelectorAll('.nav-link').forEach(function(a) {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ======================== Reveal ========================
+var reveals = document.querySelectorAll('.reveal');
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.1 });
+reveals.forEach(function(el) { revealObserver.observe(el); });
+
+// Counter animation
+var counters = document.querySelectorAll('.stat-num');
+var counterObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      var el = e.target, target = parseInt(el.dataset.count), current = 0;
+      var step = Math.max(1, Math.floor(target / 30));
+      var timer = setInterval(function() {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = current;
+      }, 40);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(function(el) { counterObserver.observe(el); });
+
+// Hero parallax
+var heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', function() {
+  var y = window.scrollY;
+  if (y < window.innerHeight) {
+    heroBg.style.transform = 'scale(1.1) translateY(' + (y * 0.3) + 'px)';
+    heroBg.style.opacity = 1 - (y / window.innerHeight) * 0.5;
+  }
+});
+
+// ======================== Modal ========================
+function showModal(el) {
+  var img = el.querySelector('img');
+  var name = el.querySelector('.char-name,.flow-nm,.scene-title,.kv-label');
+  var desc = el.querySelector('.char-role,.flow-fx,.scene-desc');
+  var quoteKey = 'data-quote-' + LANG;
+  var quote = el.getAttribute(quoteKey) || el.getAttribute('data-quote-ja');
+  var html = '<img class="mi" src="' + img.src + '" style="cursor:zoom-in" onclick="window.open(\'' + img.src + '\',\'_blank\')">';
+  html += '<div class="mb"><h2 style="font-size:1.3rem;font-weight:900">' + (name ? name.textContent : '') + '</h2>';
+  if (desc) html += '<p style="color:var(--dim);margin-top:.5rem">' + desc.textContent + '</p>';
+  if (quote) html += '<p style="font-family:\'Zen Antique Soft\',serif;color:rgba(255,255,255,.6);margin-top:1rem;font-style:italic;border-left:3px solid var(--ac);padding-left:1rem">' + quote + '</p>';
+  html += '</div>';
+  document.getElementById('mi').innerHTML = html;
+  document.getElementById('mo').classList.add('on');
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') document.getElementById('mo').classList.remove('on'); });
+
+// ======================== Email Subscribe ========================
+function submitEmail(e) {
+  e.preventDefault();
+  var form = document.getElementById('emailForm');
+  var email = form.querySelector('input').value;
+  sendSubscribe(email);
+  form.style.display = 'none';
+  document.getElementById('emailSuccess').style.display = 'block';
+  return false;
+}
+function submitEmailInline(e) {
+  e.preventDefault();
+  var form = document.getElementById('emailFormInline');
+  var email = form.querySelector('input').value;
+  sendSubscribe(email);
+  form.style.display = 'none';
+  document.getElementById('emailSuccessInline').style.display = 'block';
+  var mainForm = document.getElementById('emailForm');
+  if (mainForm) { mainForm.style.display = 'none'; document.getElementById('emailSuccess').style.display = 'block'; }
+  return false;
+}
+function sendSubscribe(email) {
+  fetch('/api/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, lang: LANG, source: 'website' })
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.count) updateSubCount(d.count);
+  }).catch(function() {});
+}
+function updateSubCount(count) {
+  var el = document.getElementById('subCount');
+  var t = T[LANG] || T.ja;
+  if (el && count > 0) el.textContent = count + ' ' + t.sub_count_text;
+}
+
+// Stagger reveal
+var staggerObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      var children = e.target.querySelectorAll('.char-card,.flow-card,.scene-card,.kv-card,.ep-item');
+      children.forEach(function(child, i) {
+        child.style.opacity = '0'; child.style.transform = 'translateY(20px)';
+        child.style.transition = 'all .5s ' + (i * 0.08) + 's cubic-bezier(.16,1,.3,1)';
+        requestAnimationFrame(function() { child.style.opacity = '1'; child.style.transform = 'translateY(0)'; });
+      });
+      staggerObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.chars-grid,.flow-grid,.scenes-grid,.kv-grid,.ep-timeline').forEach(function(el) { staggerObserver.observe(el); });
+
+// ======================== Init ========================
+setLang(LANG);
+</script>
+<script src="/track.js"></script>
+</body>
+</html>

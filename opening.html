@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/opening.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#08080d">
+<meta property="og:title" content="FLOW — Opening | 0.2%の証明">
+<meta property="og:description" content="BJJ x AI anime — オリジナル主題歌「0.2%の証明」付きオープニング映像。全60話。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://flow-anime.com/opening.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FLOW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flow_bjj">
+<meta name="twitter:title" content="FLOW — Opening | 0.2%の証明">
+<meta name="twitter:description" content="Watch the opening of FLOW with original theme song. BJJ x AI anime, 60 episodes.">
+<meta name="twitter:image" content="https://flow-anime.com/images/og_image.png">
+<meta name="description" content="BJJ x AI anime — オリジナル主題歌「0.2%の証明」付きオープニング映像。全60話。">
+<title>FLOW — Opening | 0.2%の証明</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Zen+Antique+Soft&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#e8e8f0;font-family:'Noto Sans JP',sans-serif;overflow-x:hidden}
+#op{position:fixed;inset:0;z-index:100;background:#000;overflow:hidden}#op.done{display:none}
+.L{position:absolute;inset:0;opacity:0;transition:opacity 0.5s;overflow:hidden}.L.on{opacity:1}
+.L img{width:100%;height:100%;object-fit:cover;animation:slowZoom 8s ease forwards}
+@keyframes slowZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+.L.zoom-out img{animation:zoomOut 8s ease forwards}@keyframes zoomOut{from{transform:scale(1.15)}to{transform:scale(1)}}
+.L.pan-left img{animation:panLeft 8s ease forwards}@keyframes panLeft{from{transform:translateX(5%)}to{transform:translateX(-5%)}}
+.L.pan-right img{animation:panRight 8s ease forwards}@keyframes panRight{from{transform:translateX(-5%)}to{transform:translateX(5%)}}
+.CC{position:absolute;inset:0;display:flex;opacity:0;overflow:hidden;transition:opacity .3s}.CC.on{opacity:1}.CC.rev{flex-direction:row-reverse}
+.CC.slide-l{animation:ccL .6s cubic-bezier(.16,1,.3,1) forwards}.CC.slide-r{animation:ccR .6s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes ccL{from{transform:translateX(-80px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes ccR{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}
+.CC img{width:48%;height:100%;object-fit:cover;object-position:top}
+.CC .cp{width:52%;display:flex;flex-direction:column;justify-content:center;padding:4vw;background:linear-gradient(135deg,rgba(10,10,18,.95),rgba(17,17,30,.95))}
+.CC .cn{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:.12em}
+.CC .cr{font-size:clamp(.65rem,1.2vw,.9rem);color:#666;letter-spacing:.25em;margin-top:.3rem;font-weight:300}
+.CC .cq{font-family:'Zen Antique Soft',serif;font-size:clamp(.85rem,1.5vw,1.15rem);color:#bbb;margin-top:1.5rem;line-height:1.9;border-left:3px solid;padding-left:1rem;font-style:italic}
+#op-title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;opacity:0;pointer-events:none}
+#op-title.on{opacity:1}
+#op-title h1{font-family:'Dela Gothic One',sans-serif;font-size:clamp(6rem,20vw,16rem);letter-spacing:.35em;background:linear-gradient(135deg,#fff 0%,#00d4ff 40%,#4a9eff 70%,#7c5cff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 80px rgba(0,212,255,.5)) drop-shadow(0 0 30px rgba(124,92,255,.3))}
+#op-title .sub{font-size:clamp(.6rem,1.5vw,1rem);color:rgba(255,255,255,.4);letter-spacing:.6em;margin-top:.5rem}
+.title-in{animation:titleIn 2s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes titleIn{0%{transform:scale(3);opacity:0}20%{transform:scale(1);opacity:1}75%{opacity:1}100%{opacity:0}}
+#lyrics{position:absolute;bottom:6%;left:0;right:0;text-align:center;z-index:30;pointer-events:none}
+#lyrics p{font-family:'Zen Antique Soft',serif;font-size:clamp(1.1rem,3vw,1.8rem);color:#fff;text-shadow:0 2px 40px rgba(0,0,0,1),0 0 60px rgba(74,158,255,.4),0 0 10px rgba(0,0,0,1);opacity:0;transition:all .35s;letter-spacing:.12em;transform:translateY(8px)}
+#lyrics p.on{opacity:1;transform:translateY(0)}
+canvas#fx{position:absolute;inset:0;z-index:25;pointer-events:none}
+#flash{position:absolute;inset:0;z-index:28;background:#fff;opacity:0;pointer-events:none}#flash.on{animation:flashFx .2s ease-out}@keyframes flashFx{0%{opacity:.85}100%{opacity:0}}
+#vignette{position:absolute;inset:0;z-index:15;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.6) 100%)}
+#slines{position:absolute;inset:0;z-index:18;pointer-events:none;opacity:0;transition:opacity .15s}#slines.on{opacity:1}
+#skip{position:absolute;bottom:1.5rem;right:1.5rem;z-index:50;padding:.35rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:rgba(255,255,255,.4);font-size:.65rem;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);letter-spacing:.1em;transition:all .2s}#skip:hover{color:#fff;border-color:#4a9eff}
+#prog{position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,#4a9eff,#00d4ff,#7c5cff);z-index:50;width:0;transition:width .2s}
+#start-overlay{position:absolute;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.8);cursor:pointer;transition:opacity .5s}
+#start-overlay.gone{opacity:0;pointer-events:none}
+#start-overlay h2{font-family:'Dela Gothic One',sans-serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:.3em;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#start-overlay p{color:#555;font-size:.8rem;letter-spacing:.3em;margin-top:1rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.credit-small{position:absolute;bottom:2rem;right:2rem;text-align:right;color:rgba(255,255,255,.15);font-size:.55rem;line-height:1.8;letter-spacing:.05em}
+#story{display:none;background:#08080d}#story.on{display:block}
+.story-head{height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:url('images/keyvisual/kv_main.png') center/cover;position:relative}
+.story-head::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.72)}.story-head *{position:relative}
+.story-head h1{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2.5rem,7vw,5rem);letter-spacing:.2em;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.story-head p{color:#555;font-size:.8rem;letter-spacing:.3em;margin-top:.5rem}
+.story-body{max-width:780px;margin:0 auto;padding:3rem 1.5rem}
+.ss{margin-bottom:4rem}.ss-h{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.ss-n{font-family:'Dela Gothic One',sans-serif;font-size:2.2rem;background:linear-gradient(135deg,#4a9eff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ss-t{font-size:1.1rem;font-weight:700}.ss-sub{font-size:.7rem;color:#555;margin-top:.15rem}.ss-img{width:100%;border-radius:10px;margin-bottom:1.5rem}
+.eb{margin-bottom:2rem;padding:1.5rem;background:#111119;border-radius:10px;border-left:3px solid #4a9eff;transition:all .3s}
+.eb:hover{border-color:#00d4ff;background:#141421}
+.eb-h{display:flex;align-items:baseline;gap:.5rem}.eb-h .n{font-family:'Dela Gothic One',sans-serif;font-size:1.4rem;color:#4a9eff}.eb-h .t{font-size:1rem;font-weight:900}
+.eb-b{margin-top:.7rem;line-height:2;font-size:.85rem;color:#888}.eb-b strong{color:#ddd}
+.eb-b .tag{display:inline-block;margin-top:.4rem;padding:.15rem .7rem;background:rgba(74,158,255,.08);color:#4a9eff;border-radius:100px;font-size:.7rem;font-weight:700}
+.ed-trigger{text-align:center;padding:4rem 2rem}
+.ed-btn{padding:1rem 3rem;border-radius:100px;border:2px solid rgba(74,158,255,.3);background:transparent;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.1em;transition:all .3s}
+.ed-btn:hover{border-color:#4a9eff;background:rgba(74,158,255,.1);transform:scale(1.03)}
+.vbtn{padding:.6rem 1.2rem;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#aaa;
+  font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .2s}.vbtn:hover{border-color:#4a9eff;color:#fff}
+.vbtn.sel{background:rgba(74,158,255,.15);border-color:#4a9eff;color:#4a9eff;font-weight:700}
+.cbtn{padding:.4rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#888;
+  font-size:.78rem;cursor:pointer;font-family:inherit;transition:all .2s}.cbtn:hover{border-color:var(--c);color:var(--c)}
+.cbtn.sel{background:color-mix(in srgb,var(--c) 15%,transparent);border-color:var(--c);color:var(--c);font-weight:700}
+.sbtn{padding:.4rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#888;
+  font-size:.78rem;cursor:pointer;font-family:inherit;transition:all .2s}.sbtn:hover{border-color:#4a9eff;color:#fff}
+.sbtn.sel{background:rgba(74,158,255,.15);border-color:#4a9eff;color:#4a9eff;font-weight:700}
+#feedback.on{display:block}
+#ed{display:none;position:fixed;inset:0;z-index:100;background:#000;overflow:hidden}#ed.on{display:block}
+.ed-bg{position:absolute;inset:0;opacity:.15}.ed-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.6) blur(2px)}
+canvas#edfx{position:absolute;inset:0;z-index:5;pointer-events:none}
+#ed-lyrics{position:absolute;bottom:8%;left:0;right:0;text-align:center;z-index:10;pointer-events:none}
+#ed-lyrics p{font-family:'Zen Antique Soft',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:rgba(255,255,255,.85);text-shadow:0 2px 30px rgba(0,0,0,.9);opacity:0;transition:all .5s;letter-spacing:.1em;transform:translateY(6px)}
+#ed-lyrics p.on{opacity:1;transform:translateY(0)}
+.ed-cw{position:absolute;inset:0;display:flex;justify-content:center;z-index:3;overflow:hidden}
+.ed-c{padding-top:100vh;text-align:center}.ed-c p{font-size:.85rem;color:#555;line-height:3;letter-spacing:.1em}
+.ed-c p.h{color:#fff;font-size:1.1rem;font-weight:700}.ed-c p.big{font-family:'Dela Gothic One',sans-serif;font-size:2rem;letter-spacing:.3em;color:#fff}
+.ed-c p.final{font-family:'Zen Antique Soft',serif;font-size:1.3rem;color:#aaa;margin-top:2rem}.ed-c p.tiny{font-size:.6rem;color:#333}
+#bgm-player{position:fixed;bottom:1.5rem;left:1.5rem;z-index:80;background:rgba(17,17,25,.95);
+  backdrop-filter:blur(12px);border-radius:14px;padding:.6rem 1rem;border:1px solid rgba(255,255,255,.06);
+  display:none;align-items:center;gap:.6rem}
+#bgm-player.show{display:flex}
+#bgm-player button{background:none;border:none;color:#4a9eff;cursor:pointer;font-size:1rem;padding:0;width:24px}
+#bgm-player input[type=range]{width:60px;accent-color:#4a9eff;height:3px}
+#bgm-player .label{font-size:.6rem;color:#555;letter-spacing:.05em}
+.live-bar{background:rgba(17,17,25,.9);backdrop-filter:blur(8px);padding:.4rem 1rem;text-align:center;
+  font-size:.7rem;color:#555;border-bottom:1px solid rgba(255,255,255,.03);position:sticky;top:0;z-index:50}
+.live-bar .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#22cc88;margin-right:.4rem;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+#read-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#4a9eff,#00d4ff,#7c5cff);
+  z-index:90;width:0;transition:width .1s;display:none}
+#read-progress.show{display:block}
+.eb:hover .ep-link{opacity:1}
+#topBtn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:80;width:40px;height:40px;border-radius:50%;
+  background:rgba(17,17,25,.9);border:1px solid rgba(255,255,255,.08);color:#888;font-size:1rem;
+  cursor:pointer;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);transition:all .2s}
+#topBtn.show{display:flex}
+#topBtn:hover{border-color:#4a9eff;color:#4a9eff}
+</style>
+</head>
+<body>
+<div id="read-progress"></div>
+<div id="op">
+  <div id="start-overlay">
+    <h2>FLOW</h2>
+    <div style="display:flex;gap:.5rem;margin-top:1.5rem;flex-wrap:nowrap;justify-content:center;width:100%;max-width:380px;padding:0 1rem">
+      <button onclick="setOpLang('ja');startOP()" style="flex:1;min-width:0;padding:.7rem .5rem;border-radius:100px;border:1px solid rgba(74,158,255,.4);background:linear-gradient(135deg,rgba(74,158,255,.15),rgba(124,92,255,.15));color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.05em;transition:all .2s;backdrop-filter:blur(8px);white-space:nowrap">日本語</button>
+      <button onclick="setOpLang('en');startOP()" style="flex:1;min-width:0;padding:.7rem .5rem;border-radius:100px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.05em;transition:all .2s;backdrop-filter:blur(8px);white-space:nowrap">English</button>
+      <button onclick="setOpLang('pt');startOP()" style="flex:1;min-width:0;padding:.7rem .5rem;border-radius:100px;border:1px solid rgba(34,204,136,.3);background:rgba(34,204,136,.08);color:rgba(34,204,136,.7);font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.05em;transition:all .2s;backdrop-filter:blur(8px);white-space:nowrap">Português</button>
+    </div>
+    <p style="margin-top:1rem;color:#555;font-size:.7rem;letter-spacing:.3em;animation:pulse 2s infinite">SELECT LANGUAGE & START</p>
+    <div class="credit-small">監修: 村田良蔵<br>制作: 濱田優貴</div>
+  </div>
+  <div class="L" id="L0" style="background:#000;opacity:1"></div>
+  <div class="L" id="L-ep1"><img src="images/scenes/scene_ep1_kaido.png"></div>
+  <div class="L zoom-out" id="L-kv"><img src="images/keyvisual/kv_main.png"></div>
+  <div class="L pan-left" id="L-awake"><img src="images/keyvisual/kv_flow_awakening.png"></div>
+  <div class="L pan-right" id="L-rivals"><img src="images/keyvisual/kv_rivals.png"></div>
+  <div class="L" id="L-uzu"><img src="images/flow_art/flow_lv3_uzu.png"></div>
+  <div class="L zoom-out" id="L-umi"><img src="images/flow_art/flow_lv4_umi.png"></div>
+  <div class="L" id="L-mat"><img src="images/keyvisual/kv_themat.png"></div>
+  <div class="L pan-left" id="L-ep10"><img src="images/scenes/scene_ep10_awakening.png"></div>
+  <div class="L pan-right" id="L-sage"><img src="images/scenes/scene_s4_sage_reveal.png"></div>
+  <div class="L" id="L-rin-sc"><img src="images/scenes/scene_ep6_rin_spider.png"></div>
+  <div class="L zoom-out" id="L-reunion"><img src="images/scenes/scene_ep12_reunion.png"></div>
+  <div class="L" id="L-lv1"><img src="images/flow_art/flow_lv1_shizuku.png"></div>
+  <div class="L pan-left" id="L-lv2"><img src="images/flow_art/flow_lv2_nagare.png"></div>
+  <div class="CC" id="C-nagare"><img src="images/characters/nagare_sheet_v2.png"><div class="cp"><div class="cn" style="color:#3366cc">NAGARE</div><div class="cr">流 — PROTAGONIST</div><div class="cq" style="border-color:#3366cc">触れば分かる。<br>お前がどこに行きたいか</div></div></div>
+  <div class="CC rev" id="C-rio"><img src="images/characters/rio_sheet.png"><div class="cp"><div class="cn" style="color:#99bbee">RIO</div><div class="cr">理央 — RIVAL</div><div class="cq" style="border-color:#99bbee">感覚？ そんな曖昧なものに<br>命を預けるのか</div></div></div>
+  <div class="CC" id="C-luciano"><img src="images/characters/marcelo_sheet.png"><div class="cp"><div class="cn" style="color:#cc8844">LUCIANO</div><div class="cr">ルシアーノ — MENTOR</div><div class="cq" style="border-color:#cc8844">柔術は、完璧な体の<br>ためのものじゃない</div></div></div>
+  <div class="CC rev" id="C-rin"><img src="images/characters/rin_sheet.png"><div class="cp"><div class="cn" style="color:#cc3344">RIN</div><div class="cr">凛 — ALLY</div><div class="cq" style="border-color:#cc3344">AIなんか使えない。<br>つまらないから</div></div></div>
+  <div class="CC" id="C-sage"><img src="images/characters/sage_sheet.png"><div class="cp"><div class="cn" style="color:#44ddff">SAGE</div><div class="cr">セージ — AI</div><div class="cq" style="border-color:#44ddff">人間の不確定性は…<br>排除すべき変数だ</div></div></div>
+  <div id="op-title"><h1>FLOW</h1><div class="sub">AIに読めない柔術で、世界の頂点へ</div></div>
+  <div id="vignette"></div><div id="flash"></div><div id="slines"></div><canvas id="fx"></canvas>
+  <div id="lyrics"><p id="lrc"></p></div><div id="prog"></div>
+  <button id="skip" onclick="endOP(event)">SKIP ▸▸</button>
+</div>
+<div id="story">
+  <div class="story-head"><h1>FLOW</h1><p>EPISODE GUIDE — 全60話</p></div>
+  <div class="live-bar"><span class="dot"></span><span id="liveCount">1</span>人が今閲覧中</div>
+  <div class="story-body" id="storyBody"></div>
+  <div class="ed-trigger" style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;align-items:center">
+    <button class="ed-btn" onclick="setEdLang('ja');startED()">ENDING 日本語</button>
+    <button class="ed-btn" onclick="setEdLang('en');startED()" style="border-color:rgba(74,158,255,.3);color:rgba(74,158,255,.7)">English</button>
+    <button class="ed-btn" onclick="setEdLang('pt');startED()" style="border-color:rgba(34,204,136,.3);color:rgba(34,204,136,.7)">Português</button>
+  </div>
+</div>
+
+<!-- ========== FEEDBACK ========== -->
+<div id="feedback" style="display:none;background:#08080d">
+  <div style="max-width:700px;margin:0 auto;padding:4rem 1.5rem">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.5rem,4vw,2.5rem);background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ありがとうございました</div>
+      <p style="color:#666;font-size:.85rem;margin-top:.8rem;line-height:1.8">FLOW 全60話のストーリーをお読みいただきありがとうございます。<br>この作品を実現するために、あなたの声を聞かせてください。</p>
+    </div>
+
+    <!-- Quick vote -->
+    <div style="background:#111119;border-radius:16px;padding:2rem;margin-bottom:2rem">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;margin-bottom:1.2rem">この作品、どう思いましたか？</div>
+      <div id="quickVote" style="display:flex;gap:.8rem;flex-wrap:wrap">
+        <button onclick="vote(this,'amazing')" class="vbtn">最高！アニメ化してほしい</button>
+        <button onclick="vote(this,'good')" class="vbtn">面白い。もっと見たい</button>
+        <button onclick="vote(this,'ok')" class="vbtn">悪くない</button>
+        <button onclick="vote(this,'meh')" class="vbtn">あまり刺さらなかった</button>
+      </div>
+      <div id="voteResult" style="display:none;margin-top:1rem;color:#4a9eff;font-size:.85rem"></div>
+    </div>
+
+    <!-- Detail feedback -->
+    <div style="background:#111119;border-radius:16px;padding:2rem;margin-bottom:2rem">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;margin-bottom:1.2rem">もう少し聞かせてください</div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:.8rem;color:#888;display:block;margin-bottom:.4rem">好きなキャラクターは？（複数可）</label>
+        <div id="charVote" style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button onclick="this.classList.toggle('sel')" class="cbtn" style="--c:#3366cc">流</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn" style="--c:#99bbee">理央</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn" style="--c:#cc8844">ルシアーノ</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn" style="--c:#cc3344">凛</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn" style="--c:#44ddff">SAGE</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn" style="--c:#fff">海堂</button>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:.8rem;color:#888;display:block;margin-bottom:.4rem">一番見たいシーズンは？</label>
+        <div id="seasonVote" style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button onclick="selSeason(this)" class="sbtn">S1 白帯篇</button>
+          <button onclick="selSeason(this)" class="sbtn">S2 青帯篇</button>
+          <button onclick="selSeason(this)" class="sbtn">S3 紫帯篇</button>
+          <button onclick="selSeason(this)" class="sbtn">S4 茶帯篇</button>
+          <button onclick="selSeason(this)" class="sbtn">S5 黒帯篇</button>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:.8rem;color:#888;display:block;margin-bottom:.4rem">自由コメント</label>
+        <textarea id="freeComment" rows="3" placeholder="感想、改善点、柔術の技で気になった点など..."
+          style="width:100%;background:#0a0a12;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e8e8f0;
+          padding:.8rem;font-family:inherit;font-size:.85rem;resize:vertical;outline:none"></textarea>
+      </div>
+      <button onclick="submitFeedback()" style="width:100%;padding:.8rem;border-radius:100px;border:none;
+        background:linear-gradient(135deg,#4a9eff,#7c5cff);color:#fff;font-weight:700;font-size:.9rem;
+        cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">送信する</button>
+      <div id="submitResult" style="display:none;margin-top:1rem;text-align:center;color:#22cc88;font-size:.85rem"></div>
+    </div>
+
+    <!-- Email registration -->
+    <div style="background:#111119;border-radius:16px;padding:2rem;margin-bottom:2rem;text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;margin-bottom:.5rem">アニメ化の進捗を受け取る</div>
+      <p style="color:#555;font-size:.75rem;margin-bottom:1rem">メールアドレスを登録すると、制作の進捗をお知らせします</p>
+      <div style="display:flex;gap:.5rem;max-width:400px;margin:0 auto">
+        <input id="emailInput" type="email" placeholder="your@email.com" style="flex:1;padding:.6rem 1rem;border-radius:100px;
+          border:1px solid rgba(255,255,255,.1);background:#0a0a12;color:#e8e8f0;font-size:.85rem;outline:none;font-family:inherit">
+        <button onclick="registerEmail()" style="padding:.6rem 1.5rem;border-radius:100px;border:none;
+          background:linear-gradient(135deg,#4a9eff,#7c5cff);color:#fff;font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit;white-space:nowrap">登録</button>
+      </div>
+      <div id="emailResult" style="display:none;margin-top:.8rem;font-size:.8rem;color:#22cc88"></div>
+    </div>
+
+    <!-- Share -->
+    <div style="background:#111119;border-radius:16px;padding:2rem;margin-bottom:2rem;text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;margin-bottom:1rem">この作品を広める</div>
+      <p style="color:#666;font-size:.8rem;margin-bottom:1.2rem">柔術仲間にシェアしてください。反響が大きければ本当にアニメ化します。</p>
+      <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+        <a href="https://twitter.com/intent/tweet?text=%E6%9F%94%E8%A1%93%C3%97AI%E3%81%AE%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E3%82%A2%E3%83%8B%E3%83%A1%E4%BC%81%E7%94%BB%E3%80%8CFLOW%E3%80%8D%E3%81%8C%E3%82%84%E3%81%B0%E3%81%84%E3%80%82%0A%E5%85%A860%E8%A9%B1%E3%81%AE%E8%84%9A%E6%9C%AC%E3%80%81%E4%B8%BB%E9%A1%8C%E6%AD%8C%E3%80%81%E3%82%AD%E3%83%A3%E3%83%A9%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E5%85%A8%E9%83%A8%E3%81%82%E3%82%8B%E3%80%82%0Ahttps%3A%2F%2Fflow-anime.com%2Fopening.html%0A%23%E6%9F%94%E8%A1%93%20%23BJJ%20%23FLOW%20%23%E3%82%A2%E3%83%8B%E3%83%A1" target="_blank"
+          style="padding:.6rem 1.5rem;border-radius:100px;background:#1da1f2;color:#fff;font-size:.8rem;font-weight:700;text-decoration:none;transition:all .2s"
+          onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">X(Twitter)でシェア</a>
+        <button onclick="navigator.clipboard.writeText('https://flow-anime.com/opening.html');this.textContent='Copied!';setTimeout(()=>this.textContent='URLをコピー',2000)"
+          style="padding:.6rem 1.5rem;border-radius:100px;background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s">URLをコピー</button>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem">
+      <a href="pitch.html" style="background:#111119;border-radius:12px;padding:1.5rem;text-decoration:none;text-align:center;transition:all .2s;border:1px solid transparent"
+        onmouseover="this.style.borderColor='#4a9eff'" onmouseout="this.style.borderColor='transparent'">
+        <div style="font-size:1.5rem;margin-bottom:.3rem">📋</div>
+        <div style="color:#fff;font-weight:700;font-size:.85rem">企画書を見る</div>
+        <div style="color:#555;font-size:.7rem;margin-top:.2rem">出版社・制作会社向け</div>
+      </a>
+      <a href="review.html" style="background:#111119;border-radius:12px;padding:1.5rem;text-decoration:none;text-align:center;transition:all .2s;border:1px solid transparent"
+        onmouseover="this.style.borderColor='#4a9eff'" onmouseout="this.style.borderColor='transparent'">
+        <div style="font-size:1.5rem;margin-bottom:.3rem">🗳️</div>
+        <div style="color:#fff;font-weight:700;font-size:.85rem">詳細レビュー</div>
+        <div style="color:#555;font-size:.7rem;margin-top:.2rem">全素材に投票・コメント</div>
+      </a>
+    </div>
+
+    <div style="text-align:center;color:#333;font-size:.55rem;padding:2rem 0">監修: 村田良蔵 / 制作: 濱田優貴</div>
+  </div>
+</div>
+<div id="ed">
+  <div class="ed-bg"><img src="images/keyvisual/kv_themat.png"></div>
+  <canvas id="edfx"></canvas><div class="ed-cw"><div class="ed-c" id="edCr"></div></div>
+  <div id="ed-lyrics"><p id="edlrc"></p></div>
+</div>
+<div id="bgm-player"><button id="bgmBtn" onclick="toggleBGM()">&#9654;</button><input type="range" min="0" max="100" value="20" oninput="setBGMVol(this.value)"><div class="label">BGM</div></div>
+<button id="topBtn" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<audio id="opa" preload="auto"><source src="music/op_new.mp3" type="audio/mpeg"></audio>
+<audio id="eda" preload="auto"><source src="music/ed_new.mp3" type="audio/mpeg"></audio>
+<script>
+const opa=document.getElementById('opa'),eda=document.getElementById('eda'),cvs=document.getElementById('fx'),cx=cvs.getContext('2d');
+let particles=[],timers=[];
+function rsz(c){c.width=innerWidth;c.height=innerHeight}addEventListener('resize',()=>rsz(cvs));rsz(cvs);
+class Pt{constructor(t){this.t=t;const W=cvs.width,H=cvs.height;if(t==='ink'){this.x=Math.random()*W;this.y=H+5;this.s=Math.random()*3+1;this.sp=Math.random()*2+1;this.a=Math.random()*.35+.1;this.c='#4a9eff'}else if(t==='spark'){this.x=W/2+(Math.random()-.5)*400;this.y=H/2+(Math.random()-.5)*400;this.vx=(Math.random()-.5)*14;this.vy=(Math.random()-.5)*14;this.s=Math.random()*3+1;this.life=1;this.c=['#4a9eff','#00d4ff','#7c5cff','#fff','#ff6'][~~(Math.random()*5)]}else{this.x=Math.random()*W;this.y=-5;this.s=Math.random()*1.5+.5;this.sp=Math.random()*.6+.2;this.a=Math.random()*.2+.05;this.dx=(Math.random()-.5)*.3}}
+up(){if(this.t==='ink'){this.y-=this.sp;this.x+=Math.sin(this.y*.01)*.5;return this.y>-10}if(this.t==='spark'){this.x+=this.vx;this.y+=this.vy;this.life-=.018;this.vx*=.97;this.vy*=.97;return this.life>0}this.y+=this.sp;this.x+=this.dx;return this.y<cvs.height+10}
+dr(c){c.beginPath();c.globalAlpha=this.t==='spark'?this.life:this.a;c.fillStyle=this.t==='snow'?'#fff':this.c;c.arc(this.x,this.y,this.s,0,Math.PI*2);c.fill();c.globalAlpha=1}}
+function addP(t,n){for(let i=0;i<n;i++)particles.push(new Pt(t))}
+function anim(){cx.clearRect(0,0,cvs.width,cvs.height);particles=particles.filter(p=>{p.dr(cx);return p.up()});requestAnimationFrame(anim)}anim();
+function flash(){const f=document.getElementById('flash');f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+function slines(ms){const s=document.getElementById('slines');s.innerHTML='';for(let i=0;i<30;i++){const d=document.createElement('div');const a=Math.random()*360,l=Math.random()*600+200;d.style.cssText=`position:absolute;left:50%;top:50%;width:${l}px;height:${Math.random()>.8?2:1}px;transform:rotate(${a}deg) translateX(${Math.random()*200+60}px);background:linear-gradient(90deg,transparent,rgba(255,255,255,${Math.random()*.1+.02}),transparent)`;s.appendChild(d)}s.classList.add('on');setTimeout(()=>s.classList.remove('on'),ms)}
+function hideAll(){document.querySelectorAll('.L,.CC').forEach(e=>e.classList.remove('on'));document.getElementById('op-title').classList.remove('on')}
+function showL(id){hideAll();const e=document.getElementById(id);if(e){e.classList.add('on');const img=e.querySelector('img');if(img){img.style.animation='none';void img.offsetWidth;img.style.animation=''}}}
+function showC(id,dir){hideAll();const e=document.getElementById(id);e.className=e.className.replace(/slide-[lr]/g,'').trim();void e.offsetWidth;e.classList.add('on',dir)}
+function showTitle(){hideAll();const t=document.getElementById('op-title');t.classList.add('on');const h=t.querySelector('h1');h.className='';void h.offsetWidth;h.classList.add('title-in')}
+function lrc(t){const e=document.getElementById('lrc');e.classList.remove('on');void e.offsetWidth;e.textContent=t;if(t)e.classList.add('on')}
+// Language toggle for OP
+let opLang='ja';
+function setOpLang(l){opLang=l;var src=l==='en'?'music/op_en.mp3':l==='pt'?'music/op_pt.mp3':'music/op_new.mp3';opa.querySelector('source').src=src;opa.load()}
+// English lyrics map (same timings)
+const LRC_EN={
+'Perfect logic？ くだらないね':'Perfect logic? Don\'t make me laugh',
+'最適化された未来なんて 息が詰まる':'An optimized future just suffocates me',
+'俺の左手（ここ）には、まだ熱があるんだ':'I still have heat burning right here',
+'錆びついたシャッター 閉ざされた場所':'Rusted shutters, a closed-off place',
+'手首に巻いた黒帯だけが道標（サイン）':'Only the black belt on my wrist is the sign',
+'左半身（こいつ）はもう言うこと聞かない':'This body won\'t listen anymore',
+'それでも畳の上に立つ理由がある':'Even so, I have a reason to stand on the tatami',
+'イヤピースから流れる 100%の解答（アンサー）':'The 100% answer flowing from the earpiece',
+'そんなものじゃ測れない 命の重さ':'You can\'t measure the weight of a life with that',
+'触れれば分かる 呼吸のウソ':'I can feel the lies in your breath',
+'データじゃ絶対読めない この"一手"を':'This single move that data can never read',
+'水面下で静かに 流れが始まる':'Quietly beneath the surface, the current begins',
+'画面の数字を塗り替えろ ERROR ERROR':'Overwrite the numbers on screen: ERROR ERROR',
+'欠けたままでいい 不完全で越えろ':'It\'s fine to be broken, overcome with imperfection',
+'誰かのコピーじゃない これが俺の柔術（リアル）だ':'I\'m not someone\'s copy — this is my reality',
+'滴（しずく）から渦へ 巻き込んでいく':'From a drop to a vortex, pulling everything in',
+'流れる水は、もう誰にも止められない':'No one can stop the flowing water anymore',
+'「逃げたんだ」と嗤う 銀髪の友よ':'"You ran away," sneers my silver-haired friend',
+'合理性（システム）の檻で 何を守ってる？':'What are you protecting in the system\'s cage?',
+'99.8%の予測（カベ）だろうと':'Even if it\'s a 99.8% wall',
+'残り0.2の空白に 海は広がってる':'An ocean stretches in the 0.2% blank space',
+'視界が墨に染まる 境界線が溶ける':'Vision dyed in ink, boundary lines melt',
+'計算式の外側で 命が脈打つ':'Life pulses outside the formulas',
+'勝つためじゃない 俺であるため':'Not to win — to be myself',
+'世界がフリーズする その瞬間へ':'Towards that moment when the world freezes',
+'水面下で静かに 渦が目覚める':'Quietly beneath the surface, the vortex awakens',
+'予測不能の閃きに 全てを賭けろ':'Bet everything on unpredictable inspiration',
+'痛みを引き連れ 限界の先へ':'Dragging pain along, beyond the limits',
+'AIの神話を壊す これが俺の柔術（リアル）だ':'Breaking the myth of AI — this is my reality',
+'抗うほど強く 呑み込んでいく':'The more you resist, the stronger it swallows',
+'流れる水は、まだ深淵（そこ）へ向かう':'The flowing water still heads to the abyss',
+'残像を追いかけるのは もうやめた':'I\'m done chasing afterimages',
+'右手一本で紡ぐ 新しい型（スタイル）':'A new style, forged with just my right arm',
+'あの日の師匠（あんた）の背中すら':'Even your back from that day',
+'いつか、この波で追い越してみせるさ':'Someday I\'ll overtake it with this wave',
+'滴から渦、そして未知の海へ':'From drop to vortex, into an unknown ocean',
+'流れる水は、終わらない':'The flowing water never ends',
+'Just flow...':'Just flow...',
+'鳴り響け ERROR...':'Let the ERROR ring out...',
+'俺だけの柔術（リアル）...':'My only reality...',
+};
+const LRC_PT={
+'Perfect logic？ くだらないね':'Lógica perfeita? Não me faça rir',
+'最適化された未来なんて 息が詰まる':'Um futuro otimizado só me sufoca',
+'俺の左手（ここ）には、まだ熱があるんだ':'Eu ainda tenho calor queimando bem aqui',
+'錆びついたシャッター 閉ざされた場所':'Persianas enferrujadas, um lugar fechado',
+'手首に巻いた黒帯だけが道標（サイン）':'Apenas a faixa preta no meu pulso é o sinal',
+'左半身（こいつ）はもう言うこと聞かない':'Isto já não me obedece mais',
+'それでも畳の上に立つ理由がある':'Mesmo assim, tenho um motivo para estar no tatame',
+'イヤピースから流れる 100%の解答（アンサー）':'A resposta 100% certa fluindo pelo fone',
+'そんなものじゃ測れない 命の重さ':'Não se pode medir o peso de uma vida com isso',
+'触れれば分かる 呼吸のウソ':'Basta tocar para sentir as mentiras na respiração',
+'データじゃ絶対読めない この"一手"を':'Este movimento que os dados nunca poderão ler',
+'水面下で静かに 流れが始まる':'Silenciosamente sob a superfície, a correnteza começa',
+'画面の数字を塗り替えろ ERROR ERROR':'Sobrescreva os números na tela: ERROR ERROR',
+'欠けたままでいい 不完全で越えろ':'Tudo bem ser incompleto, supere com a imperfeição',
+'誰かのコピーじゃない これが俺の柔術（リアル）だ':'Não sou a cópia de ninguém, esta é a minha realidade',
+'滴（しずく）から渦へ 巻き込んでいく':'De uma gota a um vórtice, arrastando tudo',
+'流れる水は、もう誰にも止められない':'Ninguém mais pode parar a água que flui',
+'「逃げたんだ」と嗤う 銀髪の友よ':'Você zomba dizendo "Fugiu", meu amigo de cabelos prateados',
+'合理性（システム）の檻で 何を守ってる？':'O que protege dentro da jaula do sistema?',
+'99.8%の予測（カベ）だろうと':'Mesmo que seja uma parede de 99,8%',
+'残り0.2の空白に 海は広がってる':'Um oceano se estende no espaço em branco de 0,2%',
+'視界が墨に染まる 境界線が溶ける':'Minha visão se tinge de tinta, as fronteiras derretem',
+'計算式の外側で 命が脈打つ':'A vida pulsa fora das fórmulas',
+'勝つためじゃない 俺であるため':'Não é para vencer, é para ser eu mesmo',
+'世界がフリーズする その瞬間へ':'Rumo ao instante em que o mundo congela',
+'水面下で静かに 渦が目覚める':'Silenciosamente sob a superfície, o vórtice desperta',
+'予測不能の閃きに 全てを賭けろ':'Aposte tudo em um lampejo imprevisível',
+'痛みを引き連れ 限界の先へ':'Arrastando a dor, além dos limites',
+'AIの神話を壊す これが俺の柔術（リアル）だ':'Quebrando o mito da IA, esta é a minha realidade',
+'抗うほど強く 呑み込んでいく':'Quanto mais resiste, mais forte ela o engole',
+'流れる水は、まだ深淵（そこ）へ向かう':'A água que flui ainda segue para lá',
+'残像を追いかけるのは もうやめた':'Cansei de perseguir imagens residuais',
+'右手一本で紡ぐ 新しい型（スタイル）':'Um novo estilo, forjado apenas com meu braço direito',
+'あの日の師匠（あんた）の背中すら':'Até mesmo as suas costas daquele dia',
+'いつか、この波で追い越してみせるさ':'Um dia, vou ultrapassá-las com esta onda',
+'滴から渦、そして未知の海へ':'De uma gota a um vórtice, e para um mar desconhecido',
+'流れる水は、終わらない':'A água que flui não tem fim',
+'Just flow...':'Just flow...',
+'鳴り響け ERROR...':'Ressoe o ERROR...',
+'俺だけの柔術（リアル）...':'A minha própria realidade...',
+};
+function tLrc(t){return opLang==='en'?(LRC_EN[t]||t):opLang==='pt'?(LRC_PT[t]||t):t}
+// Wrap lrc to apply translation
+const _lrc=lrc;
+lrc=function(t){_lrc(tLrc(t))};
+
+// OP TIMELINE — 「0.2%の証明」(Whisper-synced)
+const SEQ=[
+{t:0,fn:()=>showL('L0')},
+{t:0.5,fn:()=>{showL('L-ep1');addP('ink',25)}},
+// Intro 1.2-11s
+{t:1.2,fn:()=>{lrc('Perfect logic？ くだらないね')}},
+{t:3.5,fn:()=>{showL('L-awake');lrc('最適化された未来なんて 息が詰まる')}},
+{t:7.2,fn:()=>{flash();showTitle();lrc('俺の左手（ここ）には、まだ熱があるんだ');addP('spark',80)}},
+{t:11,fn:()=>{lrc('');addP('ink',20)}},
+// Verse1 20-32s
+{t:20,fn:()=>{showC('C-nagare','slide-l');lrc('錆びついたシャッター 閉ざされた場所')}},
+{t:23.4,fn:()=>lrc('手首に巻いた黒帯だけが道標（サイン）')},
+{t:26.6,fn:()=>{flash();showL('L-lv1');lrc('左半身（こいつ）はもう言うこと聞かない');addP('ink',20)}},
+{t:28.9,fn:()=>{showL('L-awake');lrc('それでも畳の上に立つ理由がある');slines(1500)}},
+// Pre-Chorus1 33-50s
+{t:33.6,fn:()=>{flash();showC('C-luciano','slide-r');lrc('イヤピースから流れる 100%の解答（アンサー）');addP('spark',30)}},
+{t:38.5,fn:()=>{lrc('そんなものじゃ測れない 命の重さ')}},
+{t:43.5,fn:()=>{showL('L-ep10');lrc('触れれば分かる 呼吸のウソ');addP('ink',25);slines(1200)}},
+{t:46.5,fn:()=>{flash();showL('L-lv2');lrc('データじゃ絶対読めない この"一手"を');addP('spark',40)}},
+// Chorus1 50-80s
+{t:50.5,fn:()=>{showL('L-uzu');lrc('水面下で静かに 流れが始まる');addP('spark',60);slines(2000)}},
+{t:55.2,fn:()=>{flash();showC('C-sage','slide-r');lrc('画面の数字を塗り替えろ ERROR ERROR');addP('ink',30)}},
+{t:58.2,fn:()=>lrc('欠けたままでいい 不完全で越えろ')},
+{t:62.8,fn:()=>{showC('C-nagare','slide-l');lrc('誰かのコピーじゃない これが俺の柔術（リアル）だ');addP('spark',40)}},
+{t:66.9,fn:()=>{flash();showL('L-kv');lrc('');addP('spark',80);slines(2000)}},
+{t:69.8,fn:()=>{showL('L-lv2');lrc('滴（しずく）から渦へ 巻き込んでいく');addP('ink',30)}},
+{t:74.1,fn:()=>{showL('L-uzu');lrc('流れる水は、もう誰にも止められない');addP('spark',50)}},
+{t:79.6,fn:()=>{lrc('');addP('ink',15)}},
+// Verse2 81-95s
+{t:81,fn:()=>{showC('C-rio','slide-r');lrc('「逃げたんだ」と嗤う 銀髪の友よ')}},
+{t:84.7,fn:()=>{lrc('合理性（システム）の檻で 何を守ってる？');addP('spark',25)}},
+{t:86.4,fn:()=>{flash();showL('L-lv3');lrc('99.8%の予測（カベ）だろうと');slines(1000)}},
+{t:90.5,fn:()=>{showL('L-umi');lrc('残り0.2の空白に 海は広がってる');addP('ink',40)}},
+// Pre-Chorus2 95-112s
+{t:95.3,fn:()=>{flash();showC('C-rin','slide-l');lrc('視界が墨に染まる 境界線が溶ける');addP('spark',35)}},
+{t:100,fn:()=>{showL('L-ep10');lrc('計算式の外側で 命が脈打つ');slines(1500)}},
+{t:105.3,fn:()=>{lrc('勝つためじゃない 俺であるため')}},
+{t:108.7,fn:()=>{flash();showL('L-awake');lrc('世界がフリーズする その瞬間へ');addP('spark',50)}},
+// Chorus2 112-141s
+{t:112.2,fn:()=>{showL('L-uzu');lrc('水面下で静かに 渦が目覚める');addP('spark',70);slines(2500)}},
+{t:116.7,fn:()=>{flash();showC('C-nagare','slide-l');lrc('予測不能の閃きに 全てを賭けろ');addP('spark',50)}},
+{t:119.4,fn:()=>{lrc('痛みを引き連れ 限界の先へ')}},
+{t:123.9,fn:()=>{flash();showL('L-kv');lrc('AIの神話を壊す これが俺の柔術（リアル）だ');addP('spark',100);slines(3000)}},
+{t:131,fn:()=>{showL('L-lv3');lrc('抗うほど強く 呑み込んでいく');addP('ink',30)}},
+{t:135.9,fn:()=>{showL('L-sage');lrc('流れる水は、まだ深淵（そこ）へ向かう');addP('ink',50)}},
+{t:140.6,fn:()=>{lrc('');addP('ink',15)}},
+// Bridge 142-162s
+{t:142.1,fn:()=>{flash();showC('C-luciano','slide-r');lrc('残像を追いかけるのは もうやめた');addP('spark',30)}},
+{t:145.2,fn:()=>{showL('L-rivals');lrc('右手一本で紡ぐ 新しい型（スタイル）');slines(1500)}},
+{t:151.7,fn:()=>{showC('C-nagare','slide-l');lrc('あの日の師匠（あんた）の背中すら');addP('ink',20)}},
+{t:155.6,fn:()=>{flash();showL('L-umi');lrc('いつか、この波で追い越してみせるさ');addP('spark',60);slines(2000)}},
+// Last Chorus 162-192s
+{t:162.5,fn:()=>{showL('L-uzu');lrc('水面下で静かに 流れが始まる');addP('spark',80);slines(3000)}},
+{t:167.2,fn:()=>{flash();lrc('画面の数字を塗り替えろ ERROR ERROR');addP('ink',30)}},
+{t:172.9,fn:()=>{showC('C-nagare','slide-l');lrc('欠けたままでいい 不完全で越えろ');addP('spark',50)}},
+{t:176.6,fn:()=>{flash();showL('L-kv');lrc('誰かのコピーじゃない これが俺の柔術（リアル）だ');addP('spark',120);slines(3000)}},
+{t:182,fn:()=>{showL('L-lv3');lrc('滴から渦、そして未知の海へ');addP('ink',40)}},
+{t:187,fn:()=>{flash();showL('L-mat');lrc('流れる水は、終わらない');addP('spark',80)}},
+// Outro 193-211s
+{t:193.6,fn:()=>{lrc('Just flow...');showL('L-reunion');addP('ink',20)}},
+{t:196,fn:()=>{flash();lrc('鳴り響け ERROR...');addP('spark',40);slines(1500)}},
+{t:199.3,fn:()=>{showL('L-kv');lrc('俺だけの柔術（リアル）...');addP('ink',30)}},
+{t:205,fn:()=>{lrc('');hideAll();showL('L0')}},
+];
+function startOP(){document.getElementById('start-overlay').classList.add('gone');if(window.flowTrack)flowTrack('op_start');opa.currentTime=0;opa.play();SEQ.forEach(s=>timers.push(setTimeout(s.fn,s.t*1000)));const iv=setInterval(()=>{if(opa.paused){clearInterval(iv);return}addP('ink',1)},500);opa.ontimeupdate=()=>{document.getElementById('prog').style.width=(opa.currentTime/opa.duration*100)+'%'};opa.onended=()=>endOP()}
+function endOP(e){if(e)e.stopPropagation();opa.pause();timers.forEach(clearTimeout);timers=[];particles=[];document.getElementById('op').classList.add('done');document.getElementById('story').classList.add('on');scrollTo(0,0)}
+// STORY
+const sM=[{n:1,t:'白帯篇 — 目覚め',s:'Ep 1-12',img:'images/scenes/scene_ep1_kaido.png'},{n:2,t:'青帯篇 — 嵐',s:'Ep 13-24',img:'images/scenes/scene_ep12_reunion.png'},{n:3,t:'紫帯篇 — 深淵',s:'Ep 25-36',img:'images/flow_art/flow_lv4_umi.png'},{n:4,t:'茶帯篇 — 決壊',s:'Ep 37-48',img:'images/scenes/scene_s4_sage_reveal.png'},{n:5,t:'黒帯篇 — 海',s:'Ep 49-60',img:'images/keyvisual/kv_themat.png'}];
+// Inline images/cards to insert between episodes
+const inlineContent={
+  1:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><img src="images/characters/nagare_sheet_v2.png" style="width:100%;border-radius:10px"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.5rem;color:#3366cc">NAGARE — 流</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">17歳。5歳の事故で左半身の感覚が鈍い。師匠・海堂の失踪後、閉鎖された道場の前を毎日通る。左腕の黒い包帯と手首の黒帯ブレスレットがトレードマーク。</div></div></div>`,
+  3:`<div style="background:#0d1020;border-radius:12px;padding:1.5rem;margin:2rem 0;border:1px solid rgba(74,158,255,.1)"><div style="font-family:'Dela Gothic One';color:#4a9eff;font-size:1rem;margin-bottom:.8rem">FLOW SYSTEM — Lv.1 滴（しずく）</div><img src="images/flow_art/flow_lv1_shizuku.png" style="width:100%;border-radius:8px;margin-bottom:.8rem"><div style="color:#888;font-size:.8rem;line-height:1.8">一瞬だけAIの予測を外す。水面に落ちる一滴のように、ほんの僅かな空白を作る。<br><strong style="color:#ff6666">代償:</strong> 30%のグリップ力低下（10分間）<br><strong style="color:#4a9eff">発動条件:</strong> 相手との物理的接触 + 意図せず訪れる集中状態</div></div>`,
+  5:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><img src="images/characters/sage_sheet.png" style="width:100%;border-radius:10px"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.5rem;color:#44ddff">SAGE — セージ</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">格闘技統合AI。全選手のデータを保有し、勝敗を99.8%の精度で予測する。元は学術研究プロジェクト。最も恐ろしいのは、選手が自ら進んでAIに依存すること。</div></div></div>`,
+  6:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.5rem;color:#cc3344">RIN — 凛</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">19歳。元体操選手。足関節技の天才「蜘蛛」。AIを使わないのは「つまらないから」。流の戦友。恋愛ではなく、同じ道を行く者同士。</div></div><img src="images/scenes/scene_ep6_rin_spider.png" style="width:100%;border-radius:10px"></div>`,
+  10:`<div style="background:#0d1020;border-radius:12px;padding:1.5rem;margin:2rem 0;border:1px solid rgba(74,158,255,.1)"><div style="font-family:'Dela Gothic One';color:#4488dd;font-size:1rem;margin-bottom:.8rem">FLOW SYSTEM — Lv.2 流（ながれ）</div><img src="images/scenes/scene_ep10_awakening.png" style="width:100%;border-radius:8px;margin-bottom:.8rem"><div style="color:#888;font-size:.8rem;line-height:1.8">3〜5手が連続する水の流れになる。相手がついてこれない。画面が水墨画調に変化する演出。<br><strong style="color:#ff6666">代償:</strong> 吐き気 + 左腕の痺れ（30分）。<strong>この試合中、フロウは二度と使えない。</strong><br><strong style="color:#4a9eff">発動条件:</strong> 相手との呼吸の同期。勝とうと思った瞬間、解ける。</div></div>`,
+  12:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><img src="images/scenes/scene_ep12_reunion.png" style="width:100%;border-radius:10px"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.5rem;color:#99bbee">RIO — 理央</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">18歳。かつて流と同じ道場で学んだ幼馴染。今はSAGE社のエース。「人間の感覚は不正確。AIに従うことが最も合理的」。しかし物語の中で揺らいでいく。</div></div></div>`,
+  18:`<img src="images/keyvisual/kv_rivals.png" style="width:100%;border-radius:12px;margin:2rem 0">`,
+  21:`<div style="background:#0d1020;border-radius:12px;padding:1.5rem;margin:2rem 0;border:1px solid rgba(74,158,255,.1)"><div style="font-family:'Dela Gothic One';color:#2266ee;font-size:1rem;margin-bottom:.8rem">FLOW SYSTEM — Lv.3 渦（うず）</div><img src="images/flow_art/flow_lv3_uzu.png" style="width:100%;border-radius:8px;margin-bottom:.8rem"><div style="color:#888;font-size:.8rem;line-height:1.8">相手もフロウに引き込む。互いのAIが機能停止する。全スクリーンにERR表示。<br><strong style="color:#ff6666">代償:</strong> 意識朦朧。<strong>使用後1週間、フロウが一切使えない。</strong><br><strong style="color:#4a9eff">発動条件:</strong> 流とルシアーノ以外の接触 + 極限の集中状態。制御は極めて困難。</div></div>`,
+  25:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><img src="images/characters/marcelo_sheet.png" style="width:100%;border-radius:10px"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.5rem;color:#cc8844">LUCIANO — ルシアーノ</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">55歳。珊瑚帯。海堂の師匠であり親友。元はリオで「ARTE SUAVE」を営んでいたが、5年前に東京へ移住。下北沢の小さな道場で流を導く。</div></div></div>`,
+  30:`<img src="images/flow_art/flow_lv4_umi.png" style="width:100%;border-radius:12px;margin:2rem 0"><div style="text-align:center;color:#555;font-size:.75rem;margin:-1rem 0 2rem">Lv.4 海（うみ）— 海堂だけが到達した未知の領域。代償は不明。</div>`,
+  34:`<img src="images/keyvisual/kv_flow_awakening.png" style="width:100%;border-radius:12px;margin:2rem 0">`,
+  40:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><img src="images/characters/rin_sheet.png" style="width:100%;border-radius:10px"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.3rem;color:#cc3344">凛の膝</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">内側側副靱帯の部分断裂。ドクターストップの可能性。しかし凛は言う——「テーピングで出る」。止めるな、と。</div></div></div>`,
+  44:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0"><div style="display:flex;flex-direction:column;justify-content:center;padding:1rem"><div style="font-family:'Dela Gothic One';font-size:1.3rem;color:#99bbee">理央の選択</div><div style="color:#666;font-size:.8rem;margin-top:.5rem;line-height:1.8">ミドル級決勝。理央がイヤピースを外す。SAGE本部が騒然。「ユニットRIO、通信途絶」。初めて自分だけの柔術で戦う。</div></div><img src="images/characters/rio_sheet.png" style="width:100%;border-radius:10px"></div>`,
+  47:`<img src="images/scenes/scene_s4_sage_reveal.png" style="width:100%;border-radius:12px;margin:2rem 0"><div style="text-align:center;color:#555;font-size:.75rem;margin:-1rem 0 2rem">SAGEサーバールーム — 海堂のデータはここにある</div>`,
+  50:`<img src="images/keyvisual/kv_themat.png" style="width:100%;border-radius:12px;margin:2rem 0"><div style="text-align:center;color:#555;font-size:.75rem;margin:-1rem 0 2rem">「全ては畳の上で。」</div>`,
+  55:`<div style="background:#0d1020;border-radius:12px;padding:1.5rem;margin:2rem 0;border:1px solid rgba(0,68,255,.2)"><div style="font-family:'Dela Gothic One';color:#0044ff;font-size:1rem;margin-bottom:.8rem">FLOW SYSTEM — Lv.4 海（うみ）</div><div style="color:#888;font-size:.8rem;line-height:1.8">海堂だけが到達し、そこから帰ってこなかった領域。流がここに到達するとき、フロウが神経系をバイパスし、動かなかった左腕が一時的に機能する。しかしそれは治癒ではなく、莫大な代償を伴う強制駆動。最終戦後、左腕は二度と動かなくなる。</div></div>`,
+  58:`<img src="images/keyvisual/kv_main.png" style="width:100%;border-radius:12px;margin:2rem 0">`,
+  60:`<div style="background:linear-gradient(135deg,rgba(74,158,255,.05),rgba(124,92,255,.05));border:1px solid rgba(74,158,255,.1);border-radius:16px;padding:2rem;margin:2rem 0;text-align:center"><div style="font-family:'Zen Antique Soft',serif;font-size:1.5rem;color:#aaa;line-height:2">流れる水は、終わらない。</div><div style="margin-top:1rem;color:#555;font-size:.75rem">— FLOW 最終話「一の波」より</div></div>`,
+};
+async function buildStory(){const b=document.getElementById('storyBody');for(let i=0;i<5;i++){const m=sM[i],sec=document.createElement('div');sec.className='ss';sec.innerHTML=`<div class="ss-h"><div class="ss-n">S${m.n}</div><div><div class="ss-t">${m.t}</div><div class="ss-sub">${m.s}</div></div></div><img src="${m.img}" class="ss-img">`;try{const r=await fetch(`story/episode_guide_s${m.n}.md`);const md=await r.text();md.split(/^## /m).filter(x=>x.trim()).forEach(ep=>{const ls=ep.split('\n'),tl=ls[0].trim(),tm=tl.match(/第(\d+)話.*?「(.+?)」/);if(!tm)return;const epNum=parseInt(tm[1]);let bh='',tech='',realflow='';ls.slice(1).filter(l=>l.trim()&&!l.startsWith('---')).forEach(l=>{l=l.trim().replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');if(l.startsWith('<strong>技</strong>'))tech=l.replace(/<strong>技<\/strong>[:：]\s*/,'');else if(l.startsWith('<strong>ED後REAL FLOW</strong>'))realflow=l.replace(/<strong>ED後REAL FLOW<\/strong>[:：]\s*/,'');else if(!l.startsWith('<strong>ED後')&&!l.startsWith('<strong>次回'))bh+=`<p>${l}</p>`});const bl=document.createElement('div');bl.className='eb';bl.id='ep-'+tm[1];bl.innerHTML=`<div class="eb-h"><span class="n">${tm[1]}</span><span class="t">「${tm[2]}」</span><span class="ep-link" onclick="copyEpLink(${tm[1]})" title="リンクをコピー" style="margin-left:auto;cursor:pointer;font-size:.7rem;color:#444;opacity:0;transition:opacity .2s">🔗</span></div><div class="eb-b">${bh}${tech&&!tech.match(/^[—\-]+/)?`<div class="tag">${tech}</div>`:''}${realflow?`<div style="margin-top:.5rem;font-size:.7rem;color:#555">REAL FLOW: ${realflow}</div>`:''}</div>`;sec.appendChild(bl);if(inlineContent[epNum]){const ic=document.createElement('div');ic.innerHTML=inlineContent[epNum];sec.appendChild(ic)}})}catch(e){}b.appendChild(sec)}}buildStory();
+// ENDING — language
+let edLang='ja';
+function setEdLang(l){edLang=l;var src=l==='en'?'music/ed_en.mp3':l==='pt'?'music/ed_pt.mp3':'music/ed_new.mp3';eda.querySelector('source').src=src;eda.load()}
+function startED(){if(window.flowTrack)flowTrack('ed_start');document.getElementById('story').classList.remove('on');document.getElementById('ed').classList.add('on');const ec=document.getElementById('edfx'),ex=ec.getContext('2d');rsz(ec);addEventListener('resize',()=>rsz(ec));let ep=[];function ea(){ex.clearRect(0,0,ec.width,ec.height);ep=ep.filter(p=>{p.dr(ex);return p.up()});requestAnimationFrame(ea)}ea();setInterval(()=>{if(!eda.paused)ep.push(new Pt('snow'))},120);
+const cr=document.getElementById('edCr');cr.innerHTML=`<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p class="big">FLOW</p><p>&nbsp;</p><p class="h">「もう一回」</p><p>Ending Theme</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">CAST</p><p>流 — 主人公</p><p>理央 — ライバル</p><p>ルシアーノ・サントス — 師匠</p><p>凛 — 同志</p><p>SAGE — AI</p><p>海堂陽一 — 消えた師匠</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">STAFF</p><p>監修 — 村田良蔵</p><p>制作 — 濱田優貴</p><p>制作協力 — Enabler DAO</p><p>&nbsp;</p><p>キャラクターデザイン — Gemini AI</p><p>音楽制作 — Suno AI</p><p>脚本・演出 — Claude</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">SPECIAL THANKS</p><p>Brazilian Jiu-Jitsu Community</p><p>All Martial Artists</p><p>&nbsp;</p><p>&nbsp;</p><p class="final">流れる水は、終わらない。</p><p>&nbsp;</p><p>&nbsp;</p><p class="tiny">Produced with Claude Code + Gemini + Suno — 2026</p>`;
+let sy=innerHeight;function sc(){if(!eda.paused){sy-=.7;cr.style.transform=`translateY(${sy}px)`;requestAnimationFrame(sc)}}
+// ED lyrics (Whisper-synced)
+const ED_EN={
+'汗ばんだ道着が 夕風に揺れる':'My sweaty gi sways in the evening breeze',
+'長く伸びた影を なぞって歩く坂道':'Walking up the hill, tracing my long shadow',
+'上手く動かない左手は ポケットの奥へ':'My left hand that won\'t move, hidden deep in my pocket',
+'もどかしさも一緒に ぎゅっと握りしめた':'I squeeze tight, along with all my frustration',
+'明日もまた、あの場所へ行こう':'Tomorrow, I\'ll go back to that place again',
+'近道なんてない 泥臭い毎日':'There are no shortcuts, just muddy grinding days',
+'だけど、この痛みが 僕の証明だから':'But this pain is the proof that I exist',
+'帰り道はいつもと同じ':'The walk home is the same as always',
+'でも、昨日の僕とは確かに違うんだ':'But I\'m definitely different from yesterday',
+'エビひとつ まだ不格好だけど':'Even a basic shrimp is still awkward',
+'耳の奥で鳴る 先生の「もう一回」':'Deep in my ears: the Professor\'s "One more time"',
+'その声が、僕をまた前へ押し出す':'That voice pushes me forward once again',
+'「またね」と凛が笑って 手を振った':'"See ya," Rin smiled and waved her hand',
+'ルシアーノの背中が シャッターを降ろす音':'The sound of Luciano pulling down the shutters',
+'カビと汗の匂いがする 古い地下室':'The old basement smelling of mold and sweat',
+'世界で一番小さくて、世界で一番広い海だ':'The smallest place in the world, and the widest ocean',
+'誰かが弾き出した 完璧な正解より':'Rather than a perfect answer calculated by AI',
+'転んで見つける答えが愛おしい':'I cherish the move I find by stumbling',
+'でも、昨日より少しだけ強いんだ':'But I\'m just a little bit stronger than yesterday',
+'手首に巻いた 黒帯のブレスレット':'The black belt bracelet wrapped around my wrist',
+'指先でなぞって 空を見上げる':'I trace it with my fingertips and look up at the sky',
+'明日もまた、僕はここに立つよ':'Tomorrow, I will stand on the mats again',
+'完璧じゃなくていい 欠けたままでいい':'I don\'t need to be perfect, it\'s fine to be incomplete',
+'右手一本で掴む 今日があるから':'Because I have a "today" grabbed with just my right hand',
+'不器用なステップも、いつか繋がって':'Even clumsy steps will connect someday',
+'僕だけの流れ（フロウ）になる':'And become my very own flow',
+'エビひとつ まだ不格好だけど':'Even a basic shrimp is still awkward',
+'笑って言うよ「あぁ、もう一回」':'I smile and say, "Yeah, one more time."',
+'夕日に溶けていく 帰り道':'The walk home melting into the setting sun',
+'ポケットの中の左手':'My left hand inside my pocket',
+'明日もまた、畳の上に……':'Tomorrow again, on the tatami mats...',
+};
+const ED_PT={
+'汗ばんだ道着が 夕風に揺れる':'Meu quimono suado balança na brisa da tarde',
+'長く伸びた影を なぞって歩く坂道':'Caminhando pela ladeira, traçando minha sombra',
+'上手く動かない左手は ポケットの奥へ':'Minha mão esquerda que não obedece, no fundo do bolso',
+'もどかしさも一緒に ぎゅっと握りしめた':'Aperto-a com força, junto com toda a frustração',
+'明日もまた、あの場所へ行こう':'Amanhã, irei para aquele lugar de novo',
+'近道なんてない 泥臭い毎日':'Não há atalhos, apenas dias duros e suados',
+'だけど、この痛みが 僕の証明だから':'Mas essa dor é a prova da minha existência',
+'帰り道はいつもと同じ':'O caminho de volta é o mesmo de sempre',
+'でも、昨日の僕とは確かに違うんだ':'Mas, com certeza, sou diferente de quem eu era ontem',
+'エビひとつ まだ不格好だけど':'Mesmo uma fuga de quadril ainda sendo desajeitada',
+'耳の奥で鳴る 先生の「もう一回」':'Ecoando no ouvido: o "Mais uma vez" do Professor',
+'その声が、僕をまた前へ押し出す':'Essa voz me empurra para frente de novo',
+'「またね」と凛が笑って 手を振った':'"Até mais", Rin sorriu e acenou',
+'ルシアーノの背中が シャッターを降ろす音':'O som do Luciano baixando as portas',
+'カビと汗の匂いがする 古い地下室':'O velho porão com cheiro de mofo e suor',
+'世界で一番小さくて、世界で一番広い海だ':'O menor lugar do mundo, e o oceano mais vasto',
+'誰かが弾き出した 完璧な正解より':'Mais do que a resposta perfeita calculada por uma IA',
+'転んで見つける答えが愛おしい':'Eu valorizo o movimento que encontro ao cair',
+'でも、昨日より少しだけ強いんだ':'Mas sou um pouco mais forte do que ontem',
+'手首に巻いた 黒帯のブレスレット':'A pulseira de faixa preta no meu pulso',
+'指先でなぞって 空を見上げる':'Eu a traço com a ponta dos dedos e olho para o céu',
+'明日もまた、僕はここに立つよ':'Amanhã, estarei no tatame de novo',
+'完璧じゃなくていい 欠けたままでいい':'Não preciso ser perfeito, tudo bem ser incompleto',
+'右手一本で掴む 今日があるから':'Porque existe um "hoje" que agarro só com a mão direita',
+'不器用なステップも、いつか繋がって':'Até os passos desajeitados vão se conectar',
+'僕だけの流れ（フロウ）になる':'E se tornar o meu próprio flow',
+'笑って言うよ「あぁ、もう一回」':'Eu sorrio e digo: "Sim, mais uma vez"',
+'夕日に溶けていく 帰り道':'O caminho de volta derretendo no pôr do sol',
+'ポケットの中の左手':'Minha mão esquerda dentro do bolso',
+'明日もまた、畳の上に……':'Amanhã de novo, sobre o tatame...',
+};
+function tEdLrc(t){return edLang==='en'?(ED_EN[t]||t):edLang==='pt'?(ED_PT[t]||t):t}
+
+// ED lyrics — 「もう一回」(Whisper-synced)
+const EL=[
+{t:9.6,x:'汗ばんだ道着が 夕風に揺れる'},
+{t:14,x:'長く伸びた影を なぞって歩く坂道'},
+{t:17.6,x:'上手く動かない左手は ポケットの奥へ'},
+{t:21.2,x:'もどかしさも一緒に ぎゅっと握りしめた'},
+{t:25.7,x:'明日もまた、あの場所へ行こう'},
+{t:32.5,x:''},
+{t:33.3,x:'近道なんてない 泥臭い毎日'},
+{t:38,x:'だけど、この痛みが 僕の証明だから'},
+{t:42.6,x:'帰り道はいつもと同じ'},
+{t:47.7,x:'でも、昨日の僕とは確かに違うんだ'},
+{t:52.6,x:'エビひとつ まだ不格好だけど'},
+{t:56.2,x:'耳の奥で鳴る 先生の「もう一回」'},
+{t:61.6,x:'その声が、僕をまた前へ押し出す'},
+{t:65.8,x:''},
+{t:66.9,x:'「またね」と凛が笑って 手を振った'},
+{t:71.3,x:'ルシアーノの背中が シャッターを降ろす音'},
+{t:76.4,x:'カビと汗の匂いがする 古い地下室'},
+{t:81.2,x:'世界で一番小さくて、世界で一番広い海だ'},
+{t:87,x:''},
+{t:88.4,x:'誰かが弾き出した 完璧な正解より'},
+{t:93.4,x:'転んで見つける答えが愛おしい'},
+{t:98.1,x:'帰り道はいつもと同じ'},
+{t:102.1,x:'でも、昨日より少しだけ強いんだ'},
+{t:107.6,x:'手首に巻いた 黒帯のブレスレット'},
+{t:112.4,x:'指先でなぞって 空を見上げる'},
+{t:115.9,x:'明日もまた、僕はここに立つよ'},
+{t:120.6,x:'完璧じゃなくていい 欠けたままでいい'},
+{t:125.4,x:'右手一本で掴む 今日があるから'},
+{t:129.2,x:'不器用なステップも、いつか繋がって'},
+{t:134.4,x:'僕だけの流れ（フロウ）になる'},
+{t:138.6,x:'帰り道はいつもと同じ'},
+{t:143.2,x:'でも、昨日の僕とは確かに違うんだ'},
+{t:148.4,x:'エビひとつ まだ不格好だけど'},
+{t:152,x:'耳の奥で鳴る 先生の「もう一回」'},
+{t:157,x:'笑って言うよ「あぁ、もう一回」'},
+{t:161.6,x:''},
+{t:162.8,x:'夕日に溶けていく 帰り道'},
+{t:168,x:'ポケットの中の左手'},
+{t:172.2,x:'明日もまた、畳の上に……'},
+{t:178,x:''},
+];
+const el=document.getElementById('edlrc');EL.forEach(l=>setTimeout(()=>{el.classList.remove('on');void el.offsetWidth;var txt=tEdLrc(l.x);el.textContent=txt;if(txt)el.classList.add('on')},l.t*1000));
+eda.currentTime=0;eda.play();sc();eda.onended=()=>{setTimeout(()=>{document.getElementById('ed').classList.remove('on');document.getElementById('feedback').classList.add('on');scrollTo(0,0)},3000)}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!opa.paused)endOP();if(!eda.paused){eda.pause();document.getElementById('ed').classList.remove('on');document.getElementById('feedback').classList.add('on');scrollTo(0,0)}}});
+// Feedback functions
+function vote(btn,val){document.querySelectorAll('.vbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
+  const fb=JSON.parse(localStorage.getItem('flow-fb')||'{}');fb.vote=val;fb.ts=Date.now();localStorage.setItem('flow-fb',JSON.stringify(fb));
+  document.getElementById('voteResult').style.display='block';document.getElementById('voteResult').textContent='回答ありがとうございます！';
+  if(window.flowTrack)flowTrack('vote',{vote:val})}
+function selSeason(btn){document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
+function submitFeedback(){
+  const fb=JSON.parse(localStorage.getItem('flow-fb')||'{}');
+  fb.chars=[...document.querySelectorAll('.cbtn.sel')].map(b=>b.textContent);
+  fb.season=document.querySelector('.sbtn.sel')?.textContent||'';
+  fb.comment=document.getElementById('freeComment').value;
+  fb.ts=Date.now();localStorage.setItem('flow-fb',JSON.stringify(fb));
+  if(window.flowTrack)flowTrack('feedback',fb);
+  document.getElementById('submitResult').style.display='block';
+  document.getElementById('submitResult').textContent='フィードバックを保存しました！ありがとうございます。';
+}
+// Feature 1: BGM Player
+const bgmAudio=new Audio('music/ed_new.mp3');
+bgmAudio.loop=true;bgmAudio.volume=0.2;
+function toggleBGM(){if(bgmAudio.paused){bgmAudio.play();document.getElementById('bgmBtn').innerHTML='&#9646;&#9646;'}else{bgmAudio.pause();document.getElementById('bgmBtn').innerHTML='&#9654;'}}
+function setBGMVol(v){bgmAudio.volume=v/100}
+// Feature 2: Live Visitor Counter (real API)
+function updateLiveCount(){fetch('/api/live').then(r=>r.json()).then(d=>{document.getElementById('liveCount').textContent=d.count||0}).catch(()=>{})}
+updateLiveCount();setInterval(updateLiveCount,30000);
+// Feature 3: Reading Progress Bar
+const readProgress=document.getElementById('read-progress');
+// Feature 5: Episode Deep Links
+function copyEpLink(n){const url=location.origin+location.pathname+'#ep-'+n;navigator.clipboard.writeText(url).then(()=>{const el=document.querySelector('#ep-'+n+' .ep-link');if(el){el.textContent='Copied!';setTimeout(()=>el.textContent='🔗',1500)}})}
+// Feature 6: Top Button + scroll handling
+const topBtn=document.getElementById('topBtn'),bgmPlayer=document.getElementById('bgm-player');
+window.addEventListener('scroll',()=>{const story=document.getElementById('story');const storyVisible=story.classList.contains('on');
+  if(storyVisible&&scrollY>500){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  if(storyVisible){bgmPlayer.classList.add('show');readProgress.classList.add('show');
+    const sb=document.getElementById('storyBody');if(sb){const rect=sb.getBoundingClientRect(),pct=Math.min(100,Math.max(0,(-rect.top)/(rect.height-innerHeight)*100));readProgress.style.width=pct+'%'}}
+  else{bgmPlayer.classList.remove('show');readProgress.classList.remove('show')}});
+// Deep link scroll on load
+window.addEventListener('load',()=>{if(location.hash&&location.hash.startsWith('#ep-')){const el=document.getElementById(location.hash.slice(1));if(el){endOP();setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),500)}}});
+// Feature 4: Email Registration
+function registerEmail(){const email=document.getElementById('emailInput').value;if(!email||!email.includes('@')){alert('有効なメールアドレスを入力してください');return}
+  if(window.flowTrack)flowTrack('email_register',{email:email});
+  fetch('/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:'email_register',data:{email:email}})}).catch(()=>{});
+  document.getElementById('emailResult').style.display='block';document.getElementById('emailResult').textContent='登録ありがとうございます！進捗をお知らせします。';document.getElementById('emailInput').value=''}
+</script>
+<script src="/track.js"></script>
+</body>
+</html>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/review.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#08080d">
+<meta property="og:title" content="FLOW — Review & Vote">
+<meta property="og:description" content="FLOWアニメ企画のレビュー＆投票ページ。キャラクター、ストーリー、音楽に投票しよう。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://flow-anime.com/review.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FLOW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flow_bjj">
+<meta name="twitter:title" content="FLOW — Review & Vote">
+<meta name="twitter:description" content="Review and vote on FLOW anime project. Characters, story, music — share your feedback.">
+<meta name="twitter:image" content="https://flow-anime.com/images/og_image.png">
+<meta name="description" content="FLOWアニメ企画のレビュー＆投票ページ。キャラクター、ストーリー、音楽に投票しよう。">
+<title>FLOW — Review & Vote</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#08080d;--s1:#111119;--s2:#1a1a26;--s3:#222233;--ac:#4a9eff;--ac2:#00d4ff;--ac3:#7c5cff;
+    --tx:#e8e8f0;--dim:#7777aa;--good:#22cc88;--warn:#ffaa33;--bad:#ff4466;
+    --nagare:#3366cc;--rio:#99bbee;--luciano:#cc8844;--rin:#cc3344;--sage:#44ddff}
+  body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;overflow-x:hidden}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+
+  /* GLOBAL ANIM */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .fade-in{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,0.92);backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,0.04);padding:0;display:flex;align-items:center;height:52px}
+  .nav-logo{font-weight:900;font-size:1.1rem;letter-spacing:0.15em;padding:0 1.5rem;
+    background:linear-gradient(90deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .nav-links{display:flex;gap:0;flex:1;overflow-x:auto}
+  .nav-links a{color:var(--dim);text-decoration:none;font-size:0.72rem;letter-spacing:0.08em;padding:0 0.8rem;
+    line-height:52px;transition:all 0.2s;border-bottom:2px solid transparent;white-space:nowrap}
+  .nav-links a:hover,.nav-links a.active{color:var(--tx);border-bottom-color:var(--ac)}
+  .nav-badge{background:var(--ac3);color:#fff;font-size:0.6rem;padding:0.1rem 0.4rem;border-radius:100px;
+    margin-left:0.3rem;vertical-align:middle;font-weight:700}
+  .nav-right{padding:0 1rem;display:flex;gap:0.8rem;align-items:center}
+  .reviewer-name{font-size:0.75rem;color:var(--dim)}
+  .vote-counter{font-size:0.75rem;color:var(--ac2);font-weight:700}
+
+  /* HERO */
+  .hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);gap:2px;opacity:0.12;filter:grayscale(0.5)}
+  .hero-bg img{width:100%;height:100%;object-fit:cover}
+  .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(8,8,13,0.3),rgba(8,8,13,0.95))}
+  .hero *:not(.hero-bg):not(.hero-bg *){position:relative;z-index:2}
+  .hero-title{font-size:clamp(4rem,12vw,9rem);font-weight:900;letter-spacing:0.25em;
+    background:linear-gradient(135deg,#fff,var(--ac2),var(--ac3));background-size:200% 100%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 4s linear infinite}
+  .hero-label{font-size:0.7rem;letter-spacing:0.5em;color:var(--ac3);font-weight:700;
+    padding:0.4rem 1.5rem;border:1px solid rgba(124,92,255,0.3);border-radius:100px;margin-bottom:1rem}
+  .hero-sub{font-size:clamp(0.85rem,1.8vw,1.1rem);color:var(--dim);letter-spacing:0.3em;font-weight:300;margin-top:0.5rem}
+  .hero-stats{display:flex;gap:2rem;margin-top:3rem;flex-wrap:wrap;justify-content:center}
+  .hs{text-align:center;padding:1rem 1.5rem;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.05);
+    min-width:100px;transition:all 0.3s}
+  .hs:hover{border-color:var(--ac);transform:translateY(-3px)}
+  .hs .n{font-size:1.8rem;font-weight:900;background:linear-gradient(var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hs .l{font-size:0.65rem;color:var(--dim);letter-spacing:0.12em;margin-top:0.2rem}
+  .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+  .btn{padding:0.7rem 2rem;border-radius:100px;border:none;font-family:inherit;font-size:0.85rem;
+    font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em}
+  .btn-primary{background:linear-gradient(135deg,var(--ac),var(--ac3));color:#fff}
+  .btn-primary:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(74,158,255,0.3)}
+  .btn-ghost{background:transparent;color:var(--tx);border:1px solid rgba(255,255,255,0.15)}
+  .btn-ghost:hover{border-color:var(--ac);color:var(--ac)}
+  .scroll-hint{position:absolute;bottom:2rem;animation:float 3s ease infinite;color:var(--dim);font-size:0.7rem;letter-spacing:0.15em;z-index:2}
+
+  /* SECTION */
+  section{padding:5rem 2rem;max-width:1400px;margin:0 auto}
+  .stitle{font-size:1.6rem;font-weight:900;display:flex;align-items:center;gap:0.8rem}
+  .stitle-text{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stitle-count{font-size:0.7rem;color:var(--dim);font-weight:400;padding:0.2rem 0.6rem;border:1px solid rgba(255,255,255,0.1);border-radius:100px}
+  .ssub{color:var(--dim);margin-bottom:2rem;font-size:0.8rem;margin-top:0.3rem}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,255,0.15),transparent);margin:0 auto;max-width:600px}
+
+  /* REVIEW CARD */
+  .rcard{background:var(--s1);border-radius:16px;overflow:hidden;transition:all 0.35s;border:2px solid transparent;position:relative}
+  .rcard:hover{transform:translateY(-5px);border-color:rgba(74,158,255,0.3);box-shadow:0 16px 50px rgba(0,0,0,0.4)}
+  .rcard img{width:100%;aspect-ratio:1;object-fit:cover;object-position:top;cursor:pointer;transition:filter 0.3s}
+  .rcard:hover img{filter:brightness(1.05)}
+  .rcard .info{padding:1rem}
+  .rcard .name{font-weight:900;font-size:1rem}
+  .rcard .sub{font-size:0.75rem;color:var(--dim);margin-top:0.15rem}
+
+  /* VOTE BAR */
+  .vote-bar{display:flex;gap:0.3rem;margin-top:0.8rem;align-items:center}
+  .vote-btn{flex:1;padding:0.4rem 0;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;
+    color:var(--dim);font-size:0.7rem;cursor:pointer;transition:all 0.2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:0.3rem}
+  .vote-btn:hover{border-color:var(--ac);color:var(--ac)}
+  .vote-btn.voted-up{background:rgba(34,204,136,0.15);border-color:var(--good);color:var(--good)}
+  .vote-btn.voted-down{background:rgba(255,68,102,0.15);border-color:var(--bad);color:var(--bad)}
+  .vote-btn.voted-flag{background:rgba(255,170,51,0.15);border-color:var(--warn);color:var(--warn)}
+  .vote-count{font-weight:700;font-size:0.8rem}
+
+  /* COMMENT */
+  .comment-area{margin-top:0.5rem;display:none}
+  .comment-area.open{display:block}
+  .comment-input{width:100%;padding:0.5rem 0.7rem;border-radius:8px;border:1px solid rgba(255,255,255,0.1);
+    background:var(--s2);color:var(--tx);font-size:0.75rem;font-family:inherit;resize:none;outline:none;transition:border 0.2s}
+  .comment-input:focus{border-color:var(--ac)}
+  .comment-list{margin-top:0.5rem;max-height:120px;overflow-y:auto}
+  .comment-item{font-size:0.7rem;padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--dim)}
+  .comment-item strong{color:var(--tx)}
+  .comment-toggle{font-size:0.65rem;color:var(--dim);cursor:pointer;margin-top:0.4rem;text-align:center}
+  .comment-toggle:hover{color:var(--ac)}
+
+  /* STATUS BADGE */
+  .status{position:absolute;top:0.8rem;right:0.8rem;font-size:0.6rem;padding:0.2rem 0.6rem;border-radius:100px;
+    font-weight:700;letter-spacing:0.05em;z-index:5;backdrop-filter:blur(8px)}
+  .status-approved{background:rgba(34,204,136,0.2);color:var(--good);border:1px solid rgba(34,204,136,0.3)}
+  .status-review{background:rgba(74,158,255,0.2);color:var(--ac);border:1px solid rgba(74,158,255,0.3)}
+  .status-redo{background:rgba(255,68,102,0.2);color:var(--bad);border:1px solid rgba(255,68,102,0.3)}
+
+  /* GRID */
+  .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+  .g5{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+  @media(max-width:1000px){.g5{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.g5,.g4,.g3{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+
+  /* FLOW CARDS */
+  .flow-card{background:var(--s2);border-radius:14px;overflow:hidden;border-left:3px solid;transition:all 0.3s;position:relative}
+  .flow-card:hover{transform:scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+  .flow-card img{width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer}
+  .fc-body{padding:1rem}
+  .flow-lv{font-size:0.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.15em}
+  .flow-nm{font-size:1.4rem;font-weight:900;margin:0.15rem 0}
+  .flow-fx{font-size:0.78rem;color:var(--dim);line-height:1.4}
+  .flow-cost{font-size:0.7rem;color:#ff6666;margin-top:0.3rem}
+
+  /* SAGE COMPARE */
+  .sage-wrap{position:relative;border-radius:16px;overflow:hidden;cursor:col-resize;user-select:none;aspect-ratio:1;max-width:800px;margin:0 auto}
+  .sage-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .sage-wrap .sage-after{clip-path:inset(0 0 0 50%);transition:clip-path 0.05s}
+  .sage-slider{position:absolute;top:0;bottom:0;width:3px;background:var(--ac);left:50%;z-index:5;pointer-events:none}
+  .sage-slider::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:36px;height:36px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 20px rgba(74,158,255,0.5)}
+  .sage-labels{display:flex;justify-content:space-between;margin-top:0.8rem}
+  .sage-labels span{font-size:0.8rem;font-weight:700;letter-spacing:0.05em}
+
+  /* EPISODES */
+  .season-tabs{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap}
+  .season-tab{padding:0.45rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,0.08);background:transparent;
+    color:var(--dim);cursor:pointer;font-size:0.75rem;transition:all 0.2s;font-family:inherit}
+  .season-tab.active{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
+  .season-tab:hover:not(.active){border-color:rgba(74,158,255,0.4)}
+  .ep-item{display:flex;align-items:center;gap:0.8rem;padding:0.7rem 1rem;background:var(--s1);border-radius:10px;
+    cursor:pointer;transition:all 0.2s;border:1px solid transparent;margin-bottom:0.3rem}
+  .ep-item:hover{background:var(--s2);border-color:rgba(74,158,255,0.15)}
+  .ep-item.active{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 6%,var(--s1))}
+  .ep-num{font-size:1.3rem;font-weight:900;color:var(--ac);min-width:2rem;text-align:center}
+  .ep-info{flex:1;min-width:0}
+  .ep-title{font-weight:700;font-size:0.85rem}
+  .ep-hook{font-size:0.72rem;color:var(--dim);margin-top:0.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ep-tech{font-size:0.65rem;padding:0.15rem 0.5rem;background:rgba(74,158,255,0.08);color:var(--ac);border-radius:100px;white-space:nowrap}
+  .ep-vote{display:flex;gap:0.2rem}
+  .ep-vote .evb{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;
+    color:var(--dim);cursor:pointer;font-size:0.7rem;transition:all 0.15s}
+  .ep-vote .evb:hover{border-color:var(--ac);color:var(--ac)}
+  .ep-vote .evb.voted-up{background:rgba(34,204,136,0.15);border-color:var(--good);color:var(--good)}
+  .ep-vote .evb.voted-down{background:rgba(255,68,102,0.15);border-color:var(--bad);color:var(--bad)}
+
+  /* PROGRESS DASHBOARD */
+  .dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem}
+  @media(max-width:700px){.dashboard{grid-template-columns:repeat(2,1fr)}}
+  .dash-card{background:var(--s1);border-radius:14px;padding:1.2rem;text-align:center;border:1px solid rgba(255,255,255,0.04)}
+  .dash-card .dc-n{font-size:2.2rem;font-weight:900}
+  .dash-card .dc-l{font-size:0.7rem;color:var(--dim);letter-spacing:0.1em;margin-top:0.2rem}
+  .dash-card .dc-bar{height:4px;background:rgba(255,255,255,0.05);border-radius:2px;margin-top:0.8rem;overflow:hidden}
+  .dash-card .dc-fill{height:100%;border-radius:2px;transition:width 1s ease}
+
+  /* MODAL */
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(12px);z-index:1000;
+    align-items:center;justify-content:center;padding:1rem}
+  .modal-bg.on{display:flex}
+  .modal{background:var(--s1);border-radius:20px;max-width:950px;width:100%;max-height:92vh;overflow-y:auto;
+    position:relative;border:1px solid rgba(255,255,255,0.08);animation:fadeUp 0.3s ease}
+  .modal-x{position:sticky;top:0.8rem;float:right;margin-right:0.8rem;width:34px;height:34px;border-radius:50%;
+    border:none;background:rgba(255,255,255,0.08);color:white;font-size:1rem;cursor:pointer;z-index:10}
+  .modal-x:hover{background:rgba(255,255,255,0.15)}
+  .modal img.mi{width:100%;border-radius:20px 20px 0 0}
+  .modal .mb{padding:1.5rem 2rem 2rem}
+  .modal .mb h2{font-size:1.5rem;font-weight:900}
+  .modal .mb p{color:var(--dim);line-height:1.6;font-size:0.85rem;margin-top:0.5rem}
+
+  /* SUMMARY PANEL */
+  .summary{background:linear-gradient(135deg,rgba(74,158,255,0.08),rgba(124,92,255,0.08));border:1px solid rgba(74,158,255,0.15);
+    border-radius:16px;padding:2rem;margin-top:3rem}
+  .summary h3{font-size:1.1rem;font-weight:900;color:var(--ac)}
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
+  .summary-item{background:rgba(0,0,0,0.2);border-radius:10px;padding:1rem}
+  .summary-item .si-cat{font-size:0.7rem;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
+  .summary-item .si-score{font-size:1.8rem;font-weight:900;margin:0.3rem 0}
+  .summary-item .si-detail{font-size:0.75rem;color:var(--dim)}
+
+  /* EXPORT */
+  .export-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,8,13,0.95);backdrop-filter:blur(12px);
+    border-top:1px solid rgba(255,255,255,0.05);padding:0.8rem 2rem;display:flex;align-items:center;justify-content:space-between;
+    z-index:90;transform:translateY(100%);transition:transform 0.3s}
+  .export-bar.show{transform:translateY(0)}
+  .export-info{font-size:0.8rem;color:var(--dim)}
+  .export-info strong{color:var(--ac2)}
+  .export-actions{display:flex;gap:0.5rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">FLOW</div>
+  <div class="nav-links">
+    <a href="#dashboard" class="active">Dashboard</a>
+    <a href="#keyvisuals">KV<span class="nav-badge">3</span></a>
+    <a href="#characters">Char<span class="nav-badge">5</span></a>
+    <a href="#expressions">Expr<span class="nav-badge">5</span></a>
+    <a href="#flow-system">Flow<span class="nav-badge">4</span></a>
+    <a href="#sage-ui">UI<span class="nav-badge">2</span></a>
+    <a href="#scenes">Scene<span class="nav-badge">5</span></a>
+    <a href="#episodes">Ep<span class="nav-badge">60</span></a>
+  </div>
+  <div class="nav-right">
+    <span class="vote-counter" id="totalVotes">0 votes</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <img src="images/keyvisual/kv_main.png"><img src="images/characters/nagare_sheet_v2.png">
+    <img src="images/flow_art/flow_lv4_umi.png"><img src="images/scenes/scene_ep10_awakening.png">
+    <img src="images/characters/rin_sheet.png"><img src="images/keyvisual/kv_rivals.png">
+  </div>
+  <div class="hero-label">PRODUCTION REVIEW v1.0</div>
+  <div class="hero-title">FLOW</div>
+  <div class="hero-sub">REVIEW & VOTING SYSTEM</div>
+  <div class="hero-stats">
+    <div class="hs"><div class="n">24</div><div class="l">ARTWORKS</div></div>
+    <div class="hs"><div class="n">60</div><div class="l">EPISODES</div></div>
+    <div class="hs"><div class="n">5</div><div class="l">SEASONS</div></div>
+    <div class="hs"><div class="n" id="pendingCount">84</div><div class="l">PENDING REVIEW</div></div>
+  </div>
+  <div class="hero-cta">
+    <button class="btn btn-primary" onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})">Start Review</button>
+    <button class="btn btn-ghost" onclick="exportResults()">Export Results</button>
+  </div>
+  <div class="scroll-hint">SCROLL TO BEGIN REVIEW</div>
+</div>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+  <div class="stitle"><span class="stitle-text">REVIEW DASHBOARD</span></div>
+  <div class="ssub">Current voting status across all categories</div>
+  <div class="dashboard">
+    <div class="dash-card"><div class="dc-n" style="color:var(--good)" id="dashApproved">0</div><div class="dc-l">APPROVED</div><div class="dc-bar"><div class="dc-fill" id="dashApprovedBar" style="width:0;background:var(--good)"></div></div></div>
+    <div class="dash-card"><div class="dc-n" style="color:var(--warn)" id="dashFlagged">0</div><div class="dc-l">NEEDS REVISION</div><div class="dc-bar"><div class="dc-fill" id="dashFlaggedBar" style="width:0;background:var(--warn)"></div></div></div>
+    <div class="dash-card"><div class="dc-n" style="color:var(--bad)" id="dashRejected">0</div><div class="dc-l">REDO</div><div class="dc-bar"><div class="dc-fill" id="dashRejectedBar" style="width:0;background:var(--bad)"></div></div></div>
+    <div class="dash-card"><div class="dc-n" style="color:var(--dim)" id="dashPending">84</div><div class="dc-l">PENDING</div><div class="dc-bar"><div class="dc-fill" id="dashPendingBar" style="width:100%;background:var(--dim)"></div></div></div>
+  </div>
+</section>
+
+<!-- KEY VISUALS -->
+<section id="keyvisuals" class="fade-in">
+  <div class="stitle"><span class="stitle-text">KEY VISUALS</span><span class="stitle-count">3 items</span></div>
+  <div class="ssub">Main promotional artwork — vote on each</div>
+  <div class="g3" id="kvGrid"></div>
+</section>
+<div class="divider"></div>
+
+<!-- CHARACTERS -->
+<section id="characters" class="fade-in">
+  <div class="stitle"><span class="stitle-text">CHARACTER SHEETS</span><span class="stitle-count">5 items</span></div>
+  <div class="ssub">Character designs — check consistency and appeal</div>
+  <div class="g5" id="charGrid"></div>
+</section>
+<div class="divider"></div>
+
+<!-- EXPRESSIONS -->
+<section id="expressions" class="fade-in">
+  <div class="stitle"><span class="stitle-text">EXPRESSION SHEETS</span><span class="stitle-count">5 items</span></div>
+  <div class="ssub">6 expressions per character — check consistency with character sheets</div>
+  <div class="g5" id="exprGrid"></div>
+</section>
+<div class="divider"></div>
+
+<!-- FLOW SYSTEM -->
+<section id="flow-system" class="fade-in">
+  <div class="stitle"><span class="stitle-text">FLOW SYSTEM</span><span class="stitle-count">4 levels</span></div>
+  <div class="ssub">Core power system visualization — 4 stages of awakening</div>
+  <div class="g4" id="flowGrid"></div>
+</section>
+<div class="divider"></div>
+
+<!-- SAGE UI -->
+<section id="sage-ui" class="fade-in">
+  <div class="stitle"><span class="stitle-text">SAGE UI DESIGN</span><span class="stitle-count">Compare</span></div>
+  <div class="ssub">Drag the slider to compare Normal vs Glitch state</div>
+  <div class="sage-wrap" id="sageWrap">
+    <img src="images/sage_ui/sage_ui_normal.png" class="sage-before">
+    <img src="images/sage_ui/sage_ui_glitch.png" class="sage-after">
+    <div class="sage-slider" id="sageSlider"></div>
+  </div>
+  <div class="sage-labels"><span style="color:var(--ac2)">NORMAL</span><span style="color:var(--bad)">GLITCH — FLOW DETECTED</span></div>
+  <div style="margin-top:1.5rem">
+    <div class="g2" id="sageVoteGrid"></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SCENES -->
+<section id="scenes" class="fade-in">
+  <div class="stitle"><span class="stitle-text">SCENE CONCEPT ART</span><span class="stitle-count">5 scenes</span></div>
+  <div class="ssub">Key story moments — check mood, character accuracy, composition</div>
+  <div class="g3" id="sceneGrid"></div>
+</section>
+<div class="divider"></div>
+
+<!-- EPISODES -->
+<section id="episodes" class="fade-in">
+  <div class="stitle"><span class="stitle-text">EPISODE GUIDE</span><span class="stitle-count">60 episodes</span></div>
+  <div class="ssub">Vote on each episode — flag weak ones for revision</div>
+  <div class="season-tabs" id="seasonTabs"></div>
+  <div id="epList"></div>
+</section>
+
+<!-- SUMMARY -->
+<section id="summary" class="fade-in">
+  <div class="summary">
+    <h3>REVIEW SUMMARY</h3>
+    <p style="color:var(--dim);font-size:0.85rem;margin-top:0.5rem">Voting results will appear here as reviews come in.</p>
+    <div class="summary-grid" id="summaryGrid"></div>
+    <div style="text-align:center;margin-top:1.5rem">
+      <button class="btn btn-primary" onclick="exportResults()">Export Review Report</button>
+      <button class="btn btn-ghost" onclick="resetVotes()" style="margin-left:0.5rem">Reset All Votes</button>
+    </div>
+  </div>
+</section>
+
+<!-- EXPORT BAR -->
+<div class="export-bar" id="exportBar">
+  <div class="export-info"><strong id="exportCount">0</strong> items reviewed</div>
+  <div class="export-actions">
+    <button class="btn btn-ghost" onclick="exportResults()" style="padding:0.4rem 1.2rem;font-size:0.75rem">Export JSON</button>
+    <button class="btn btn-primary" onclick="copyShareLink()" style="padding:0.4rem 1.2rem;font-size:0.75rem">Copy Share Link</button>
+  </div>
+</div>
+
+<!-- AI REVIEW NOTES -->
+<section id="ai-review" class="fade-in">
+  <div class="stitle"><span class="stitle-text">AI REVIEW NOTES</span><span class="stitle-count">Auto-analysis</span></div>
+  <div class="ssub">Pre-populated issues found by automated review</div>
+  <div class="g2">
+    <div style="background:var(--s1);border-radius:16px;padding:1.5rem;border-left:3px solid var(--ac)">
+      <h3 style="font-size:1rem;font-weight:900;color:var(--ac);margin-bottom:0.8rem">ART REVIEW — 4.15/5</h3>
+      <div style="font-size:0.78rem;color:var(--dim);line-height:1.8">
+        <div style="color:var(--bad);font-weight:700;margin-top:0.3rem">REDO:</div>
+        <div>- <b>flow_lv3_uzu</b> (3.5): Monochrome breaks series. Characters too small.</div>
+        <div>- <b>scene_ep12_reunion</b> (3.5): Both fighters identical. Kaido needs design.</div>
+        <div style="color:var(--warn);font-weight:700;margin-top:0.3rem">REVISE:</div>
+        <div>- <b>rin_expressions</b> (3.5): Face rounder than character sheet.</div>
+        <div style="color:var(--good);font-weight:700;margin-top:0.3rem">BEST:</div>
+        <div>- <b>sage_ui_normal</b> (5.0): Production-ready.</div>
+        <div>- <b>marcelo_sheet</b> (4.5), <b>kv_rivals</b> (4.5)</div>
+        <div style="margin-top:0.3rem">Note: All images have garbled Japanese text (fixable in post).</div>
+      </div>
+    </div>
+    <div style="background:var(--s1);border-radius:16px;padding:1.5rem;border-left:3px solid var(--ac3)">
+      <h3 style="font-size:1rem;font-weight:900;color:var(--ac3);margin-bottom:0.8rem">STORY REVIEW — 3.9/5</h3>
+      <div style="font-size:0.78rem;color:var(--dim);line-height:1.8">
+        <div style="color:var(--bad);font-weight:700;margin-top:0.3rem">CRITICAL:</div>
+        <div>- <b>S2 Ep25</b>: All-Japan final NEVER RESOLVED. S3 jumps to Brazil.</div>
+        <div>- <b>Ep20</b>: Numb left hand used for lapela guard (contradicts Ep18).</div>
+        <div>- <b>S2 numbering</b>: 13 episodes instead of 12.</div>
+        <div style="color:var(--warn);font-weight:700;margin-top:0.3rem">PACING:</div>
+        <div>- S5 Ep49-54: 6 setup eps. Feels like different genre.</div>
+        <div>- "Flow at last second" repeats 7 times — needs variety.</div>
+        <div style="color:var(--good);font-weight:700;margin-top:0.3rem">BEST:</div>
+        <div>- S1 (4.5/5): Near-perfect opener.</div>
+        <div>- S3 Brazil arc: Best thematic section.</div>
+        <div>- Ep60: Outstanding finale.</div>
+        <div style="margin-top:0.3rem">Scores: S1 <span style="color:var(--good)">4.5</span> S2 <span style="color:var(--warn)">3.5</span> S3 <span style="color:var(--good)">4.0</span> S4 <span style="color:var(--good)">4.0</span> S5 <span style="color:var(--warn)">3.5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-bg" id="mbg" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="modal" id="mcontent"><button class="modal-x" onclick="document.getElementById('mbg').classList.remove('on')">x</button><div id="minner"></div></div>
+</div>
+
+<script>
+// ========== DATA ==========
+const allItems = [];
+let votes = JSON.parse(localStorage.getItem('flow-votes')||'{}');
+let comments = JSON.parse(localStorage.getItem('flow-comments')||'{}');
+
+function itemId(cat, name) { return `${cat}:${name}`; }
+
+// KV
+const kvData = [
+  {id:'kv_main',cat:'kv',name:'MAIN POSTER',desc:'全キャラ集合メインビジュアル',img:'images/keyvisual/kv_main.png'},
+  {id:'kv_awakening',cat:'kv',name:'FLOW AWAKENING',desc:'現実と水墨画の境界が溶ける覚醒シーン',img:'images/keyvisual/kv_flow_awakening.png'},
+  {id:'kv_rivals',cat:'kv',name:'RIVALS',desc:'流 vs 理央 — 人間の直感 vs 機械の最適解',img:'images/keyvisual/kv_rivals.png'}
+];
+
+// Characters
+const charData = [
+  {id:'nagare',cat:'char',name:'NAGARE',sub:'流 — 主人公',color:'var(--nagare)',img:'images/characters/nagare_sheet_v2.png'},
+  {id:'rio',cat:'char',name:'RIO',sub:'理央 — ライバル',color:'var(--rio)',img:'images/characters/rio_sheet.png'},
+  {id:'luciano',cat:'char',name:'LUCIANO',sub:'ルシアーノ — 師匠',color:'var(--luciano)',img:'images/characters/marcelo_sheet.png'},
+  {id:'rin',cat:'char',name:'RIN',sub:'凛 — 同志',color:'var(--rin)',img:'images/characters/rin_sheet.png'},
+  {id:'sage',cat:'char',name:'SAGE',sub:'セージ — AI',color:'var(--sage)',img:'images/characters/sage_sheet.png'}
+];
+
+// Expressions
+const exprData = charData.map(c => ({id:`expr_${c.id}`,cat:'expr',name:c.name,sub:'Expression Sheet',color:c.color,img:`images/expressions/${c.id}_expressions.png`}));
+
+// Flow
+const flowData = [
+  {id:'flow_lv1',cat:'flow',name:'滴 Shizuku',sub:'Level 1',color:'#6699cc',img:'images/flow_art/flow_lv1_shizuku.png',desc:'一瞬だけAI予測を外す',cost:'軽い疲労'},
+  {id:'flow_lv2',cat:'flow',name:'流 Nagare',sub:'Level 2',color:'#4488dd',img:'images/flow_art/flow_lv2_nagare.png',desc:'3〜5手が連続する水の流れ',cost:'左半身の痺れ'},
+  {id:'flow_lv3',cat:'flow',name:'渦 Uzu',sub:'Level 3',color:'#2266ee',img:'images/flow_art/flow_lv3_uzu.png',desc:'相手もフロウに引き込む。全AI停止',cost:'意識朦朧'},
+  {id:'flow_lv4',cat:'flow',name:'海 Umi',sub:'Level 4',color:'#0044ff',img:'images/flow_art/flow_lv4_umi.png',desc:'海堂だけが到達した未知の領域',cost:'???'}
+];
+
+// SAGE UI
+const sageData = [
+  {id:'sage_normal',cat:'sage',name:'SAGE UI — Normal',img:'images/sage_ui/sage_ui_normal.png'},
+  {id:'sage_glitch',cat:'sage',name:'SAGE UI — Glitch',img:'images/sage_ui/sage_ui_glitch.png'}
+];
+
+// Scenes
+const sceneData = [
+  {id:'sc_ep1',cat:'scene',name:'EP.01 残像',desc:'海堂 vs ヴィクトル。SAGE予測99.7%を覆す',img:'images/scenes/scene_ep1_kaido.png'},
+  {id:'sc_ep6',cat:'scene',name:'EP.06 蜘蛛',desc:'凛の登場。足関節の蜘蛛の巣',img:'images/scenes/scene_ep6_rin_spider.png'},
+  {id:'sc_ep10',cat:'scene',name:'EP.10 流',desc:'フロウ初発動。全AI画面にERR',img:'images/scenes/scene_ep10_awakening.png'},
+  {id:'sc_ep12',cat:'scene',name:'EP.12 逃亡者',desc:'理央が道場に現れる',img:'images/scenes/scene_ep12_reunion.png'},
+  {id:'sc_s4',cat:'scene',name:'S4 SAGEの真実',desc:'サーバー室。取り込まれた海堂',img:'images/scenes/scene_s4_sage_reveal.png'}
+];
+
+// Episodes
+const seasons=[
+  {n:1,title:'S1 白帯篇',eps:[
+    {num:1,t:'残像',h:'海堂の伝説の試合。99.7%を覆す。',tech:''},
+    {num:2,t:'珊瑚帯の男',h:'ルシアーノとの出会い。',tech:'エビ'},
+    {num:3,t:'右手の世界',h:'右手の感覚が研ぎ澄まされる。',tech:'グリップ'},
+    {num:4,t:'水面',h:'初スパー惨敗。「滴」発動。',tech:'腕十字DF'},
+    {num:5,t:'99.2%',h:'SAGEが流を監視対象に。',tech:'クローズドガード'},
+    {num:6,t:'蜘蛛',h:'凛登場。ヒールフックで秒殺。',tech:'アシガラミ'},
+    {num:7,t:'珊瑚の記憶',h:'海堂の過去。',tech:''},
+    {num:8,t:'白帯の戦場',h:'地方大会。',tech:''},
+    {num:9,t:'畳の詰将棋',h:'1回戦〜準決勝。',tech:'スイープ'},
+    {num:10,t:'流',h:'「流」初発動。SAGE ERR。',tech:'RNC'},
+    {num:11,t:'異常値',h:'青帯昇格。左手が消える。',tech:''},
+    {num:12,t:'逃亡者',h:'理央登場。衝撃の最終話。',tech:''}]},
+  {n:2,title:'S2 青帯篇',eps:[
+    {num:13,t:'招待状',h:'SAGE東京招待試合。',tech:''},{num:14,t:'圧',h:'AI重圧パス選手との初戦。',tech:'ラッソー'},
+    {num:15,t:'データの亡霊',h:'操り人形との戦い。',tech:''},{num:16,t:'蜘蛛の巣',h:'凛のバックストーリー。',tech:'50/50'},
+    {num:17,t:'蜘蛛、糸を変える',h:'凛が上半身攻撃を習得。',tech:'ギロチン'},{num:18,t:'銀の壁',h:'流vs理央 初対決。完敗。',tech:'ニーオン'},
+    {num:19,t:'砕けた水',h:'敗北後の絶望。初めて泣く。',tech:''},{num:20,t:'左手',h:'新スタイル構築。',tech:'ベリンボロ'},
+    {num:21,t:'渦の片鱗',h:'「渦」の片鱗。',tech:''},{num:22,t:'SAGEの目',h:'理央がAIに疑問。',tech:''},
+    {num:23,t:'三者',h:'全日本。三者が勝ち上がる。',tech:''},{num:24,t:'嵐の前',h:'リベンジ。大停電。',tech:''}]},
+  {n:3,title:'S3 紫帯篇',eps:[
+    {num:25,t:'出発',h:'ブラジルへ。',tech:''},{num:26,t:'ARTE SUAVE',h:'ルシアーノの道場。',tech:'クロスチョーク'},
+    {num:27,t:'系譜',h:'師匠の系譜。',tech:'トレアンド'},{num:28,t:'第三の弟子',h:'レオの悲劇。',tech:'ヒップバンプ'},
+    {num:29,t:'海堂の足跡',h:'ブラジルで50連敗。',tech:'フラワー'},{num:30,t:'巣',h:'凛のフロウ変種「巣」。',tech:'ヒールフック'},
+    {num:31,t:'裏切り',h:'理央がProject KAIDO発見。',tech:''},{num:32,t:'渦を御す',h:'渦の制御訓練。',tech:'ダース'},
+    {num:33,t:'裸の試合',h:'ブラジル大会。AI無し。',tech:''},{num:34,t:'紫',h:'紫帯昇格。',tech:'ツイスター'},
+    {num:35,t:'神経パッチ',h:'SAGEの新兵器。',tech:''},{num:36,t:'合流',h:'三人が再び集う。',tech:''}]},
+  {n:4,title:'S4 茶帯篇',eps:[
+    {num:37,t:'世界の舞台',h:'ムラジアル開幕。',tech:''},{num:38,t:'星条旗の壁',h:'米国代表との死闘。',tech:'木村ロック'},
+    {num:39,t:'古豪',h:'ブラジル古豪vs AI。',tech:'ベリンボロ'},{num:40,t:'蜘蛛の糸、断つ',h:'凛の膝に異変。',tech:'カーフスライサー'},
+    {num:41,t:'機械',h:'ロシアの「機械」戦。',tech:'送襟絞'},{num:42,t:'折れない蜘蛛',h:'凛、意地で戦う。棄権。',tech:''},
+    {num:43,t:'静寂',h:'理央の内面。AIを外す。',tech:''},{num:44,t:'裸の王者',h:'理央がイヤピース無しで優勝。',tech:''},
+    {num:45,t:'茶',h:'流の決勝。茶帯昇格。',tech:'十字絞'},{num:46,t:'真実',h:'海堂はSAGEに取り込まれた。',tech:''},
+    {num:47,t:'地下',h:'SAGE施設に潜入。',tech:''},{num:48,t:'人間誤差修正計画',h:'Ghost KAIDO起動。',tech:''}]},
+  {n:5,title:'S5 黒帯篇',eps:[
+    {num:49,t:'分断',h:'強制AI統合。世界が割れる。',tech:''},{num:50,t:'地下道場',h:'抵抗組織結成。',tech:''},
+    {num:51,t:'理央、一から',h:'AI無しで再出発。',tech:'エビ'},{num:52,t:'自由な戦士たち',h:'フリーファイター連帯。',tech:''},
+    {num:53,t:'亡霊',h:'Ghost KAIDO出現。',tech:''},{num:54,t:'狩り',h:'SAGE追撃。仲間の犠牲。',tech:''},
+    {num:55,t:'遺品',h:'海堂のノート。「海」の手がかり。',tech:''},{num:56,t:'師の影',h:'Ghost KAIDO戦。',tech:'腕十字'},
+    {num:57,t:'温もり',h:'亡霊に「温かさ」がない。',tech:''},{num:58,t:'海',h:'デジタルの海で海堂と再会。',tech:''},
+    {num:59,t:'不完全な美しさ',h:'SAGE最終戦。不完全さこそ武道。',tech:''},{num:60,t:'畳の上で',h:'エピローグ。新たな白帯が。',tech:''}]}
+];
+
+// Register all items
+[...kvData,...charData,...exprData,...flowData,...sageData,...sceneData].forEach(d=>allItems.push(d));
+seasons.forEach(s=>s.eps.forEach(ep=>allItems.push({id:`ep_${ep.num}`,cat:'ep',name:`EP${ep.num} ${ep.t}`})));
+
+// ========== RENDER ==========
+function voteHtml(id) {
+  const v = votes[id]||'';
+  return `<div class="vote-bar">
+    <button class="vote-btn${v==='up'?' voted-up':''}" onclick="vote('${id}','up',event)"><span>+</span></button>
+    <button class="vote-btn${v==='flag'?' voted-flag':''}" onclick="vote('${id}','flag',event)"><span>!</span></button>
+    <button class="vote-btn${v==='down'?' voted-down':''}" onclick="vote('${id}','down',event)"><span>-</span></button>
+  </div>
+  <div class="comment-toggle" onclick="toggleComment('${id}',event)">comment</div>
+  <div class="comment-area" id="ca_${id.replace(/[^a-z0-9]/gi,'_')}">
+    <textarea class="comment-input" rows="2" placeholder="Add feedback..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){addComment('${id}',this);event.preventDefault()}"></textarea>
+    <div class="comment-list" id="cl_${id.replace(/[^a-z0-9]/gi,'_')}"></div>
+  </div>`;
+}
+
+function statusBadge(id) {
+  const v = votes[id];
+  if(v==='up') return '<div class="status status-approved">APPROVED</div>';
+  if(v==='flag') return '<div class="status status-review">NEEDS REVISION</div>';
+  if(v==='down') return '<div class="status status-redo">REDO</div>';
+  return '<div class="status status-review">PENDING</div>';
+}
+
+// KV
+const kvGrid = document.getElementById('kvGrid');
+kvData.forEach(d => {
+  kvGrid.innerHTML += `<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.desc}')">
+    <div class="info"><div class="name">${d.name}</div><div class="sub">${d.desc}</div>${voteHtml(d.id)}</div></div>`;
+});
+
+// Characters
+const charGrid = document.getElementById('charGrid');
+charData.forEach(d => {
+  charGrid.innerHTML += `<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.sub}')">
+    <div class="info"><div class="name" style="color:${d.color}">${d.name}</div><div class="sub">${d.sub}</div>${voteHtml(d.id)}</div></div>`;
+});
+
+// Expressions
+const exprGrid = document.getElementById('exprGrid');
+exprData.forEach(d => {
+  exprGrid.innerHTML += `<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','Expression Sheet')">
+    <div class="info"><div class="name" style="color:${d.color}">${d.name}</div>${voteHtml(d.id)}</div></div>`;
+});
+
+// Flow
+const flowGrid = document.getElementById('flowGrid');
+flowData.forEach(d => {
+  flowGrid.innerHTML += `<div class="flow-card" style="border-color:${d.color}">${statusBadge(d.id)}
+    <img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.desc}')">
+    <div class="fc-body"><div class="flow-lv">${d.sub}</div><div class="flow-nm" style="color:${d.color}">${d.name}</div>
+    <div class="flow-fx">${d.desc}</div><div class="flow-cost">代償: ${d.cost}</div>${voteHtml(d.id)}</div></div>`;
+});
+
+// SAGE vote
+const sageVoteGrid = document.getElementById('sageVoteGrid');
+sageData.forEach(d => {
+  sageVoteGrid.innerHTML += `<div class="rcard" style="border-radius:12px"><div class="info"><div class="name">${d.name}</div>${voteHtml(d.id)}</div></div>`;
+});
+
+// Scenes
+const sceneGrid = document.getElementById('sceneGrid');
+sceneData.forEach(d => {
+  sceneGrid.innerHTML += `<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.desc}')">
+    <div class="info"><div class="name">${d.name}</div><div class="sub">${d.desc}</div>${voteHtml(d.id)}</div></div>`;
+});
+
+// Episodes
+const tabsEl = document.getElementById('seasonTabs');
+const epListEl = document.getElementById('epList');
+seasons.forEach((s,i) => {
+  const btn = document.createElement('button');
+  btn.className = 'season-tab'+(i===0?' active':'');
+  btn.textContent = s.title;
+  btn.onclick = () => showSeason(i);
+  tabsEl.appendChild(btn);
+});
+function showSeason(idx) {
+  document.querySelectorAll('.season-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  const s = seasons[idx];
+  epListEl.innerHTML = '';
+  s.eps.forEach(ep => {
+    const eid = `ep_${ep.num}`;
+    const v = votes[eid]||'';
+    epListEl.innerHTML += `<div class="ep-item${v?' active':''}">
+      <div class="ep-num">${String(ep.num).padStart(2,'0')}</div>
+      <div class="ep-info"><div class="ep-title">「${ep.t}」</div><div class="ep-hook">${ep.h}</div></div>
+      ${ep.tech?`<div class="ep-tech">${ep.tech}</div>`:''}
+      <div class="ep-vote">
+        <button class="evb${v==='up'?' voted-up':''}" onclick="vote('${eid}','up',event)">+</button>
+        <button class="evb${v==='flag'?' voted-flag':''}" onclick="vote('${eid}','flag',event)">!</button>
+        <button class="evb${v==='down'?' voted-down':''}" onclick="vote('${eid}','down',event)">-</button>
+      </div>
+    </div>`;
+  });
+}
+showSeason(0);
+
+// ========== VOTE SYSTEM ==========
+function vote(id, type, event) {
+  event && event.stopPropagation();
+  if(votes[id]===type) { delete votes[id]; } else { votes[id]=type; }
+  localStorage.setItem('flow-votes',JSON.stringify(votes));
+  updateDashboard();
+  // Re-render the section containing this vote
+  reRenderAll();
+}
+
+function toggleComment(id, event) {
+  event && event.stopPropagation();
+  const safeId = id.replace(/[^a-z0-9]/gi,'_');
+  const el = document.getElementById('ca_'+safeId);
+  if(el) el.classList.toggle('open');
+}
+
+function addComment(id, textarea) {
+  const text = textarea.value.trim();
+  if(!text) return;
+  if(!comments[id]) comments[id]=[];
+  comments[id].push({text, ts:Date.now(), user:'Reviewer'});
+  localStorage.setItem('flow-comments',JSON.stringify(comments));
+  textarea.value='';
+  renderComments(id);
+}
+
+function renderComments(id) {
+  const safeId = id.replace(/[^a-z0-9]/gi,'_');
+  const el = document.getElementById('cl_'+safeId);
+  if(!el||!comments[id]) return;
+  el.innerHTML = comments[id].map(c=>`<div class="comment-item"><strong>${c.user}</strong>: ${c.text}</div>`).join('');
+}
+
+function reRenderAll() {
+  // Quick re-render by just updating badges and vote buttons via full page sections
+  // For simplicity, re-render grids
+  [kvGrid,charGrid,exprGrid,flowGrid,sceneGrid,sageVoteGrid].forEach(g=>g&&(g.innerHTML=''));
+  kvData.forEach(d=>{kvGrid.innerHTML+=`<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.desc}')"><div class="info"><div class="name">${d.name}</div><div class="sub">${d.desc}</div>${voteHtml(d.id)}</div></div>`;});
+  charData.forEach(d=>{charGrid.innerHTML+=`<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.sub}')"><div class="info"><div class="name" style="color:${d.color}">${d.name}</div><div class="sub">${d.sub}</div>${voteHtml(d.id)}</div></div>`;});
+  exprData.forEach(d=>{exprGrid.innerHTML+=`<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','Expression Sheet')"><div class="info"><div class="name" style="color:${d.color}">${d.name}</div>${voteHtml(d.id)}</div></div>`;});
+  flowData.forEach(d=>{flowGrid.innerHTML+=`<div class="flow-card" style="border-color:${d.color}">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.desc}')"><div class="fc-body"><div class="flow-lv">${d.sub}</div><div class="flow-nm" style="color:${d.color}">${d.name}</div><div class="flow-fx">${d.desc}</div><div class="flow-cost">代償: ${d.cost}</div>${voteHtml(d.id)}</div></div>`;});
+  sageData.forEach(d=>{sageVoteGrid.innerHTML+=`<div class="rcard" style="border-radius:12px"><div class="info"><div class="name">${d.name}</div>${voteHtml(d.id)}</div></div>`;});
+  sceneData.forEach(d=>{sceneGrid.innerHTML+=`<div class="rcard">${statusBadge(d.id)}<img src="${d.img}" onclick="showModal('${d.img}','${d.name}','${d.desc}')"><div class="info"><div class="name">${d.name}</div><div class="sub">${d.desc}</div>${voteHtml(d.id)}</div></div>`;});
+  // Re-render current season
+  const activeIdx = [...document.querySelectorAll('.season-tab')].findIndex(t=>t.classList.contains('active'));
+  if(activeIdx>=0) showSeason(activeIdx);
+  // Re-render comments
+  Object.keys(comments).forEach(renderComments);
+}
+
+// ========== DASHBOARD ==========
+function updateDashboard() {
+  const total = 84; // 24 art + 60 episodes
+  const vals = Object.values(votes);
+  const up = vals.filter(v=>v==='up').length;
+  const flag = vals.filter(v=>v==='flag').length;
+  const down = vals.filter(v=>v==='down').length;
+  const pending = total - up - flag - down;
+
+  document.getElementById('dashApproved').textContent = up;
+  document.getElementById('dashFlagged').textContent = flag;
+  document.getElementById('dashRejected').textContent = down;
+  document.getElementById('dashPending').textContent = pending;
+  document.getElementById('pendingCount').textContent = pending;
+  document.getElementById('dashApprovedBar').style.width = (up/total*100)+'%';
+  document.getElementById('dashFlaggedBar').style.width = (flag/total*100)+'%';
+  document.getElementById('dashRejectedBar').style.width = (down/total*100)+'%';
+  document.getElementById('dashPendingBar').style.width = (pending/total*100)+'%';
+  document.getElementById('totalVotes').textContent = `${up+flag+down} votes`;
+  document.getElementById('exportCount').textContent = up+flag+down;
+
+  // Show export bar when votes exist
+  document.getElementById('exportBar').classList.toggle('show', up+flag+down > 0);
+
+  // Update summary
+  updateSummary(up, flag, down, pending);
+}
+
+function updateSummary(up, flag, down, pending) {
+  const cats = ['kv','char','expr','flow','sage','scene','ep'];
+  const catNames = {kv:'Key Visuals',char:'Characters',expr:'Expressions',flow:'Flow System',sage:'SAGE UI',scene:'Scenes',ep:'Episodes'};
+  const grid = document.getElementById('summaryGrid');
+  grid.innerHTML = '';
+  cats.forEach(cat => {
+    const items = Object.entries(votes).filter(([k])=>k.startsWith(cat));
+    const catUp = items.filter(([,v])=>v==='up').length;
+    const catFlag = items.filter(([,v])=>v==='flag').length;
+    const catDown = items.filter(([,v])=>v==='down').length;
+    const total = items.length;
+    if(total===0) return;
+    const scoreColor = catDown>catUp ? 'var(--bad)' : catFlag>catUp ? 'var(--warn)' : 'var(--good)';
+    grid.innerHTML += `<div class="summary-item"><div class="si-cat">${catNames[cat]||cat}</div>
+      <div class="si-score" style="color:${scoreColor}">${catUp}<span style="font-size:0.8rem;color:var(--dim)">/${total}</span></div>
+      <div class="si-detail">${catUp} approved, ${catFlag} revision, ${catDown} redo</div></div>`;
+  });
+}
+
+// ========== SAGE COMPARE SLIDER ==========
+const sageWrap = document.getElementById('sageWrap');
+const sageAfter = sageWrap.querySelector('.sage-after');
+const sageSliderEl = document.getElementById('sageSlider');
+let isDragging = false;
+function updateSlider(x) {
+  const rect = sageWrap.getBoundingClientRect();
+  let pct = Math.max(0,Math.min(100,(x-rect.left)/rect.width*100));
+  sageAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
+  sageSliderEl.style.left = pct+'%';
+}
+sageWrap.addEventListener('mousedown',()=>isDragging=true);
+document.addEventListener('mousemove',e=>{if(isDragging)updateSlider(e.clientX)});
+document.addEventListener('mouseup',()=>isDragging=false);
+sageWrap.addEventListener('touchmove',e=>{updateSlider(e.touches[0].clientX);e.preventDefault()},{passive:false});
+
+// ========== MODAL ==========
+function showModal(img,name,desc) {
+  document.getElementById('minner').innerHTML = `<img class="mi" src="${img}" style="cursor:zoom-in" onclick="window.open('${img}','_blank')">
+    <div class="mb"><h2>${name}</h2><p>${desc||''}</p><p style="font-size:0.7rem;color:var(--dim);margin-top:1rem">Click image for full size</p></div>`;
+  document.getElementById('mbg').classList.add('on');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('mbg').classList.remove('on')});
+
+// ========== EXPORT ==========
+function exportResults() {
+  const report = {
+    timestamp: new Date().toISOString(),
+    votes: votes,
+    comments: comments,
+    summary: {
+      total: Object.keys(votes).length,
+      approved: Object.values(votes).filter(v=>v==='up').length,
+      flagged: Object.values(votes).filter(v=>v==='flag').length,
+      rejected: Object.values(votes).filter(v=>v==='down').length
+    },
+    flaggedItems: Object.entries(votes).filter(([,v])=>v==='flag').map(([k])=>k),
+    rejectedItems: Object.entries(votes).filter(([,v])=>v==='down').map(([k])=>k)
+  };
+  const blob = new Blob([JSON.stringify(report,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=`flow-review-${Date.now()}.json`; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyShareLink() {
+  const encoded = btoa(JSON.stringify({v:votes,c:comments}));
+  const url = location.href.split('?')[0]+'?review='+encoded;
+  navigator.clipboard.writeText(url).then(()=>alert('Share link copied!'));
+}
+
+function resetVotes() {
+  if(!confirm('Reset all votes and comments?')) return;
+  votes={}; comments={};
+  localStorage.removeItem('flow-votes');
+  localStorage.removeItem('flow-comments');
+  reRenderAll();
+  updateDashboard();
+}
+
+// Load shared review from URL
+const urlParams = new URLSearchParams(location.search);
+if(urlParams.has('review')) {
+  try {
+    const data = JSON.parse(atob(urlParams.get('review')));
+    if(data.v) votes = data.v;
+    if(data.c) comments = data.c;
+    localStorage.setItem('flow-votes',JSON.stringify(votes));
+    localStorage.setItem('flow-comments',JSON.stringify(comments));
+    reRenderAll();
+  } catch(e){}
+}
+
+// ========== SCROLL ANIMATIONS ==========
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Nav active state
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+e.target.id));
+    }
+  });
+}, {threshold:0.3});
+document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+
+// Smooth scroll
+navLinks.forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const target = document.querySelector(a.getAttribute('href'));
+  if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+// Init
+updateDashboard();
+</script>
+<script src="/track.js"></script>
+</body>
+</html>

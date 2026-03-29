@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/pitch.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#08080d">
+<meta property="og:title" content="FLOW — Pitch Deck">
+<meta property="og:description" content="FLOW — BJJ x AIオリジナルアニメ企画書。全60話、5シーズン、オリジナルサウンドトラック。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://flow-anime.com/pitch.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FLOW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flow_bjj">
+<meta name="twitter:title" content="FLOW — Pitch Deck">
+<meta name="twitter:description" content="FLOW anime pitch deck. 60 episodes, 5 seasons, original soundtrack. BJJ x AI.">
+<meta name="twitter:image" content="https://flow-anime.com/images/og_image.png">
+<title>FLOW — Pitch Deck</title>
+<meta name="description" content="FLOW — BJJ x AIオリジナルアニメ企画書。全60話、5シーズン、オリジナルサウンドトラック。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Zen+Antique+Soft&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08080d;color:#e0e0ea;font-family:'Noto Sans JP',sans-serif;overflow-x:hidden;line-height:1.8}
+
+/* --- NAV DOTS --- */
+#nav-dots{position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.7rem}
+.nav-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;transition:all .3s;padding:0}
+.nav-dot.active,.nav-dot:hover{background:#00d4ff;border-color:#00d4ff;box-shadow:0 0 8px rgba(0,212,255,.5)}
+
+/* --- SECTIONS --- */
+section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:5rem 2rem}
+section:nth-child(even){background:rgba(255,255,255,.015)}
+
+/* --- COVER --- */
+#cover{padding:0;overflow:hidden}
+#cover .bg{position:absolute;inset:0;background:url('images/keyvisual/kv_main.png') center/cover no-repeat}
+#cover .bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,13,.55) 0%,rgba(8,8,13,.75) 50%,rgba(8,8,13,.95) 100%)}
+#cover .content{position:relative;z-index:2;text-align:center}
+#cover h1{font-family:'Dela Gothic One',sans-serif;font-size:clamp(5rem,15vw,12rem);letter-spacing:.4em;background:linear-gradient(135deg,#fff 0%,#00d4ff 40%,#4a9eff 70%,#7c5cff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 60px rgba(0,212,255,.4));margin-bottom:.5rem}
+#cover .tagline{font-family:'Zen Antique Soft',serif;font-size:clamp(1rem,2.5vw,1.6rem);color:rgba(255,255,255,.7);letter-spacing:.25em}
+#cover .meta{margin-top:2.5rem;font-size:.75rem;color:rgba(255,255,255,.25);letter-spacing:.15em}
+#cover .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);font-size:.65rem;color:rgba(255,255,255,.2);letter-spacing:.3em;animation:hintPulse 2.5s infinite}
+@keyframes hintPulse{0%,100%{opacity:.2;transform:translateX(-50%) translateY(0)}50%{opacity:.5;transform:translateX(-50%) translateY(5px)}}
+
+/* --- SECTION HEADERS --- */
+.sec-label{font-size:.65rem;color:#4a9eff;letter-spacing:.4em;text-transform:uppercase;margin-bottom:.5rem;font-weight:700}
+.sec-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:.15em;margin-bottom:2rem;text-align:center;background:linear-gradient(135deg,#fff,#ccc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* --- LOGLINE --- */
+#logline .hook{font-family:'Zen Antique Soft',serif;font-size:clamp(1.1rem,2.2vw,1.5rem);max-width:800px;text-align:center;line-height:2.2;color:#ccc;border-left:3px solid #4a9eff;border-right:3px solid #4a9eff;padding:2rem 2.5rem}
+#logline .format{margin-top:2rem;font-size:.85rem;color:#666;letter-spacing:.1em}
+
+/* --- WHY NOW --- */
+#whynow .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1000px;width:100%}
+.why-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2.5rem 2rem;transition:all .3s}
+.why-card:hover{border-color:rgba(74,158,255,.3);transform:translateY(-4px)}
+.why-card .num{font-family:'Dela Gothic One',sans-serif;font-size:2.5rem;background:linear-gradient(135deg,#4a9eff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.why-card h3{font-size:1.1rem;font-weight:900;margin-bottom:.8rem}
+.why-card p{font-size:.85rem;color:#888;line-height:1.9}
+
+/* --- CHARACTERS --- */
+#characters .char-row{display:flex;gap:1.5rem;max-width:1200px;width:100%;overflow-x:auto;padding-bottom:1rem;scroll-snap-type:x mandatory}
+.char-card{flex:0 0 210px;scroll-snap-align:start;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;transition:all .3s}
+.char-card:hover{border-color:rgba(74,158,255,.3);transform:translateY(-4px)}
+.char-card img{width:100%;height:260px;object-fit:cover;object-position:top}
+.char-card .info{padding:1rem 1.2rem}
+.char-card .name{font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;letter-spacing:.1em}
+.char-card .role{font-size:.7rem;color:#4a9eff;letter-spacing:.15em;margin-top:.2rem}
+.char-card .desc{font-size:.72rem;color:#777;margin-top:.5rem;line-height:1.7}
+
+/* --- STORY ARC --- */
+#storyarc .timeline{display:flex;gap:0;max-width:1100px;width:100%;position:relative}
+#storyarc .timeline::before{content:'';position:absolute;top:2.2rem;left:0;right:0;height:2px;background:linear-gradient(90deg,#4a9eff,#00d4ff,#7c5cff,#ff6b9d,#ffd700)}
+.season{flex:1;text-align:center;position:relative;padding-top:3.5rem}
+.season .dot{position:absolute;top:1.4rem;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:#4a9eff;border:3px solid #08080d;z-index:2}
+.season:nth-child(2) .dot{background:#00d4ff}
+.season:nth-child(3) .dot{background:#7c5cff}
+.season:nth-child(4) .dot{background:#ff6b9d}
+.season:nth-child(5) .dot{background:#ffd700}
+.season .sn{font-family:'Dela Gothic One',sans-serif;font-size:.85rem;color:#fff;letter-spacing:.1em}
+.season .st{font-size:.75rem;color:#888;margin-top:.3rem}
+.season .belt{display:inline-block;margin-top:.5rem;padding:.15rem .7rem;border-radius:100px;font-size:.6rem;font-weight:700;letter-spacing:.05em}
+.season:nth-child(1) .belt{background:rgba(255,255,255,.1);color:#fff}
+.season:nth-child(2) .belt{background:rgba(74,158,255,.15);color:#4a9eff}
+.season:nth-child(3) .belt{background:rgba(124,92,255,.15);color:#7c5cff}
+.season:nth-child(4) .belt{background:rgba(255,107,157,.15);color:#ff6b9d}
+.season:nth-child(5) .belt{background:rgba(255,215,0,.15);color:#ffd700}
+.season .eps{font-size:.6rem;color:#555;margin-top:.3rem}
+
+/* --- USP --- */
+#usp .usp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;max-width:1050px;width:100%}
+.usp-card{background:linear-gradient(135deg,rgba(74,158,255,.06),rgba(124,92,255,.04));border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem 1.8rem;text-align:center;transition:all .3s}
+.usp-card:hover{border-color:rgba(74,158,255,.25);transform:translateY(-3px)}
+.usp-card .icon{font-size:2.2rem;margin-bottom:.8rem}
+.usp-card h3{font-family:'Dela Gothic One',sans-serif;font-size:1rem;letter-spacing:.08em;margin-bottom:.6rem}
+.usp-card p{font-size:.78rem;color:#888;line-height:1.8}
+
+/* --- VISUALS --- */
+#visuals .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;max-width:1200px;width:100%}
+.gallery img{width:100%;height:220px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.05);transition:all .3s;cursor:pointer}
+.gallery img:hover{border-color:rgba(74,158,255,.3);transform:scale(1.02)}
+
+/* --- MUSIC --- */
+#music{min-height:auto;padding:5rem 2rem}
+#music .tracks{display:flex;gap:2rem;max-width:800px;width:100%;flex-wrap:wrap;justify-content:center}
+.track{flex:1;min-width:300px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem;text-align:center}
+.track .label{font-size:.65rem;color:#4a9eff;letter-spacing:.3em;font-weight:700;margin-bottom:.5rem}
+.track .title{font-family:'Zen Antique Soft',serif;font-size:1.1rem;margin-bottom:1rem}
+.track audio{width:100%;height:40px;border-radius:20px;outline:none}
+
+/* --- MONETIZATION --- */
+#monetization .flow-chart{display:flex;align-items:center;gap:.5rem;max-width:900px;flex-wrap:wrap;justify-content:center}
+.rev-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:1.2rem 1.8rem;text-align:center;transition:all .3s}
+.rev-block:hover{border-color:rgba(74,158,255,.25)}
+.rev-block .stage{font-family:'Dela Gothic One',sans-serif;font-size:1rem;letter-spacing:.05em}
+.rev-block .detail{font-size:.7rem;color:#888;margin-top:.3rem}
+.rev-arrow{font-size:1.5rem;color:#4a9eff}
+
+/* --- TEAM --- */
+#team .team-grid{display:flex;gap:2rem;max-width:800px;flex-wrap:wrap;justify-content:center}
+.team-member{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem 2.5rem;text-align:center;flex:1;min-width:200px}
+.team-member .role-label{font-size:.6rem;color:#4a9eff;letter-spacing:.3em;font-weight:700;margin-bottom:.4rem}
+.team-member .name{font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;letter-spacing:.08em}
+.team-member .sub{font-size:.7rem;color:#666;margin-top:.3rem}
+
+/* --- CTA --- */
+#cta{min-height:50vh}
+#cta .cta-box{text-align:center;max-width:600px}
+#cta .cta-box p{font-size:.9rem;color:#888;margin-bottom:2rem;line-height:2}
+.cta-btn{display:inline-block;padding:1rem 3.5rem;border-radius:100px;border:2px solid rgba(74,158,255,.4);background:transparent;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.15em;transition:all .3s;text-decoration:none}
+.cta-btn:hover{border-color:#00d4ff;background:rgba(0,212,255,.08);transform:scale(1.03);box-shadow:0 0 30px rgba(0,212,255,.15)}
+
+/* --- FOOTER --- */
+footer{text-align:center;padding:3rem 2rem;font-size:.6rem;color:#333;letter-spacing:.1em}
+
+/* --- RESPONSIVE --- */
+@media(max-width:768px){
+  section{padding:4rem 1.2rem}
+  #cover h1{letter-spacing:.2em}
+  .char-card{flex:0 0 170px}
+  .char-card img{height:200px}
+  #storyarc .timeline{flex-wrap:wrap;gap:1rem}
+  #storyarc .timeline::before{display:none}
+  .season{padding-top:0;flex-basis:45%}
+  .season .dot{display:none}
+  .flow-chart{flex-direction:column}
+  .rev-arrow{transform:rotate(90deg)}
+  #nav-dots{display:none}
+}
+
+/* --- ANIMATIONS --- */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav id="nav-dots">
+  <button class="nav-dot active" onclick="scrollTo_('#cover')" title="Cover"></button>
+  <button class="nav-dot" onclick="scrollTo_('#logline')" title="Logline"></button>
+  <button class="nav-dot" onclick="scrollTo_('#whynow')" title="Why Now"></button>
+  <button class="nav-dot" onclick="scrollTo_('#characters')" title="Characters"></button>
+  <button class="nav-dot" onclick="scrollTo_('#storyarc')" title="Story Arc"></button>
+  <button class="nav-dot" onclick="scrollTo_('#usp')" title="USP"></button>
+  <button class="nav-dot" onclick="scrollTo_('#visuals')" title="Visuals"></button>
+  <button class="nav-dot" onclick="scrollTo_('#music')" title="Music"></button>
+  <button class="nav-dot" onclick="scrollTo_('#monetization')" title="Monetization"></button>
+  <button class="nav-dot" onclick="scrollTo_('#team')" title="Team"></button>
+  <button class="nav-dot" onclick="scrollTo_('#cta')" title="Contact"></button>
+</nav>
+
+<!-- 1. COVER -->
+<section id="cover">
+  <div class="bg"></div>
+  <div class="content">
+    <h1>FLOW</h1>
+    <p class="tagline">AIに読めない柔術で、世界の頂点へ</p>
+    <p class="meta">Original Anime Project &mdash; 5 Seasons / 60 Episodes</p>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- 2. LOGLINE -->
+<section id="logline">
+  <div class="sec-label">Logline</div>
+  <div class="sec-title">物語</div>
+  <div class="hook fade-in">
+    AIが全ての格闘技を解析し尽くした2030年。身体の半分が壊れた少年・流（ながれ）が、AIには予測不能な「フロウ」という身体感覚を武器に、世界最大の柔術大会ムラジアルの頂点を目指す。<br>効率と最適解が支配する世界で、「不完全さ」こそが最強の武器になる &mdash; これは人間の直感が機械を超える物語。
+  </div>
+  <p class="format fade-in">ジャンル: 格闘技 / SF / スポ根 &nbsp;&mdash;&nbsp; 形式: TVアニメシリーズ 全5クール（各12話）</p>
+</section>
+
+<!-- 3. WHY NOW -->
+<section id="whynow">
+  <div class="sec-label">Market</div>
+  <div class="sec-title">なぜ今か</div>
+  <div class="cards">
+    <div class="why-card fade-in">
+      <div class="num">01</div>
+      <h3>ブラジリアン柔術のグローバル成長</h3>
+      <p>BJJ競技人口は世界で推定1,500万人超。UFC・ADCCの視聴者数は過去5年で3倍に拡大。しかし「柔術アニメ」は市場にほぼ存在しない &mdash; 巨大な空白地帯。</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="num">02</div>
+      <h3>AI時代の普遍的テーマ</h3>
+      <p>ChatGPT以降、「AIに人間は勝てるのか」は全世代の関心事。FLOWはこの問いを格闘技という身体性のある舞台で描く。知的共感と身体的興奮の両立。</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="num">03</div>
+      <h3>未開拓のアニメジャンル</h3>
+      <p>柔道・空手・ボクシング・相撲 &mdash; 格闘技アニメは多いが、寝技主体の柔術アニメは前例なし。ルールの独自性、「詰将棋」的な戦術性が新しい映像表現を可能にする。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CHARACTERS -->
+<section id="characters">
+  <div class="sec-label">Characters</div>
+  <div class="sec-title">キャラクター</div>
+  <div class="char-row">
+    <div class="char-card fade-in">
+      <img src="images/characters/nagare_sheet_v2.png" alt="流" loading="lazy">
+      <div class="info">
+        <div class="name">流</div>
+        <div class="role">PROTAGONIST</div>
+        <div class="desc">17歳。左半身不全の少年。AIに読めない「フロウ」で世界を変える。</div>
+      </div>
+    </div>
+    <div class="char-card fade-in">
+      <img src="images/characters/rio_sheet.png" alt="理央" loading="lazy">
+      <div class="info">
+        <div class="name">理央</div>
+        <div class="role">RIVAL</div>
+        <div class="desc">18歳。AI適応型の天才。SAGEのスポンサード選手。</div>
+      </div>
+    </div>
+    <div class="char-card fade-in">
+      <img src="images/characters/marcelo_sheet.png" alt="ルシアーノ" loading="lazy">
+      <div class="info">
+        <div class="name">ルシアーノ</div>
+        <div class="role">MASTER</div>
+        <div class="desc">55歳。珊瑚帯。海堂の師にして親友。下北沢で道場を営む。</div>
+      </div>
+    </div>
+    <div class="char-card fade-in">
+      <img src="images/characters/rin_sheet.png" alt="凛" loading="lazy">
+      <div class="info">
+        <div class="name">凛</div>
+        <div class="role">ALLY</div>
+        <div class="desc">19歳。紫帯。足関節の天才「クモ」。流の戦友。</div>
+      </div>
+    </div>
+    <div class="char-card fade-in">
+      <img src="images/characters/sage_sheet.png" alt="SAGE" loading="lazy">
+      <div class="info">
+        <div class="name">SAGE</div>
+        <div class="role">ANTAGONIST</div>
+        <div class="desc">格闘技統合AI。勝敗を99.2%予測。静かに人間の意志を蝕む。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. STORY ARC -->
+<section id="storyarc">
+  <div class="sec-label">Story Arc</div>
+  <div class="sec-title">全5クール構成</div>
+  <div class="timeline fade-in">
+    <div class="season">
+      <div class="dot"></div>
+      <div class="sn">Season 1</div>
+      <div class="st">白帯篇 &mdash; 目覚め</div>
+      <div class="belt">WHITE BELT</div>
+      <div class="eps">全12話</div>
+    </div>
+    <div class="season">
+      <div class="dot"></div>
+      <div class="sn">Season 2</div>
+      <div class="st">青帯篇 &mdash; 嵐</div>
+      <div class="belt">BLUE BELT</div>
+      <div class="eps">全12話</div>
+    </div>
+    <div class="season">
+      <div class="dot"></div>
+      <div class="sn">Season 3</div>
+      <div class="st">紫帯篇 &mdash; 深淵</div>
+      <div class="belt">PURPLE BELT</div>
+      <div class="eps">全12話</div>
+    </div>
+    <div class="season">
+      <div class="dot"></div>
+      <div class="sn">Season 4</div>
+      <div class="st">茶帯篇 &mdash; 決壊</div>
+      <div class="belt">BROWN BELT</div>
+      <div class="eps">全12話</div>
+    </div>
+    <div class="season">
+      <div class="dot"></div>
+      <div class="sn">Season 5</div>
+      <div class="st">黒帯篇 &mdash; 海</div>
+      <div class="belt">BLACK BELT</div>
+      <div class="eps">全12話</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. USP -->
+<section id="usp">
+  <div class="sec-label">Unique Selling Points</div>
+  <div class="sec-title">差別化要因</div>
+  <div class="usp-grid">
+    <div class="usp-card fade-in">
+      <div class="icon">&#127919;</div>
+      <h3>未開拓ジャンル</h3>
+      <p>格闘技アニメは数あれど、寝技主体のブラジリアン柔術を本格的に描いた作品は存在しない。ブルーオーシャン。</p>
+    </div>
+    <div class="usp-card fade-in">
+      <div class="icon">&#127758;</div>
+      <h3>海外先行人気</h3>
+      <p>BJJは北米・欧州で爆発的成長中。英語圏ファンダムが最初からビルトイン。Crunchyroll/Netflix向け最適コンテンツ。</p>
+    </div>
+    <div class="usp-card fade-in">
+      <div class="icon">&#127909;</div>
+      <h3>REAL FLOW 実写連動</h3>
+      <p>実在のBJJアスリートとのコラボレーション企画「REAL FLOW」。アニメ技の実演動画でSNSバイラルを創出。</p>
+    </div>
+    <div class="usp-card fade-in">
+      <div class="icon">&#129302;</div>
+      <h3>AI &times; 柔術の時代性</h3>
+      <p>「人間 vs AI」は2020年代最大のテーマ。それを知的議論ではなく身体の物語として描く唯一の作品。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. VISUALS -->
+<section id="visuals">
+  <div class="sec-label">Visual Development</div>
+  <div class="sec-title">ビジュアル</div>
+  <div class="gallery fade-in">
+    <img src="images/keyvisual/kv_main.png" alt="Key Visual - Main" loading="lazy">
+    <img src="images/keyvisual/kv_rivals.png" alt="Key Visual - Rivals" loading="lazy">
+    <img src="images/keyvisual/kv_flow_awakening.png" alt="Key Visual - Flow Awakening" loading="lazy">
+    <img src="images/keyvisual/kv_themat.png" alt="Key Visual - Themat" loading="lazy">
+    <img src="images/scenes/scene_ep1_kaido.png" alt="Scene - Episode 1 Kaido" loading="lazy">
+    <img src="images/scenes/scene_ep10_awakening.png" alt="Scene - Awakening" loading="lazy">
+    <img src="images/scenes/scene_ep6_rin_spider.png" alt="Scene - Rin Spider Guard" loading="lazy">
+    <img src="images/scenes/scene_s4_sage_reveal.png" alt="Scene - SAGE Reveal" loading="lazy">
+    <img src="images/sage_ui/sage_ui_normal.png" alt="SAGE UI" loading="lazy">
+    <img src="images/flow_art/flow_lv3_uzu.png" alt="Flow Lv.3 - Uzu" loading="lazy">
+  </div>
+</section>
+
+<!-- 8. MUSIC -->
+<section id="music">
+  <div class="sec-label">Original Soundtrack</div>
+  <div class="sec-title">音楽</div>
+  <div class="tracks">
+    <div class="track fade-in">
+      <div class="label">OPENING THEME</div>
+      <div class="title">OP: 流れの先へ</div>
+      <audio controls preload="none">
+        <source src="https://cdn1.suno.ai/1c46c32c-ba9b-4e46-8389-d390b328a9d2.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="track fade-in">
+      <div class="label">ENDING THEME</div>
+      <div class="title">ED: 触れた世界</div>
+      <audio controls preload="none">
+        <source src="https://cdn1.suno.ai/ab3d6805-7762-41a6-b8a6-9db86d22f853.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+</section>
+
+<!-- 9. MONETIZATION -->
+<section id="monetization">
+  <div class="sec-label">Business Model</div>
+  <div class="sec-title">マネタイズ</div>
+  <div class="flow-chart fade-in">
+    <div class="rev-block">
+      <div class="stage">Webtoon</div>
+      <div class="detail">縦読み漫画で先行連載<br>ファンベース構築</div>
+    </div>
+    <div class="rev-arrow">&rarr;</div>
+    <div class="rev-block">
+      <div class="stage">TVアニメ</div>
+      <div class="detail">全5クール放送<br>配信プラットフォーム展開</div>
+    </div>
+    <div class="rev-arrow">&rarr;</div>
+    <div class="rev-block">
+      <div class="stage">グッズ</div>
+      <div class="detail">柔術着・帯・フィギュア<br>BJJブランドコラボ</div>
+    </div>
+    <div class="rev-arrow">&rarr;</div>
+    <div class="rev-block">
+      <div class="stage">BJJ連携</div>
+      <div class="detail">大会スポンサー<br>REAL FLOW実写企画</div>
+    </div>
+  </div>
+  <div style="max-width:700px;text-align:center;margin-top:3rem" class="fade-in">
+    <p style="font-size:.85rem;color:#888;line-height:2">柔術コミュニティとの深い接点を持つ本作は、従来のアニメIPを超えたスポーツ・ライフスタイルブランドとしての展開が可能。BJJ道場・大会・ギアブランドとのB2Bコラボレーションは、アニメIPとして前例のない収益チャネルを開く。</p>
+  </div>
+</section>
+
+<!-- 10. TEAM -->
+<section id="team">
+  <div class="sec-label">Team</div>
+  <div class="sec-title">制作チーム</div>
+  <div class="team-grid fade-in">
+    <div class="team-member">
+      <div class="role-label">監修 / BJJ SUPERVISOR</div>
+      <div class="name">村田良蔵</div>
+      <div class="sub">柔術指導・技術考証</div>
+    </div>
+    <div class="team-member">
+      <div class="role-label">企画・制作 / CREATOR</div>
+      <div class="name">濱田優貴</div>
+      <div class="sub">原作・脚本・プロデュース</div>
+    </div>
+    <div class="team-member">
+      <div class="role-label">AI PRODUCTION</div>
+      <div class="name">Claude + Gemini + Suno</div>
+      <div class="sub">脚本支援・ビジュアル生成・楽曲制作</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. CTA -->
+<section id="cta">
+  <div class="sec-label">Contact</div>
+  <div class="sec-title">お問い合わせ</div>
+  <div class="cta-box fade-in">
+    <p>本企画にご興味をお持ちいただけましたら、<br>お気軽にご連絡ください。</p>
+    <a href="mailto:mail@yukihamada.jp?subject=FLOW%20アニメ企画について" class="cta-btn">CONTACT US</a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 FLOW Project. All rights reserved.
+</footer>
+
+<script>
+// Scroll-driven fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Nav dots active state
+const sections = document.querySelectorAll('section');
+const dots = document.querySelectorAll('.nav-dot');
+const secObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = Array.from(sections).indexOf(e.target);
+      dots.forEach(d => d.classList.remove('active'));
+      if (dots[idx]) dots[idx].classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => secObserver.observe(s));
+
+function scrollTo_(sel) {
+  document.querySelector(sel).scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+<script src="/track.js"></script>
+</body>
+</html>

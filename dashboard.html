@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLOW — KPI Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#08080d">
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080d;color:#e8e8f0;font-family:'Noto Sans JP',sans-serif;padding:1.5rem;min-height:100vh}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.header h1{font-family:'Dela Gothic One',sans-serif;font-size:1.5rem;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header .live{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:#22cc88}
+.header .live::before{content:'';width:8px;height:8px;border-radius:50%;background:#22cc88;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.refresh{padding:.3rem .8rem;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#888;font-size:.7rem;cursor:pointer;font-family:inherit}
+.refresh:hover{border-color:#4a9eff;color:#fff}
+.time-btns{display:flex;gap:.3rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tbtn{padding:.3rem .8rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#666;font-size:.7rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.tbtn.active{background:#4a9eff;color:#000;border-color:#4a9eff;font-weight:700}
+
+/* KPI Cards */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#111119;border-radius:14px;padding:1.2rem;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.03)}
+.kpi .label{font-size:.6rem;color:#666;letter-spacing:.1em;text-transform:uppercase}
+.kpi .value{font-family:'Dela Gothic One',sans-serif;font-size:2rem;margin-top:.3rem;line-height:1}
+.kpi .sub{font-size:.65rem;color:#555;margin-top:.3rem}
+
+/* Chart */
+.chart-wrap{background:#111119;border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,.03)}
+.chart-title{font-size:.85rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.chart-title .dot{width:8px;height:8px;border-radius:50%}
+canvas{width:100%!important;height:200px!important}
+
+/* Tables */
+.tbl-wrap{background:#111119;border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,.03)}
+.tbl-title{font-size:.85rem;font-weight:700;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:.6rem;color:#555;letter-spacing:.08em;text-transform:uppercase;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+td{font-size:.78rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.02);color:#aaa}
+td:last-child{text-align:right}
+.bar-cell{display:flex;align-items:center;gap:.5rem}
+.bar{height:6px;border-radius:3px;background:linear-gradient(90deg,#4a9eff,#00d4ff)}
+
+/* Duration bar */
+.dur-bar{height:20px;border-radius:4px;display:flex;overflow:hidden;margin-top:.5rem}
+.dur-bar div{height:100%;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#000;min-width:30px;transition:width .5s}
+
+/* Feedback */
+.fb-card{background:#0d1020;border-radius:10px;padding:1rem;margin-bottom:.5rem;border-left:3px solid #4a9eff}
+.fb-card .fb-vote{font-weight:700;font-size:.8rem;color:#4a9eff}.fb-card .fb-chars{font-size:.7rem;color:#888;margin-top:.2rem}
+.fb-card .fb-comment{font-size:.8rem;color:#ccc;margin-top:.4rem;font-style:italic}
+
+/* Subscriber */
+.sub-item{display:flex;align-items:center;gap:.8rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.02);font-size:.78rem}
+.sub-email{color:#ccc;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub-lang{font-size:.6rem;padding:.15rem .4rem;border-radius:4px;font-weight:700}
+.sub-lang.ja{background:rgba(255,68,102,.15);color:#ff6688}
+.sub-lang.en{background:rgba(74,158,255,.15);color:#4a9eff}
+.sub-lang.pt{background:rgba(34,204,136,.15);color:#22cc88}
+.sub-ts{font-size:.65rem;color:#555}
+
+/* Live feed */
+.feed{max-height:300px;overflow-y:auto}
+.feed-item{display:flex;align-items:center;gap:.8rem;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.02);font-size:.72rem}
+.feed-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.feed-path{color:#aaa;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.feed-event{color:#666}.feed-time{color:#444;font-size:.6rem;flex-shrink:0}
+.feed-data{font-size:.6rem;color:#555;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+#loading{text-align:center;padding:4rem;color:#555;font-size:.9rem}
+#error{display:none;text-align:center;padding:2rem;color:#ff4466;font-size:.85rem}
+.section-label{font-family:'Dela Gothic One',sans-serif;font-size:1rem;color:#4a9eff;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(74,158,255,.15)}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>FLOW KPI Dashboard</h1>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <div class="live">LIVE</div>
+    <button class="refresh" onclick="load()">Refresh</button>
+    <a href="/" style="font-size:.7rem;color:#555;text-decoration:none">&larr; Site</a>
+  </div>
+</div>
+
+<div class="time-btns">
+  <button class="tbtn active" onclick="setHours(24,this)">24h</button>
+  <button class="tbtn" onclick="setHours(48,this)">48h</button>
+  <button class="tbtn" onclick="setHours(168,this)">7d</button>
+  <button class="tbtn" onclick="setHours(720,this)">30d</button>
+  <button class="tbtn" onclick="setHours(8760,this)">All</button>
+</div>
+
+<div id="loading">Loading analytics...</div>
+<div id="error"></div>
+<div id="dash" style="display:none">
+
+<!-- KPIs row -->
+<div class="kpis">
+  <div class="kpi"><div class="label">Total PV</div><div class="value" id="kTotalPV" style="color:#4a9eff">-</div><div class="sub">All time</div></div>
+  <div class="kpi"><div class="label">Unique Visitors</div><div class="value" id="kTotalUV" style="color:#00d4ff">-</div><div class="sub">All time</div></div>
+  <div class="kpi"><div class="label">Recent Views</div><div class="value" id="kRecentPV" style="color:#7c5cff">-</div><div class="sub" id="kRecentLabel">Last 24h</div></div>
+  <div class="kpi"><div class="label">Avg Dwell Time</div><div class="value" id="kAvgDuration" style="color:#ffaa33">-</div><div class="sub" id="kDurSessions">-</div></div>
+  <div class="kpi"><div class="label">Subscribers</div><div class="value" id="kSubCount" style="color:#22cc88">-</div><div class="sub">Email signups</div></div>
+</div>
+
+<!-- Charts -->
+<div class="chart-wrap">
+  <div class="chart-title"><div class="dot" style="background:#4a9eff"></div>Pageviews Over Time</div>
+  <canvas id="chart"></canvas>
+</div>
+
+<!-- Dwell Time Section -->
+<div class="section-label">Dwell Time Analysis</div>
+<div class="grid2">
+  <div class="tbl-wrap">
+    <div class="tbl-title">Duration Distribution</div>
+    <div class="dur-bar" id="durBar"></div>
+    <div id="durLegend" style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.8rem"></div>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-title">Avg Duration by Page</div>
+    <table><thead><tr><th>Page</th><th>Avg Time</th><th>Sessions</th></tr></thead><tbody id="tblDuration"></tbody></table>
+  </div>
+</div>
+
+<!-- Traffic Section -->
+<div class="section-label">Traffic</div>
+<div class="grid2">
+  <div class="tbl-wrap">
+    <div class="tbl-title">Top Pages</div>
+    <table><thead><tr><th>Page</th><th>Views</th><th>Unique</th></tr></thead><tbody id="tblPages"></tbody></table>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-title">Referrers</div>
+    <table><thead><tr><th>Source</th><th>Visits</th></tr></thead><tbody id="tblRefs"></tbody></table>
+  </div>
+</div>
+
+<!-- Audience Section -->
+<div class="section-label">Audience — Language & Region</div>
+<div class="grid2">
+  <div class="tbl-wrap">
+    <div class="tbl-title">Visitors by Language</div>
+    <div class="dur-bar" id="langBar" style="margin-bottom:.8rem"></div>
+    <table><thead><tr><th>Language</th><th>Visitors</th><th>%</th></tr></thead><tbody id="tblLang"></tbody></table>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-title">Visitors by Country / Region</div>
+    <table><thead><tr><th>Country</th><th>Visitors</th><th>%</th></tr></thead><tbody id="tblCountry"></tbody></table>
+  </div>
+</div>
+<div class="grid2" style="margin-top:1rem">
+  <div class="tbl-wrap">
+    <div class="tbl-title">Subscribers by Language</div>
+    <div id="subLangChart"></div>
+  </div>
+  <div class="tbl-wrap" id="wrap-placeholder" style="display:flex;align-items:center;justify-content:center;color:#444;font-size:.8rem">
+    More audience insights coming soon
+  </div>
+</div>
+
+<!-- Engagement Section -->
+<div class="section-label">Engagement</div>
+<div class="grid2">
+  <div class="tbl-wrap">
+    <div class="tbl-title">Custom Events</div>
+    <table><thead><tr><th>Event</th><th>Count</th></tr></thead><tbody id="tblEvents"></tbody></table>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-title">Votes</div>
+    <div id="voteSummary"></div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="tbl-wrap">
+    <div class="tbl-title">Feedback</div>
+    <div id="feedbackList"></div>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-title">Subscribers</div>
+    <div id="subList" style="max-height:300px;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- Live Feed -->
+<div class="section-label">Live Feed</div>
+<div class="tbl-wrap">
+  <div class="feed" id="liveFeed"></div>
+</div>
+
+</div>
+
+<script>
+let currentHours = 24;
+const KEY = new URLSearchParams(location.search).get('key') || prompt('Dashboard key:') || '';
+
+function setHours(h, btn) {
+  currentHours = h;
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  load();
+}
+
+async function load() {
+  try {
+    const [statsR, subsR] = await Promise.all([
+      fetch(`/api/stats?key=${KEY}&hours=${currentHours}`),
+      fetch(`/api/subscribers?key=${KEY}`)
+    ]);
+    if (!statsR.ok) throw new Error('Unauthorized');
+    const d = await statsR.json();
+    const subs = await subsR.json();
+    if (d.error) throw new Error(d.error);
+    render(d, subs);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('dash').style.display = 'block';
+    document.getElementById('error').style.display = 'none';
+  } catch (e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error').textContent = 'Error: ' + e.message + ' — Check your dashboard key.';
+  }
+}
+
+function fmtDuration(sec) {
+  if (sec < 60) return sec + 's';
+  const m = Math.floor(sec / 60);
+  const s = Math.round(sec % 60);
+  return m + 'm ' + (s > 0 ? s + 's' : '');
+}
+
+function render(d, subs) {
+  // KPIs
+  animateNum('kTotalPV', d.total_pageviews);
+  animateNum('kTotalUV', d.total_unique);
+  animateNum('kRecentPV', d.recent_pageviews);
+  document.getElementById('kRecentLabel').textContent = `Last ${d.recent_hours}h`;
+
+  // Duration KPI
+  document.getElementById('kAvgDuration').textContent = fmtDuration(d.avg_duration || 0);
+  document.getElementById('kDurSessions').textContent = `${d.duration_sessions || 0} sessions`;
+
+  // Subscriber KPI
+  animateNum('kSubCount', d.subscriber_count || 0);
+
+  // Duration distribution bar
+  const buckets = d.duration_buckets || {};
+  const bucketTotal = Object.values(buckets).reduce((a, b) => a + b, 0) || 1;
+  const bucketColors = {'0-10s':'#ff4466','10-30s':'#ffaa33','30-60s':'#4a9eff','1-3min':'#7c5cff','3min+':'#22cc88'};
+  const durBar = document.getElementById('durBar');
+  const durLegend = document.getElementById('durLegend');
+  durBar.innerHTML = '';
+  durLegend.innerHTML = '';
+  Object.entries(buckets).forEach(([k, v]) => {
+    const pct = Math.max(v / bucketTotal * 100, 0);
+    if (v > 0) {
+      const div = document.createElement('div');
+      div.style.width = pct + '%';
+      div.style.background = bucketColors[k] || '#888';
+      div.textContent = v;
+      durBar.appendChild(div);
+    }
+    durLegend.innerHTML += `<div style="display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:#888"><div style="width:10px;height:10px;border-radius:2px;background:${bucketColors[k]||'#888'}"></div>${k} (${v})</div>`;
+  });
+
+  // Duration by page
+  document.getElementById('tblDuration').innerHTML = (d.duration_by_page || []).map(p =>
+    `<tr><td>${p.path}</td><td>${fmtDuration(p.avg)}</td><td style="text-align:right">${p.count}</td></tr>`
+  ).join('') || '<tr><td colspan="3" style="color:#555">No data yet</td></tr>';
+
+  // Top pages
+  const maxPV = Math.max(...d.top_pages.map(p => p.views), 1);
+  document.getElementById('tblPages').innerHTML = d.top_pages.map(p =>
+    `<tr><td><div class="bar-cell"><div class="bar" style="width:${p.views/maxPV*100}px"></div>${p.path}</div></td><td>${p.views}</td><td style="text-align:right">${p.unique}</td></tr>`
+  ).join('');
+
+  // Referrers
+  document.getElementById('tblRefs').innerHTML = (d.referrers.length ? d.referrers : [{ref: '(direct)', count: d.total_pageviews}]).map(r =>
+    `<tr><td>${r.ref || '(direct)'}</td><td style="text-align:right">${r.count}</td></tr>`
+  ).join('');
+
+  // Language breakdown
+  const langColors = {ja:'#ff4466',en:'#4a9eff',pt:'#22cc88',zh:'#ffaa33',ko:'#7c5cff',unknown:'#555'};
+  const langNames = {ja:'Japanese',en:'English',pt:'Portuguese',zh:'Chinese',ko:'Korean',es:'Spanish',fr:'French',de:'German',unknown:'Unknown'};
+  const langs = d.lang_breakdown || [];
+  const langTotal = langs.reduce((a,b) => a + b.count, 0) || 1;
+  // Lang bar
+  const langBar = document.getElementById('langBar');
+  langBar.innerHTML = '';
+  langs.forEach(l => {
+    const pct = l.count / langTotal * 100;
+    if (pct > 0) {
+      const div = document.createElement('div');
+      div.style.width = pct + '%';
+      div.style.background = langColors[l.lang] || '#888';
+      div.textContent = l.count;
+      langBar.appendChild(div);
+    }
+  });
+  // Lang table
+  document.getElementById('tblLang').innerHTML = langs.length ?
+    langs.map(l =>
+      `<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${langColors[l.lang]||'#888'};margin-right:.5rem;vertical-align:middle"></span>${langNames[l.lang]||l.lang}</td><td>${l.count}</td><td style="text-align:right">${(l.count/langTotal*100).toFixed(1)}%</td></tr>`
+    ).join('') : '<tr><td colspan="3" style="color:#555">No data yet</td></tr>';
+
+  // Country breakdown
+  const countries = d.country_breakdown || [];
+  const countryTotal = countries.reduce((a,b) => a + b.count, 0) || 1;
+  document.getElementById('tblCountry').innerHTML = countries.length ?
+    countries.slice(0, 15).map(c =>
+      `<tr><td>${c.country}</td><td>${c.count}</td><td style="text-align:right">${(c.count/countryTotal*100).toFixed(1)}%</td></tr>`
+    ).join('') : '<tr><td colspan="3" style="color:#555">No data yet</td></tr>';
+
+  // Subscriber by language
+  const subLangs = d.sub_by_lang || [];
+  const subTotal = subLangs.reduce((a,b) => a + b.count, 0) || 0;
+  document.getElementById('subLangChart').innerHTML = subLangs.length ?
+    subLangs.map(s => {
+      const pct = subTotal > 0 ? (s.count / subTotal * 100) : 0;
+      return `<div style="display:flex;align-items:center;gap:.8rem;margin:.5rem 0">
+        <span style="font-size:.75rem;color:#aaa;min-width:28px">${langNames[s.lang]||s.lang}</span>
+        <div style="flex:1;height:20px;background:rgba(255,255,255,.03);border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${langColors[s.lang]||'#888'};border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#000;min-width:20px">${s.count}</div>
+        </div>
+        <span style="font-size:.65rem;color:#555">${pct.toFixed(0)}%</span>
+      </div>`;
+    }).join('') : '<div style="color:#555;font-size:.8rem">No subscribers yet</div>';
+
+  // Custom events
+  document.getElementById('tblEvents').innerHTML = d.custom_events.map(e =>
+    `<tr><td>${e.event}</td><td style="text-align:right">${e.count}</td></tr>`
+  ).join('') || '<tr><td colspan="2" style="color:#555">No events yet</td></tr>';
+
+  // Votes
+  const voteCounts = {};
+  d.votes.forEach(v => { if (v && v.vote) voteCounts[v.vote] = (voteCounts[v.vote] || 0) + 1; });
+  const voteLabels = {amazing: 'Amazing', good: 'Good', ok: 'Okay', meh: 'Meh'};
+  const voteColors = {amazing: '#22cc88', good: '#4a9eff', ok: '#ffaa33', meh: '#ff4466'};
+  document.getElementById('voteSummary').innerHTML = Object.entries(voteCounts).length ?
+    Object.entries(voteCounts).map(([k,v]) =>
+      `<div style="display:flex;align-items:center;gap:.5rem;margin:.4rem 0"><div style="width:12px;height:12px;border-radius:50%;background:${voteColors[k]||'#888'}"></div><span style="font-size:.8rem;color:#aaa">${voteLabels[k]||k}: <strong style="color:#fff">${v}</strong></span></div>`
+    ).join('') : '<div style="color:#555;font-size:.8rem">No votes yet</div>';
+
+  // Feedback
+  document.getElementById('feedbackList').innerHTML = d.feedback.length ?
+    d.feedback.slice(0, 20).map(f =>
+      `<div class="fb-card">${f.vote ? `<div class="fb-vote">${voteLabels[f.vote]||f.vote}</div>` : ''}${f.chars && f.chars.length ? `<div class="fb-chars">Fav: ${f.chars.join(', ')}</div>` : ''}${f.comment ? `<div class="fb-comment">"${f.comment}"</div>` : ''}</div>`
+    ).join('') : '<div style="color:#555;font-size:.8rem">No feedback yet</div>';
+
+  // Subscribers
+  document.getElementById('subList').innerHTML = subs.subscribers && subs.subscribers.length ?
+    subs.subscribers.map(s =>
+      `<div class="sub-item"><span class="sub-email">${s.email}</span><span class="sub-lang ${s.lang}">${s.lang.toUpperCase()}</span><span class="sub-ts">${s.ts}</span></div>`
+    ).join('') : '<div style="color:#555;font-size:.8rem">No subscribers yet</div>';
+
+  // Live feed
+  document.getElementById('liveFeed').innerHTML = d.recent_events.map(e => {
+    const colors = {pageview:'#4a9eff',vote:'#22cc88',feedback:'#7c5cff',duration:'#ffaa33',email_signup:'#ff69b4',op_start:'#ff6',ed_start:'#f6f'};
+    let extra = '';
+    if (e.event === 'duration' && e.data) {
+      try { const dd = JSON.parse(e.data); extra = fmtDuration(dd.seconds || 0); } catch(x){}
+    } else if (e.event === 'email_signup' && e.data) {
+      try { const dd = JSON.parse(e.data); extra = dd.email_domain || ''; } catch(x){}
+    }
+    return `<div class="feed-item"><div class="feed-dot" style="background:${colors[e.event]||'#888'}"></div><span class="feed-path">${e.path}</span><span class="feed-event">${e.event}</span>${extra ? `<span class="feed-data">${extra}</span>` : ''}<span class="feed-time">${e.ts}</span></div>`;
+  }).join('');
+
+  // Chart
+  drawChart(d.hourly);
+}
+
+function animateNum(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const start = parseInt(el.textContent) || 0;
+  const diff = target - start;
+  const steps = 30;
+  let step = 0;
+  function tick() {
+    step++;
+    el.textContent = Math.round(start + diff * (step / steps)).toLocaleString();
+    if (step < steps) requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function drawChart(data) {
+  const canvas = document.getElementById('chart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = 200 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = canvas.offsetWidth, H = 200;
+  ctx.clearRect(0, 0, W, H);
+
+  if (!data.length) { ctx.fillStyle = '#555'; ctx.font = '14px sans-serif'; ctx.fillText('No data yet', W/2-30, H/2); return; }
+
+  const maxV = Math.max(...data.map(d => d.views), 1);
+  const barW = Math.max(4, (W - 40) / data.length - 2);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+  for (let i = 0; i < 4; i++) {
+    const y = 20 + (H - 40) * i / 3;
+    ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  data.forEach((d, i) => {
+    const x = 30 + i * (barW + 2);
+    const h = (d.views / maxV) * (H - 50);
+    const grad = ctx.createLinearGradient(x, H - 20, x, H - 20 - h);
+    grad.addColorStop(0, '#4a9eff'); grad.addColorStop(1, '#7c5cff');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(x, H - 20 - h, barW, h, 2);
+    ctx.fill();
+
+    const uh = (d.unique / maxV) * (H - 50);
+    ctx.fillStyle = 'rgba(0,212,255,0.4)';
+    ctx.beginPath();
+    ctx.roundRect(x, H - 20 - uh, barW, uh, 2);
+    ctx.fill();
+  });
+}
+
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/rpg.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#08080d">
+<meta property="og:title" content="FLOW — RPG Feedback">
+<meta property="og:description" content="良蔵ポーカーグループ柔術メンバー向け。FLOWアニメ企画にフィードバックして、みんなのIPを一緒に育てよう。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://flow-anime.com/rpg.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FLOW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flow_bjj">
+<meta name="twitter:title" content="FLOW — RPG Feedback">
+<meta name="twitter:image" content="https://flow-anime.com/images/og_image.png">
+<title>FLOW — RPG Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Dela+Gothic+One&family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080d;--s1:#111119;--s2:#1a1a26;--ac:#4a9eff;--ac2:#00d4ff;--ac3:#7c5cff;--tx:#e8e8f0;--dim:#7777aa}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;-webkit-font-smoothing:antialiased}
+
+/* Header */
+.hero{text-align:center;padding:3rem 1.5rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url('images/keyvisual/kv_main.png') center/cover;opacity:.1}
+.hero *{position:relative}
+.hero-badge{display:inline-block;padding:.3rem 1rem;border-radius:100px;border:1px solid rgba(74,158,255,.3);
+  background:rgba(74,158,255,.08);color:var(--ac);font-size:.7rem;font-weight:700;letter-spacing:.1em;margin-bottom:1rem}
+.hero h1{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2rem,6vw,3rem);
+  background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--dim);font-size:.85rem;margin-top:.5rem;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* Nav pills */
+.nav-pills{display:flex;gap:.4rem;padding:.8rem 1rem;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  position:sticky;top:0;z-index:50;background:rgba(8,8,13,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.04)}
+.nav-pills::-webkit-scrollbar{display:none}
+.pill{padding:.4rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;
+  color:var(--dim);font-size:.7rem;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.pill:hover,.pill.active{border-color:var(--ac);color:var(--ac);background:rgba(74,158,255,.08)}
+
+/* Content */
+.container{max-width:700px;margin:0 auto;padding:1.5rem}
+.section{margin-bottom:2rem}
+.section-title{font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:var(--ac);
+  margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(74,158,255,.15);
+  display:flex;align-items:center;gap:.5rem}
+.section-title .num{background:var(--ac);color:#000;width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900}
+
+/* Preview cards */
+.preview{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem}
+@media(max-width:500px){.preview{grid-template-columns:1fr}}
+.pcard{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+  background:var(--s1);transition:all .3s;cursor:pointer;text-decoration:none;color:var(--tx)}
+.pcard:hover{border-color:var(--ac);transform:translateY(-2px)}
+.pcard img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.pcard .pinfo{padding:.6rem .8rem}
+.pcard .ptitle{font-weight:700;font-size:.8rem}
+.pcard .pdesc{font-size:.65rem;color:var(--dim);margin-top:.2rem}
+
+/* Audio player */
+.audio-card{background:var(--s1);border-radius:12px;padding:1rem;border:1px solid rgba(255,255,255,.06);margin-bottom:.8rem}
+.audio-card .atitle{font-weight:700;font-size:.85rem;margin-bottom:.5rem}
+.audio-card audio{width:100%;height:36px}
+.audio-card .alyric{font-size:.7rem;color:var(--dim);margin-top:.5rem;font-style:italic;line-height:1.6}
+
+/* Feedback form */
+.form-group{margin-bottom:1.2rem}
+.form-label{font-size:.75rem;color:var(--dim);margin-bottom:.4rem;display:block;font-weight:700}
+.form-label .required{color:#ff4466;margin-left:.2rem}
+.form-input{width:100%;padding:.7rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:#fff;font-size:.85rem;font-family:inherit;outline:none;transition:all .3s}
+.form-input:focus{border-color:var(--ac);background:rgba(255,255,255,.06)}
+textarea.form-input{min-height:80px;resize:vertical;line-height:1.6}
+.form-hint{font-size:.6rem;color:rgba(255,255,255,.2);margin-top:.3rem}
+
+/* Rating */
+.rating-group{display:flex;gap:.4rem;flex-wrap:wrap}
+.rating-btn{padding:.5rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.08);
+  background:transparent;color:var(--dim);font-size:.75rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.rating-btn:hover{border-color:var(--ac);color:var(--ac)}
+.rating-btn.selected{background:rgba(74,158,255,.15);border-color:var(--ac);color:var(--ac);font-weight:700}
+
+/* Character select */
+.char-select{display:flex;gap:.5rem;flex-wrap:wrap}
+.char-btn{padding:.4rem .8rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);
+  background:transparent;font-size:.7rem;cursor:pointer;font-family:inherit;transition:all .2s;color:var(--dim)}
+.char-btn:hover{border-color:var(--ac)}
+.char-btn.selected{font-weight:700}
+
+/* Submit */
+.submit-btn{width:100%;padding:1rem;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--ac),var(--ac3));color:#fff;font-size:1rem;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all .3s;letter-spacing:.05em}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(74,158,255,.3)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* Points banner */
+.points-banner{background:linear-gradient(135deg,rgba(74,158,255,.1),rgba(124,92,255,.1));
+  border:1px solid rgba(74,158,255,.2);border-radius:12px;padding:1rem;text-align:center;margin-bottom:1.5rem}
+.points-banner .pts{font-family:'Dela Gothic One',sans-serif;font-size:2rem;color:var(--ac2)}
+.points-banner .pts-label{font-size:.7rem;color:var(--dim);margin-top:.2rem}
+
+/* Success */
+.success-card{display:none;background:var(--s1);border-radius:16px;padding:2rem;text-align:center;
+  border:1px solid rgba(34,204,136,.2)}
+.success-card.show{display:block}
+.success-card h3{color:#22cc88;font-size:1.2rem;margin-bottom:.5rem}
+.success-card p{color:var(--dim);font-size:.85rem;line-height:1.7}
+
+/* Footer */
+.rpg-footer{text-align:center;padding:2rem 1rem;border-top:1px solid rgba(255,255,255,.04);
+  color:rgba(255,255,255,.15);font-size:.65rem}
+.rpg-footer a{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">RPG MEMBERS ONLY</div>
+  <h1>FLOW Feedback</h1>
+  <p>良蔵ポーカーグループ柔術メンバーの皆さんへ<br>
+  みんなのフィードバックでFLOWを育てよう。<br>
+  貢献はポイントとして記録されます。</p>
+</div>
+
+<!-- NAV -->
+<div class="nav-pills">
+  <button class="pill active" onclick="scrollToSec('preview')">まず見る</button>
+  <button class="pill" onclick="scrollToSec('feedback')">フィードバック</button>
+  <button class="pill" onclick="scrollToSec('points')">ポイント</button>
+</div>
+
+<div class="container">
+
+<!-- STEP 1: PREVIEW -->
+<div class="section" id="preview">
+  <div class="section-title"><span class="num">1</span>まずFLOWを体験しよう</div>
+
+  <div class="preview">
+    <a href="opening.html" class="pcard">
+      <img src="images/keyvisual/kv_flow_awakening.png" alt="Opening" loading="lazy">
+      <div class="pinfo"><div class="ptitle">OP「0.2%の証明」</div><div class="pdesc">音楽+映像を体験</div></div>
+    </a>
+    <a href="/" class="pcard">
+      <img src="images/keyvisual/kv_main.png" alt="Top" loading="lazy">
+      <div class="pinfo"><div class="ptitle">トップページ</div><div class="pdesc">キャラ・ストーリー・世界観</div></div>
+    </a>
+    <a href="opening.html#story" class="pcard">
+      <img src="images/scenes/scene_ep1_kaido.png" alt="Story" loading="lazy">
+      <div class="pinfo"><div class="ptitle">全60話あらすじ</div><div class="pdesc">5シーズン完全版</div></div>
+    </a>
+    <a href="pitch.html" class="pcard">
+      <img src="images/keyvisual/kv_rivals.png" alt="Pitch" loading="lazy">
+      <div class="pinfo"><div class="ptitle">企画書</div><div class="pdesc">ピッチデック</div></div>
+    </a>
+  </div>
+
+  <div class="audio-card">
+    <div class="atitle">OP「0.2%の証明」</div>
+    <audio controls preload="none"><source src="music/op_new.mp3" type="audio/mpeg"></audio>
+    <div class="alyric">水面下で静かに 流れが始まる / 画面の数字を塗り替えろ ERROR ERROR / 誰かのコピーじゃない これが俺の柔術（リアル）だ</div>
+  </div>
+  <div class="audio-card">
+    <div class="atitle">ED「もう一回」</div>
+    <audio controls preload="none"><source src="music/ed_new.mp3" type="audio/mpeg"></audio>
+    <div class="alyric">帰り道はいつもと同じ / でも、昨日の僕とは確かに違うんだ / 耳の奥で鳴る 先生の「もう一回」</div>
+  </div>
+</div>
+
+<!-- STEP 2: FEEDBACK FORM -->
+<div class="section" id="feedback">
+  <div class="section-title"><span class="num">2</span>フィードバックを送ろう</div>
+
+  <form id="fbForm" onsubmit="return submitFB(event)">
+
+    <div class="form-group">
+      <label class="form-label">メールアドレス<span class="required">*</span></label>
+      <input type="email" class="form-input" id="fb-email" placeholder="you@example.com" required>
+      <div class="form-hint">ポイント付与・今後の連絡に使用。公開されません</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">名前 / ニックネーム<span class="required">*</span></label>
+      <input type="text" class="form-input" id="fb-name" placeholder="道場での呼び名でOK" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">柔術歴</label>
+      <div class="rating-group" id="fb-exp">
+        <button type="button" class="rating-btn" onclick="sel(this)">初心者</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">白帯</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">青帯</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">紫帯以上</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">柔術未経験</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">総合評価<span class="required">*</span></label>
+      <div class="rating-group" id="fb-rating">
+        <button type="button" class="rating-btn" onclick="sel(this)">最高！制作してほしい</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">面白い、可能性ある</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">悪くないが改善点あり</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">まだ刺さらない</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">好きなキャラクターを選んで（複数OK）</label>
+      <div class="char-select" id="fb-chars">
+        <button type="button" class="char-btn" style="--c:#3366cc" onclick="toggleChar(this)">流 Nagare</button>
+        <button type="button" class="char-btn" style="--c:#99bbee" onclick="toggleChar(this)">理央 Rio</button>
+        <button type="button" class="char-btn" style="--c:#cc8844" onclick="toggleChar(this)">ルシアーノ</button>
+        <button type="button" class="char-btn" style="--c:#cc3344" onclick="toggleChar(this)">凛 Rin</button>
+        <button type="button" class="char-btn" style="--c:#44ddff" onclick="toggleChar(this)">SAGE</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">一番見たいシーズンは？</label>
+      <div class="rating-group" id="fb-season">
+        <button type="button" class="rating-btn" onclick="sel(this)">S1 白帯篇</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">S2 青帯篇</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">S3 紫帯篇</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">S4 茶帯篇</button>
+        <button type="button" class="rating-btn" onclick="sel(this)">S5 黒帯篇</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ストーリーについて</label>
+      <textarea class="form-input" id="fb-story" placeholder="設定、展開、キャラの関係性など。柔術やってる人の目線で気になる点があれば"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">技の描写について</label>
+      <textarea class="form-input" id="fb-technique" placeholder="技名は正確？ 実際の柔術と合ってる？ こんな技を入れてほしい、など"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">音楽について（OP/ED）</label>
+      <textarea class="form-input" id="fb-music" placeholder="曲の印象、歌詞で刺さった部分、改善点など"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ビジュアル / キャラデザについて</label>
+      <textarea class="form-input" id="fb-visual" placeholder="キャラの見た目、場面の絵、全体の雰囲気など"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">「こうしたらもっと良くなる」アイデア</label>
+      <textarea class="form-input" id="fb-idea" placeholder="新キャラ案、展開案、コラボ案、プロモ案、何でも自由に"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">その他コメント</label>
+      <textarea class="form-input" id="fb-other" placeholder="何でも自由に書いてください"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">フィードバックを送信 (+10pt)</button>
+  </form>
+
+  <div class="success-card" id="successCard">
+    <h3>送信完了！ ありがとう！</h3>
+    <p>フィードバックが記録されました。<br>
+    あなたの貢献ポイント: <strong id="myPoints">-</strong> pt<br><br>
+    <span style="font-size:.75rem;color:var(--dim)">FLOWが形になったとき、貢献した皆さんに還元します。<br>引き続き応援よろしくお願いします！</span></p>
+    <button onclick="resetForm()" style="margin-top:1rem;padding:.5rem 2rem;border-radius:100px;border:1px solid var(--ac);background:transparent;color:var(--ac);cursor:pointer;font-family:inherit;font-size:.8rem">もう一回フィードバックする</button>
+  </div>
+</div>
+
+<!-- STEP 3: POINTS -->
+<div class="section" id="points">
+  <div class="section-title"><span class="num">3</span>貢献ポイントについて</div>
+
+  <div class="points-banner">
+    <div class="pts" id="totalFB">-</div>
+    <div class="pts-label">みんなのフィードバック数</div>
+  </div>
+
+  <div style="background:var(--s1);border-radius:12px;padding:1.2rem;border:1px solid rgba(255,255,255,.06);margin-bottom:1rem">
+    <div style="font-weight:700;font-size:.85rem;margin-bottom:.8rem">ポイントの仕組み</div>
+    <div style="font-size:.75rem;color:var(--dim);line-height:1.8">
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.4rem"><span style="color:var(--ac);font-weight:700;min-width:60px">+10 pt</span> フィードバック送信</div>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.4rem"><span style="color:var(--ac);font-weight:700;min-width:60px">+5 pt</span> メール登録</div>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.4rem"><span style="color:var(--ac);font-weight:700;min-width:60px">+20 pt</span> 技の監修コメント</div>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.4rem"><span style="color:var(--ac);font-weight:700;min-width:60px">+50 pt</span> キャラ/ストーリー採用</div>
+      <div style="margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.04)">
+        FLOWが実際の作品になった場合、貢献ポイントに応じて<br>クレジット掲載・限定コンテンツ・収益還元を予定しています。
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="rpg-footer">
+  <a href="/">FLOW トップページ</a> &middot;
+  <a href="https://x.com/flow_bjj" target="_blank">@flow_bjj</a><br>
+  &copy; 2026 FLOW Project &middot; RPG (良蔵ポーカーグループ)
+</div>
+
+<script>
+function scrollToSec(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active')});
+  event.target.classList.add('active');
+}
+
+function sel(btn){
+  btn.parentElement.querySelectorAll('.rating-btn').forEach(function(b){b.classList.remove('selected')});
+  btn.classList.add('selected');
+}
+
+function toggleChar(btn){
+  btn.classList.toggle('selected');
+  if(btn.classList.contains('selected')){
+    btn.style.borderColor=btn.style.getPropertyValue('--c');
+    btn.style.color=btn.style.getPropertyValue('--c');
+    btn.style.background='rgba(255,255,255,.05)';
+  } else {
+    btn.style.borderColor='';btn.style.color='';btn.style.background='';
+  }
+}
+
+function getSelected(id){
+  var el=document.getElementById(id);
+  if(!el) return '';
+  var s=el.querySelector('.selected');
+  return s?s.textContent:'';
+}
+
+function getChars(){
+  return Array.from(document.querySelectorAll('#fb-chars .selected')).map(function(b){return b.textContent});
+}
+
+function submitFB(e){
+  e.preventDefault();
+  var email=document.getElementById('fb-email').value.trim();
+  var name=document.getElementById('fb-name').value.trim();
+  var rating=getSelected('fb-rating');
+  if(!email||!name||!rating){alert('メール、名前、総合評価は必須です');return false}
+
+  var data={
+    email:email, name:name,
+    exp:getSelected('fb-exp'),
+    rating:rating,
+    chars:getChars(),
+    season:getSelected('fb-season'),
+    story:document.getElementById('fb-story').value,
+    technique:document.getElementById('fb-technique').value,
+    music:document.getElementById('fb-music').value,
+    visual:document.getElementById('fb-visual').value,
+    idea:document.getElementById('fb-idea').value,
+    other:document.getElementById('fb-other').value
+  };
+
+  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('submitBtn').textContent='送信中...';
+
+  fetch('/api/rpg-feedback',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).then(function(r){return r.json()}).then(function(d){
+    document.getElementById('fbForm').style.display='none';
+    document.getElementById('successCard').classList.add('show');
+    document.getElementById('myPoints').textContent=d.points*10;
+    document.getElementById('totalFB').textContent=d.total_feedback;
+    localStorage.setItem('rpg_email',email);
+    localStorage.setItem('rpg_name',name);
+  }).catch(function(){
+    alert('送信エラー。もう一度試してください');
+    document.getElementById('submitBtn').disabled=false;
+    document.getElementById('submitBtn').textContent='フィードバックを送信 (+10pt)';
+  });
+  return false;
+}
+
+function resetForm(){
+  document.getElementById('fbForm').style.display='';
+  document.getElementById('fbForm').reset();
+  document.getElementById('successCard').classList.remove('show');
+  document.getElementById('submitBtn').disabled=false;
+  document.getElementById('submitBtn').textContent='フィードバックを送信 (+10pt)';
+  document.querySelectorAll('.selected').forEach(function(b){b.classList.remove('selected');b.style.borderColor='';b.style.color='';b.style.background=''});
+}
+
+// Pre-fill from localStorage
+var savedEmail=localStorage.getItem('rpg_email');
+var savedName=localStorage.getItem('rpg_name');
+if(savedEmail)document.getElementById('fb-email').value=savedEmail;
+if(savedName)document.getElementById('fb-name').value=savedName;
+
+// Sticky nav highlight
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active')});
+      var id=e.target.id;
+      document.querySelector('.pill[onclick*="'+id+'"]').classList.add('active');
+    }
+  });
+},{threshold:0.3});
+['preview','feedback','points'].forEach(function(id){observer.observe(document.getElementById(id))});
+</script>
+<script src="/track.js"></script>
+</body>
+</html>

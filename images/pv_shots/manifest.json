@@ -1,0 +1,152 @@
+[
+  {
+    "id": "01_water_drop",
+    "time": "0-3s",
+    "section": "INTRO"
+  },
+  {
+    "id": "02_dojo_dawn",
+    "time": "3-6s",
+    "section": "INTRO"
+  },
+  {
+    "id": "03_title",
+    "time": "6-8s",
+    "section": "INTRO"
+  },
+  {
+    "id": "04_nagare_bandage",
+    "time": "8-11s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "05_nagare_tatami",
+    "time": "11-14s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "06_flashback_child",
+    "time": "14-17s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "07_master_back",
+    "time": "17-20s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "08_earpiece",
+    "time": "20-23s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "09_nagare_refuse",
+    "time": "23-26s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "10_breathe",
+    "time": "26-28s",
+    "section": "VERSE1"
+  },
+  {
+    "id": "11_ai_screen",
+    "time": "28-31s",
+    "section": "PRE-CHORUS"
+  },
+  {
+    "id": "12_rio_stance",
+    "time": "31-34s",
+    "section": "PRE-CHORUS"
+  },
+  {
+    "id": "13_face_off",
+    "time": "34-36s",
+    "section": "PRE-CHORUS"
+  },
+  {
+    "id": "14_arena_wide",
+    "time": "36-38s",
+    "section": "PRE-CHORUS"
+  },
+  {
+    "id": "15_flow_activate",
+    "time": "38-40s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "16_guard_pull",
+    "time": "40-42s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "17_sweep",
+    "time": "42-44s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "18_error_screens",
+    "time": "44-46s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "19_mount",
+    "time": "46-48s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "20_submission",
+    "time": "48-50s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "21_stand_up",
+    "time": "50-52s",
+    "section": "CHORUS"
+  },
+  {
+    "id": "22_rin_spider",
+    "time": "52-55s",
+    "section": "VERSE2"
+  },
+  {
+    "id": "23_rin_walk",
+    "time": "55-58s",
+    "section": "VERSE2"
+  },
+  {
+    "id": "24_marcelo",
+    "time": "58-61s",
+    "section": "VERSE2"
+  },
+  {
+    "id": "25_training",
+    "time": "61-65s",
+    "section": "VERSE2"
+  },
+  {
+    "id": "26_all_fighters",
+    "time": "65-70s",
+    "section": "CHORUS2"
+  },
+  {
+    "id": "27_final_clash",
+    "time": "70-75s",
+    "section": "CHORUS2"
+  },
+  {
+    "id": "28_flow_ocean",
+    "time": "75-79s",
+    "section": "CHORUS2"
+  },
+  {
+    "id": "29_back_shot",
+    "time": "79-83s",
+    "section": "CHORUS2"
+  },
+  {
+    "id": "30_logo_final",
+    "time": "83-90s",
+    "section": "OUTRO"
+  }
+]

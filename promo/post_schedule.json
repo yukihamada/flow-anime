@@ -1,0 +1,133 @@
+[
+  {
+    "id": "d1_teaser",
+    "day": 1, "hour": 12, "lang": "ja", "status": "posted",
+    "text": "もし柔術に専用のアニメがあったら——\n\nAIが全ての格闘技を解析した2030年。\n「予測不能」だけが武器の少年がいる。\n\nFLOW、始動。\n\nhttps://flow-anime.com/opening.html\n\n#柔術 #BJJ #FLOW #アニメ",
+    "image": "images/keyvisual/kv_main.png"
+  },
+  {
+    "id": "d1_nagare",
+    "day": 1, "hour": 19, "lang": "ja", "status": "posted",
+    "text": "流（ながれ）— 17歳。\n\n5歳の事故で左腕の感覚を失った。\n師匠は2年前に消えた。\n残されたのは1本の黒帯と「流れに乗れ」という言葉だけ。\n\n左腕の黒い包帯は、壊れた自分を隠すためじゃない。受け入れた証だ。\n\n#FLOW #柔術アニメ\nhttps://flow-anime.com/opening.html",
+    "image": "images/characters/nagare_sheet.png"
+  },
+  {
+    "id": "d2_op",
+    "day": 2, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "OPできた。\n\n「壊れた身体で 完璧を超えろ\n これが俺の柔術だ」\n\n▶ https://flow-anime.com/opening.html\n\n#FLOW #BJJ",
+    "image": "images/keyvisual/kv_flow_awakening.png",
+    "note": "覚醒アートが最もインパクトある"
+  },
+  {
+    "id": "d2_question",
+    "day": 2, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "柔術やってる人に質問。\n\nアニメで一番見たい技は？\n\n自分は\n・ベリンボロ→バックテイク\n・足関の攻防\n・クローズドからの三角\n\nFLOWは全試合に実在の技名を使ってます。\n\n#柔術 #BJJ",
+    "image": "images/flow_art/flow_lv1_shizuku.png",
+    "note": "柔術シーンの画像でリアリティ訴求"
+  },
+  {
+    "id": "d3_rio",
+    "day": 3, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "「感覚？ そんな曖昧なものに命を預けるのか」\n\n理央 — 18歳。AIの最適解に従う完璧な柔術。\nでもある日、イヤピースを外す——\n\n#FLOW #柔術アニメ",
+    "image": "images/characters/rio_sheet.png",
+    "note": "理央のキャラシート"
+  },
+  {
+    "id": "d3_belt",
+    "day": 3, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "黒帯まで平均10年。\n\nFLOWの世界（2030年）では、AI訓練で昇格速度が2〜3倍に。\n\n主人公の流は2年で紫帯。\n速すぎ？ でも代償がある。\n\n#柔術 #BJJ #FLOW",
+    "image": "images/keyvisual/kv_rivals.png",
+    "note": "流vs理央の対比ビジュアル"
+  },
+  {
+    "id": "d4_rin",
+    "day": 4, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "凛 — 19歳。「蜘蛛」の異名。\n\n元体操選手。膝の怪我で引退。\n足関節に出会い、人生が変わった。\n\n「足を取ったら終わり」\n\nAIを使わない理由？\n「つまらないから。」\n\n#FLOW #BJJ #女子柔術",
+    "image": "images/scenes/scene_ep6_rin_spider.png",
+    "note": "凛の蜘蛛シーン。インパクト最大"
+  },
+  {
+    "id": "d4_poll",
+    "day": 4, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "FLOWのキャラ、誰が気になる？\n\n🔵 流 — 左腕が壊れた主人公\n⚪ 理央 — AI適応型ライバル\n🔴 凛 — 足関節の天才\n🟤 ルシアーノ — 珊瑚帯の師匠\n\nリプで教えて！\n\n#FLOW #柔術アニメ",
+    "image": "images/keyvisual/kv_main.png",
+    "note": "全キャラ集合のメインビジュアル"
+  },
+  {
+    "id": "d5_system",
+    "day": 5, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "FLOW SYSTEM — 覚醒4段階\n\n滴 → 一瞬だけAI予測を外す\n流 → 技が水のように連続する\n渦 → 相手も巻き込む。全AI停止\n海 → 師匠だけが到達した未知の領域\n\nただし「勝ちたい」と思った瞬間、解ける。\n\n#FLOW #BJJ",
+    "image": "images/flow_art/flow_lv3_uzu.png",
+    "note": "渦(うず)のフロウアート"
+  },
+  {
+    "id": "d5_realflow",
+    "day": 5, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "FLOWの各話に「REAL FLOW」コーナーがある。\n\n実在のBJJプロ選手が、その回の技を30秒で実演・解説する。\n\nアニメ見た後、道場に行きたくなる。\nそういう作品にしたい。\n\n#柔術 #BJJ #FLOW",
+    "image": "images/scenes/scene_ep1_kaido.png",
+    "note": "道場のリアルなシーン"
+  },
+  {
+    "id": "d6_sage",
+    "day": 6, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "2030年の柔術試合。\n\n観客のAI画面:\n「サブミッション確率 87.3%」\n\nフロウ発動——\n全画面が「ERR」に染まる。\n\nSAGEの本当の脅威は、選手が「自分で考えなくなる」こと。\n\n#FLOW #AI #柔術",
+    "image": "images/sage_ui/sage_ui_glitch.png",
+    "note": "SAGE UIグリッチ画面。世界観を一発で伝える"
+  },
+  {
+    "id": "d6_making",
+    "day": 6, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "FLOWの制作。\n\n📝 脚本: Claude × 人間\n🎨 キャラデザ: Gemini\n🎵 主題歌: Suno\n🥋 柔術監修: 村田良蔵\n📐 制作: 濱田優貴\n\nAIが格闘技を支配する物語を、AIと人間で一緒に作った。\n\n#FLOW #AI",
+    "image": "images/keyvisual/kv_themat.png",
+    "note": "テーマビジュアル"
+  },
+  {
+    "id": "d7_ed",
+    "day": 7, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "FLOW ED「帰り道」\n\n「帰り道はいつも同じ\n でも昨日の僕とは違う\n エビひとつ まだ下手だけど\n 先生の『もう一回』が聞こえる」\n\n柔術やってる人なら、わかると思う。\n\n#FLOW #柔術",
+    "image": "images/scenes/scene_ep12_reunion.png",
+    "note": "エモーショナルなシーン"
+  },
+  {
+    "id": "d7_feedback",
+    "day": 7, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "1週間FLOWを紹介してきました。\n\n率直に:\n・アニメ化したら見る？\n・どのキャラが好き？\n\n全60話、OPからEDまで体験できます👇\nhttps://flow-anime.com/opening.html\n\n#FLOW #柔術",
+    "image": "images/keyvisual/kv_main.png",
+    "note": "締めはメインビジュアルで"
+  },
+  {
+    "id": "d8_en1",
+    "day": 8, "hour": 12, "lang": "en", "status": "pending",
+    "text": "What if BJJ had its own anime?\n\nFLOW — 2030. AI controls fighting.\nOne boy with a broken arm fights with something AI can't predict.\n\n60 episodes. Real techniques.\n\nhttps://flow-anime.com/opening.html\n\n#BJJ #anime #FLOW",
+    "image": "images/keyvisual/kv_rivals.png",
+    "note": "英語圏向け。流vs理央の対比"
+  },
+  {
+    "id": "d8_en2",
+    "day": 8, "hour": 20, "lang": "en", "status": "pending",
+    "text": "Every fight in FLOW uses real BJJ techniques.\n\nEp 9: Triangle from closed guard\nEp 18: Knee on belly → north-south choke\nEp 41: Kimura trap → Darce\nEp 56: Reverse DLR → heel hook\n\nNo magic. Just jiu-jitsu.\n\n#BJJ #jiujitsu #FLOW",
+    "image": "images/scenes/scene_ep10_awakening.png",
+    "note": "試合シーン(ERR画面)。技のリアルさを伝える"
+  },
+  {
+    "id": "d9_pt",
+    "day": 9, "hour": 12, "lang": "pt", "status": "pending",
+    "text": "E se o Jiu-Jitsu tivesse seu proprio anime?\n\nFLOW — 2030. IA controla as lutas.\nUm garoto luta com algo que a IA nao preve.\n\n60 episodios. Tecnicas reais de BJJ.\n\nhttps://flow-anime.com/opening.html\n\n#BJJ #JiuJitsu #FLOW",
+    "image": "images/keyvisual/kv_flow_awakening.png",
+    "note": "ポルトガル語版。覚醒シーンでインパクト"
+  },
+  {
+    "id": "d9_yawara",
+    "day": 9, "hour": 20, "lang": "ja", "status": "pending",
+    "text": "FLOWの柔術監修は村田良蔵先生。\n\nSJJJFワールド黒帯王者。\n原宿YAWARA柔術アカデミー主宰。\n\n「技の名前も、かかり方も、全部リアルにしてくれ」\n\nそう言われて全60話の試合シーンを書き直しました。\n\n#FLOW #柔術 #YAWARA",
+    "image": "images/characters/marcelo_sheet.png",
+    "note": "師匠キャラ(ルシアーノ)のシート。良蔵先生モチーフ"
+  },
+  {
+    "id": "d10_thanks",
+    "day": 10, "hour": 12, "lang": "ja", "status": "pending",
+    "text": "FLOWを見てくれた方へ。\n\n柔術を知らない人が「始めてみたい」と言ってくれる。\n柔術やってる人が「技が正確で嬉しい」と言ってくれる。\n\n目標はひとつ。\n「見た人が道場に行きたくなるアニメ」\n\nhttps://flow-anime.com/opening.html\n\n#FLOW #柔術",
+    "image": "images/keyvisual/kv_main.png",
+    "note": "締め。メインビジュアルで余韻"
+  }
+]

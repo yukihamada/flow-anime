@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLOW — Post Manager</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#08080d">
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080d;color:#e8e8f0;font-family:'Noto Sans JP',sans-serif;padding:2rem;max-width:900px;margin:0 auto}
+h1{font-family:'Dela Gothic One',sans-serif;font-size:1.5rem;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.sub{color:#555;font-size:.8rem;margin-bottom:2rem}
+.controls{display:flex;gap:.8rem;margin-bottom:2rem;flex-wrap:wrap}
+.btn{padding:.5rem 1.2rem;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#aaa;font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn:hover{border-color:#4a9eff;color:#fff}
+.btn.primary{background:linear-gradient(135deg,#4a9eff,#7c5cff);color:#fff;border:none}
+.btn.danger{border-color:#ff4466;color:#ff4466}
+.btn.success{border-color:#22cc88;color:#22cc88}
+.card{background:#111119;border-radius:12px;padding:1.5rem;margin-bottom:1rem;border-left:4px solid #555;transition:all .2s}
+.card.pending{border-color:#ffaa33}
+.card.approved{border-color:#22cc88}
+.card.posted{border-color:#4a9eff}
+.card.rejected{border-color:#ff4466}
+.card.error{border-color:#ff4466;background:#1a1015}
+.card-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem}
+.card-id{font-family:'Dela Gothic One',sans-serif;font-size:.9rem;color:#4a9eff}
+.card-day{font-size:.7rem;color:#666;background:rgba(255,255,255,.05);padding:.2rem .5rem;border-radius:100px}
+.card-lang{font-size:.65rem;padding:.15rem .4rem;border-radius:4px;font-weight:700}
+.card-lang.ja{background:rgba(255,68,102,.15);color:#ff6688}
+.card-lang.en{background:rgba(74,158,255,.15);color:#4a9eff}
+.card-status{margin-left:auto;font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:100px}
+.card-status.pending{background:rgba(255,170,51,.15);color:#ffaa33}
+.card-status.approved{background:rgba(34,204,136,.15);color:#22cc88}
+.card-status.posted{background:rgba(74,158,255,.15);color:#4a9eff}
+.card-status.rejected{background:rgba(255,68,102,.15);color:#ff4466}
+.card-status.error{background:rgba(255,68,102,.15);color:#ff4466}
+.card-text{font-size:.85rem;color:#bbb;line-height:1.8;white-space:pre-wrap;background:#0a0a12;border-radius:8px;padding:1rem;margin-bottom:.8rem;border:1px solid rgba(255,255,255,.04)}
+.card-note{font-size:.7rem;color:#555;margin-bottom:.8rem;font-style:italic}
+.card-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.card-result{margin-top:.5rem;font-size:.75rem;color:#888}
+.card-result a{color:#4a9eff}
+.card-image{margin-bottom:.8rem;position:relative}
+.card-image img{max-width:100%;max-height:200px;border-radius:8px;border:1px solid rgba(255,255,255,.06);object-fit:cover}
+.card-image-label{position:absolute;bottom:6px;left:6px;font-size:.6rem;background:rgba(0,0,0,.7);color:#888;padding:2px 6px;border-radius:4px;backdrop-filter:blur(4px)}
+textarea.edit{width:100%;background:#0a0a12;border:1px solid rgba(74,158,255,.3);border-radius:8px;color:#e8e8f0;padding:.8rem;font-family:inherit;font-size:.85rem;line-height:1.8;resize:vertical;min-height:120px;outline:none;display:none}
+.char-count{font-size:.65rem;color:#555;text-align:right;margin-top:.2rem;display:none}
+.timeline{position:relative;margin-bottom:2rem;padding:1rem 0}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:rgba(255,255,255,.05)}
+.tl-dot{width:10px;height:10px;border-radius:50%;position:absolute;left:16px;top:50%;transform:translateY(-50%)}
+</style>
+</head>
+<body>
+<h1>FLOW Post Manager</h1>
+<div class="sub">X自動投稿管理。承認した投稿のみスケジュール通りに自動投稿されます。</div>
+
+<!-- SUMMARY -->
+<div id="summary" style="display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin-bottom:2rem"></div>
+
+<div class="controls">
+  <button class="btn primary" onclick="approveAll()">全て承認</button>
+  <button class="btn success" onclick="startSchedule()">スケジュール開始</button>
+  <button class="btn" onclick="postAllApproved()">承認済みを全投稿</button>
+  <button class="btn" onclick="load()">更新</button>
+  <span id="status" style="font-size:.75rem;color:#555;line-height:2.5"></span>
+</div>
+
+<!-- FILTER -->
+<div style="display:flex;gap:.4rem;margin-bottom:1.5rem;flex-wrap:wrap">
+  <button class="btn" onclick="filter('all')" style="font-size:.7rem">全て</button>
+  <button class="btn" onclick="filter('pending')" style="font-size:.7rem;color:#ffaa33">承認待ち</button>
+  <button class="btn" onclick="filter('approved')" style="font-size:.7rem;color:#22cc88">承認済み</button>
+  <button class="btn" onclick="filter('posted')" style="font-size:.7rem;color:#4a9eff">投稿済み</button>
+  <button class="btn" onclick="filter('error')" style="font-size:.7rem;color:#ff4466">エラー</button>
+</div>
+
+<div id="posts"></div>
+
+<script>
+const KEY = new URLSearchParams(location.search).get('key') || prompt('Admin key:') || '';
+let postsData = [], logData = {}, currentFilter = 'all';
+
+function renderSummary(posts, log) {
+  const counts = {pending:0, approved:0, posted:0, error:0, rejected:0};
+  posts.forEach(p => {
+    const s = log[p.id]?.tweet_id ? 'posted' : log[p.id]?.error ? 'error' : p.status;
+    counts[s] = (counts[s]||0) + 1;
+  });
+  const el = document.getElementById('summary');
+  const items = [
+    {label:'全投稿',val:posts.length,color:'#fff'},
+    {label:'投稿済み',val:counts.posted,color:'#4a9eff'},
+    {label:'承認済み',val:counts.approved,color:'#22cc88'},
+    {label:'承認待ち',val:counts.pending,color:'#ffaa33'},
+    {label:'エラー',val:counts.error,color:'#ff4466'}
+  ];
+  el.innerHTML = items.map(i => `<div style="background:#111119;border-radius:10px;padding:1rem;text-align:center;border-top:3px solid ${i.color}">
+    <div style="font-family:'Dela Gothic One';font-size:1.8rem;color:${i.color}">${i.val}</div>
+    <div style="font-size:.65rem;color:#666;margin-top:.2rem">${i.label}</div>
+  </div>`).join('');
+}
+
+function filter(f) { currentFilter = f; render(postsData, logData); }
+
+async function postAllApproved() {
+  if (!confirm('承認済みの全投稿を今すぐ投稿しますか？')) return;
+  const el = document.getElementById('status');
+  for (const p of postsData) {
+    if (p.status === 'approved' && !logData[p.id]?.tweet_id) {
+      el.textContent = `投稿中: ${p.id}...`;
+      await fetch('/api/posts/approve', {method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({key:KEY, id:p.id, action:'post_now'})});
+      await new Promise(r => setTimeout(r, 4000));
+    }
+  }
+  el.textContent = '全投稿完了';
+  load();
+}
+
+async function load() {
+  const r = await fetch(`/api/posts?key=${KEY}`);
+  const d = await r.json();
+  if (d.error) { alert('Unauthorized'); return; }
+  postsData = d.posts;
+  logData = d.log;
+  renderSummary(d.posts, d.log);
+  render(d.posts, d.log);
+}
+
+function render(posts, log) {
+  const el = document.getElementById('posts');
+  el.innerHTML = '';
+  const statusLabel = {pending:'承認待ち', approved:'承認済み', posted:'投稿済み', rejected:'却下', error:'エラー'};
+
+  const filtered = currentFilter === 'all' ? posts : posts.filter(p => {
+    const s = log[p.id]?.tweet_id ? 'posted' : log[p.id]?.error ? 'error' : p.status;
+    return s === currentFilter;
+  });
+  filtered.forEach(p => {
+    const logEntry = log[p.id];
+    const effectiveStatus = logEntry?.tweet_id ? 'posted' : logEntry?.error ? 'error' : p.status;
+    const charLen = p.text.length;
+
+    el.innerHTML += `
+    <div class="card ${effectiveStatus}">
+      <div class="card-header">
+        <span class="card-id">${p.id}</span>
+        <span class="card-day">Day ${p.day} / ${p.hour}:00 JST</span>
+        <span class="card-lang ${p.lang}">${p.lang.toUpperCase()}</span>
+        <span class="card-status ${effectiveStatus}">${statusLabel[effectiveStatus]||effectiveStatus}</span>
+      </div>
+      <div class="card-note">${p.note || ''}</div>
+      ${p.image ? `<div class="card-image"><img src="/${p.image}" alt="" loading="lazy"><span class="card-image-label">📎 ${p.image.split('/').pop()}</span></div>` : ''}
+      <div class="card-text" id="text-${p.id}" onclick="startEdit('${p.id}')">${escHtml(p.text)}</div>
+      <textarea class="edit" id="edit-${p.id}" oninput="updateCount('${p.id}')">${escHtml(p.text)}</textarea>
+      <div class="char-count" id="count-${p.id}">${charLen}/280</div>
+      <div class="card-actions">
+        ${effectiveStatus === 'pending' ? `
+          <button class="btn success" onclick="approve('${p.id}')">承認</button>
+          <button class="btn danger" onclick="reject('${p.id}')">却下</button>
+          <button class="btn" onclick="startEdit('${p.id}')">編集</button>
+        ` : ''}
+        ${effectiveStatus === 'approved' ? `
+          <button class="btn primary" onclick="postNow('${p.id}')">今すぐ投稿</button>
+          <button class="btn danger" onclick="reject('${p.id}')">取消</button>
+          <button class="btn" onclick="startEdit('${p.id}')">編集</button>
+        ` : ''}
+        ${effectiveStatus === 'posted' ? `
+          <span style="font-size:.75rem;color:#4a9eff">投稿済み</span>
+        ` : ''}
+        ${effectiveStatus === 'error' ? `
+          <button class="btn primary" onclick="postNow('${p.id}')">再試行</button>
+          <button class="btn" onclick="startEdit('${p.id}')">編集</button>
+        ` : ''}
+        ${effectiveStatus === 'rejected' ? `
+          <button class="btn success" onclick="approve('${p.id}')">復活</button>
+        ` : ''}
+      </div>
+      ${logEntry?.tweet_id ? `<div class="card-result">Tweet: <a href="https://x.com/i/web/status/${logEntry.tweet_id}" target="_blank">${logEntry.tweet_id}</a> (${logEntry.ts})</div>` : ''}
+      ${logEntry?.error ? `<div class="card-result" style="color:#ff4466">Error: ${logEntry.error}</div>` : ''}
+    </div>`;
+  });
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function startEdit(id) {
+  const textEl = document.getElementById('text-' + id);
+  const editEl = document.getElementById('edit-' + id);
+  const countEl = document.getElementById('count-' + id);
+  if (editEl.style.display === 'block') {
+    // Save
+    const newText = editEl.value;
+    fetch('/api/posts/edit', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({key: KEY, id: id, text: newText})
+    }).then(() => load());
+    editEl.style.display = 'none';
+    countEl.style.display = 'none';
+    textEl.style.display = 'block';
+  } else {
+    textEl.style.display = 'none';
+    editEl.style.display = 'block';
+    countEl.style.display = 'block';
+    editEl.focus();
+    updateCount(id);
+  }
+}
+
+function updateCount(id) {
+  const el = document.getElementById('edit-' + id);
+  const countEl = document.getElementById('count-' + id);
+  const len = el.value.length;
+  countEl.textContent = `${len}/280`;
+  countEl.style.color = len > 280 ? '#ff4466' : '#555';
+}
+
+async function approve(id) {
+  await fetch('/api/posts/approve', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({key:KEY, id:id, action:'approve'})});
+  load();
+}
+
+async function reject(id) {
+  await fetch('/api/posts/approve', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({key:KEY, id:id, action:'reject'})});
+  load();
+}
+
+async function postNow(id) {
+  if (!confirm('今すぐ投稿しますか？')) return;
+  document.getElementById('status').textContent = '投稿中...';
+  const r = await fetch('/api/posts/approve', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({key:KEY, id:id, action:'post_now'})});
+  const d = await r.json();
+  document.getElementById('status').textContent = '';
+  load();
+}
+
+async function approveAll() {
+  if (!confirm('全投稿を承認しますか？')) return;
+  for (const p of postsData) {
+    if (p.status === 'pending') {
+      await fetch('/api/posts/approve', {method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({key:KEY, id:p.id, action:'approve'})});
+    }
+  }
+  load();
+}
+
+async function startSchedule() {
+  if (!confirm('スケジュールを開始しますか？今日をDay 1として、承認済み投稿が自動投稿されます。')) return;
+  await fetch('/api/posts/start', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({key:KEY})});
+  document.getElementById('status').textContent = 'スケジュール開始しました';
+  load();
+}
+
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>

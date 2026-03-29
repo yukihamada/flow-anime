@@ -1,0 +1,6 @@
+*.old.png
+scripts/
+.git/
+fly.toml
+Dockerfile
+.dockerignore
