@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLOW PV — カットセレクター</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e8e8f0;font-family:-apple-system,'Noto Sans JP',sans-serif;padding:20px;max-width:1400px;margin:0 auto}
+h1{font-size:1.6em;font-weight:800;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.sub{color:#555;font-size:.85em;margin-bottom:20px}
+
+/* Controls */
+.toolbar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:10;background:#0a0a0f;padding:12px 0;border-bottom:1px solid #1a1a2a}
+.btn{padding:8px 18px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#aaa;font-size:.85em;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn:hover{border-color:#4a9eff;color:#fff}
+.btn.primary{background:linear-gradient(135deg,#4a9eff,#7c5cff);color:#fff;border:none}
+.btn.danger{border-color:#ff4466;color:#ff4466}
+.btn.success{background:#22cc88;color:#000;border:none}
+.counter{margin-left:auto;font-size:.9em;color:#888}
+.counter b{color:#4a9eff}
+
+/* Section headers */
+.section-header{margin:24px 0 12px;padding:8px 14px;background:rgba(74,158,255,.06);border-left:3px solid #4a9eff;border-radius:0 8px 8px 0;font-size:.9em;font-weight:700;color:#4a9eff;display:flex;align-items:center;gap:8px}
+.section-header .time{color:#555;font-weight:400;font-size:.8em}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+
+/* Card */
+.card{background:#111119;border-radius:14px;overflow:hidden;border:2px solid transparent;transition:all .2s;cursor:pointer;position:relative}
+.card:hover{border-color:rgba(74,158,255,.3);transform:translateY(-2px)}
+.card.selected{border-color:#22cc88;box-shadow:0 0 20px rgba(34,204,136,.2)}
+.card.excluded{opacity:.3;filter:grayscale(.8)}
+.card-img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.card-body{padding:12px}
+.card-id{font-size:.8em;font-weight:700;color:#4a9eff}
+.card-time{font-size:.7em;color:#555;margin-left:6px}
+.card-section{font-size:.65em;color:#333;background:rgba(255,255,255,.05);padding:2px 6px;border-radius:4px;margin-left:6px}
+.card-dur{font-size:.85em;color:#888;margin-top:4px}
+.card-dur input{width:60px;background:#0a0a12;border:1px solid #2a2a3a;border-radius:6px;color:#fff;padding:4px 8px;font-size:.85em;text-align:center}
+
+/* Check */
+.check{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:2;transition:all .15s}
+.card.selected .check{background:#22cc88;border-color:#22cc88;color:#000}
+.card.excluded .check{background:#ff4466;border-color:#ff4466;color:#fff}
+
+/* Order badge */
+.order-badge{position:absolute;top:10px;left:10px;background:rgba(74,158,255,.9);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;z-index:2}
+.card.excluded .order-badge{display:none}
+
+/* Preview strip */
+.preview{margin:20px 0;padding:16px;background:#111119;border-radius:14px;border:1px solid #1a1a2a}
+.preview h3{font-size:.9em;color:#888;margin-bottom:10px}
+.strip{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+.strip-item{flex-shrink:0;width:80px;height:45px;border-radius:6px;overflow:hidden;border:1px solid #2a2a3a;position:relative;opacity:1;transition:all .2s}
+.strip-item img{width:100%;height:100%;object-fit:cover}
+.strip-item .strip-num{position:absolute;bottom:2px;left:4px;font-size:.6em;color:#fff;text-shadow:0 1px 3px #000}
+.strip-item .strip-dur{position:absolute;bottom:2px;right:4px;font-size:.55em;color:#aaa;text-shadow:0 1px 3px #000}
+
+/* Export */
+.export-area{margin-top:16px;background:#0a0a12;border:1px solid #2a2a3a;border-radius:10px;padding:12px;font-family:monospace;font-size:.8em;color:#888;max-height:200px;overflow-y:auto;white-space:pre;display:none}
+</style>
+</head>
+<body>
+
+<h1>FLOW PV — カットセレクター</h1>
+<div class="sub">クリックで採用/除外。ドラッグで尺調整。選んだカットでPVを再構成します。</div>
+
+<div class="toolbar">
+  <button class="btn" onclick="selectAll()">全選択</button>
+  <button class="btn" onclick="deselectAll()">全解除</button>
+  <button class="btn" onclick="resetDurations()">尺リセット</button>
+  <button class="btn primary" onclick="exportFFmpeg()">ffmpegコマンド生成</button>
+  <button class="btn success" onclick="copyCommand()">コピー</button>
+  <div class="counter"><b id="sel-count">30</b>/30 カット &middot; 合計 <b id="total-dur">90.0</b>秒</div>
+</div>
+
+<div class="preview">
+  <h3>タイムライン プレビュー</h3>
+  <div class="strip" id="strip"></div>
+</div>
+
+<div id="sections"></div>
+
+<pre class="export-area" id="export"></pre>
+
+<script>
+const SHOTS = [
+  {id:"01_water_drop",time:"0-3s",sec:"INTRO",dur:3,defDur:3},
+  {id:"02_dojo_dawn",time:"3-6s",sec:"INTRO",dur:3,defDur:3},
+  {id:"03_title",time:"6-8.4s",sec:"INTRO",dur:2.4,defDur:2.4},
+  {id:"04_nagare_bandage",time:"8.4-11.3s",sec:"VERSE1",dur:2.9,defDur:2.9},
+  {id:"05_nagare_tatami",time:"11.3-14.4s",sec:"VERSE1",dur:3.1,defDur:3.1},
+  {id:"06_flashback_child",time:"14.4-17.5s",sec:"VERSE1",dur:3.1,defDur:3.1},
+  {id:"07_master_back",time:"17.5-20s",sec:"VERSE1",dur:2.5,defDur:2.5},
+  {id:"08_earpiece",time:"20-23s",sec:"VERSE1",dur:3,defDur:3},
+  {id:"09_nagare_refuse",time:"23-26s",sec:"VERSE1",dur:3,defDur:3},
+  {id:"10_breathe",time:"26-28.3s",sec:"VERSE1",dur:2.3,defDur:2.3},
+  {id:"11_ai_screen",time:"28.3-31s",sec:"PRE-CHORUS",dur:2.7,defDur:2.7},
+  {id:"12_rio_stance",time:"31-33.6s",sec:"PRE-CHORUS",dur:2.6,defDur:2.6},
+  {id:"13_face_off",time:"33.6-36.4s",sec:"PRE-CHORUS",dur:2.8,defDur:2.8},
+  {id:"14_arena_wide",time:"36.4-38.4s",sec:"PRE-CHORUS",dur:2,defDur:2},
+  {id:"15_flow_activate",time:"38.4-40.1s",sec:"CHORUS",dur:1.7,defDur:1.7},
+  {id:"16_guard_pull",time:"40.1-41.5s",sec:"CHORUS",dur:1.4,defDur:1.4},
+  {id:"17_sweep",time:"41.5-43s",sec:"CHORUS",dur:1.5,defDur:1.5},
+  {id:"18_error_screens",time:"43-44.7s",sec:"CHORUS",dur:1.7,defDur:1.7},
+  {id:"19_mount",time:"44.7-47s",sec:"CHORUS",dur:2.3,defDur:2.3},
+  {id:"20_submission",time:"47-50s",sec:"CHORUS",dur:3,defDur:3},
+  {id:"21_stand_up",time:"50-52s",sec:"CHORUS",dur:2,defDur:2},
+  {id:"22_rin_spider",time:"52-55s",sec:"VERSE2",dur:3,defDur:3},
+  {id:"23_rin_walk",time:"55-58s",sec:"VERSE2",dur:3,defDur:3},
+  {id:"24_marcelo",time:"58-61s",sec:"VERSE2",dur:3,defDur:3},
+  {id:"25_training",time:"61-65s",sec:"VERSE2",dur:4,defDur:4},
+  {id:"26_all_fighters",time:"65-70s",sec:"CHORUS2",dur:5,defDur:5},
+  {id:"27_final_clash",time:"70-75s",sec:"CHORUS2",dur:5,defDur:5},
+  {id:"28_flow_ocean",time:"75-79s",sec:"CHORUS2",dur:4,defDur:4},
+  {id:"29_back_shot",time:"79-83s",sec:"CHORUS2",dur:4,defDur:4},
+  {id:"30_logo_final",time:"83-90s",sec:"OUTRO",dur:7.3,defDur:7.3},
+];
+
+// State
+const state = SHOTS.map(s => ({...s, selected: true}));
+
+const SECTIONS = {
+  "INTRO": {label:"INTRO", time:"0-8s", color:"#4a9eff"},
+  "VERSE1": {label:"VERSE 1 — 流の過去", time:"8-28s", color:"#ff9500"},
+  "PRE-CHORUS": {label:"PRE-CHORUS — 緊張", time:"28-38s", color:"#ff4466"},
+  "CHORUS": {label:"CHORUS — バトル", time:"38-52s", color:"#22cc88"},
+  "VERSE2": {label:"VERSE 2 — 仲間", time:"52-65s", color:"#a78bfa"},
+  "CHORUS2": {label:"CHORUS 2 — クライマックス", time:"65-83s", color:"#ff4466"},
+  "OUTRO": {label:"OUTRO", time:"83-90s", color:"#555"},
+};
+
+function render() {
+  const container = document.getElementById('sections');
+  let html = '';
+  let currentSec = '';
+  let order = 0;
+
+  state.forEach((s, i) => {
+    if (s.sec !== currentSec) {
+      currentSec = s.sec;
+      const sec = SECTIONS[s.sec];
+      html += `<div class="section-header" style="border-color:${sec.color}"><span style="color:${sec.color}">${sec.label}</span><span class="time">${sec.time}</span></div><div class="grid">`;
+    }
+    if (s.selected) order++;
+    html += `
+    <div class="card ${s.selected ? 'selected' : 'excluded'}" onclick="toggle(${i})" id="card-${i}">
+      <div class="check">${s.selected ? '✓' : '✕'}</div>
+      ${s.selected ? `<div class="order-badge">${order}</div>` : ''}
+      <img class="card-img" src="images/pv_shots/${s.id}.png" alt="${s.id}" loading="lazy">
+      <div class="card-body">
+        <span class="card-id">${s.id}</span>
+        <span class="card-time">${s.time}</span>
+        <span class="card-section">${s.sec}</span>
+        <div class="card-dur">
+          尺: <input type="number" step="0.1" min="0.5" max="15" value="${s.dur}" onchange="setDur(${i},this.value)" onclick="event.stopPropagation()"> 秒
+        </div>
+      </div>
+    </div>`;
+
+    // Close grid at section boundary
+    const next = state[i + 1];
+    if (!next || next.sec !== s.sec) html += `</div>`;
+  });
+
+  container.innerHTML = html;
+  updateCounter();
+  updateStrip();
+}
+
+function toggle(i) {
+  state[i].selected = !state[i].selected;
+  render();
+}
+
+function setDur(i, val) {
+  state[i].dur = parseFloat(val) || state[i].defDur;
+  updateCounter();
+  updateStrip();
+}
+
+function selectAll() { state.forEach(s => s.selected = true); render(); }
+function deselectAll() { state.forEach(s => s.selected = false); render(); }
+function resetDurations() { state.forEach(s => s.dur = s.defDur); render(); }
+
+function updateCounter() {
+  const sel = state.filter(s => s.selected);
+  document.getElementById('sel-count').textContent = sel.length;
+  document.getElementById('total-dur').textContent = sel.reduce((a, s) => a + s.dur, 0).toFixed(1);
+}
+
+function updateStrip() {
+  const strip = document.getElementById('strip');
+  const sel = state.filter(s => s.selected);
+  strip.innerHTML = sel.map((s, i) => `
+    <div class="strip-item">
+      <img src="images/pv_shots/${s.id}.png" alt="">
+      <span class="strip-num">${i + 1}</span>
+      <span class="strip-dur">${s.dur}s</span>
+    </div>
+  `).join('');
+}
+
+function exportFFmpeg() {
+  const sel = state.filter(s => s.selected);
+  const effects = [
+    "zoompan=z='min(zoom+0.001,1.08)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'",
+    "zoompan=z='1.08':x='if(lte(on,1),0,x+1)':y='ih/2-(ih/zoom/2)'",
+    "zoompan=z='min(zoom+0.0015,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'",
+    "zoompan=z='1.06':x='iw/2-(iw/zoom/2)':y='if(lte(on,1),0,y+0.5)'"
+  ];
+
+  let script = '#!/bin/bash\nset -e\nTMP="/tmp/flow_pv_selected"\nrm -rf "$TMP" && mkdir -p "$TMP"\n\n';
+  script += '# Selected cuts\n';
+
+  sel.forEach((s, i) => {
+    const idx = String(i).padStart(2, '0');
+    const eff = effects[i % 4];
+    const fadeOut = (s.dur - 0.3).toFixed(1);
+    script += `echo "[${i+1}/${sel.length}] ${s.id} (${s.dur}s)"\n`;
+    script += `ffmpeg -y -loop 1 -i "images/pv_shots/${s.id}.png" -vf "${eff}:d=${s.dur}*30:s=1920x1080:fps=30,fade=t=in:st=0:d=0.3,fade=t=out:st=${fadeOut}:d=0.3" -t ${s.dur} -c:v libx264 -pix_fmt yuv420p -preset fast -crf 20 "$TMP/clip_${idx}.mp4" 2>/dev/null\n\n`;
+  });
+
+  script += '# Concat list\n';
+  sel.forEach((_, i) => {
+    const idx = String(i).padStart(2, '0');
+    script += `echo "file '$TMP/clip_${idx}.mp4'" >> "$TMP/concat.txt"\n`;
+  });
+
+  script += `\necho "Concatenating..."\nffmpeg -y -f concat -safe 0 -i "$TMP/concat.txt" -i "music/op1.mp3" \\\n  -c:v libx264 -crf 18 -preset medium -c:a aac -b:a 192k \\\n  -shortest -movflags +faststart flow_pv_selected.mp4 2>/dev/null\n\necho "Done: flow_pv_selected.mp4"\nls -lh flow_pv_selected.mp4\n`;
+
+  const el = document.getElementById('export');
+  el.style.display = 'block';
+  el.textContent = script;
+  el.scrollIntoView({behavior: 'smooth'});
+}
+
+function copyCommand() {
+  const el = document.getElementById('export');
+  if (el.style.display === 'none') { exportFFmpeg(); }
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    alert('ffmpegスクリプトをコピーしました！\nターミナルで cd flow-anime && bash して貼り付けてください');
+  });
+}
+
+render();
+</script>
+</body>
+</html>

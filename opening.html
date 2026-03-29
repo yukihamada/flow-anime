@@ -135,7 +135,7 @@ canvas#edfx{position:absolute;inset:0;z-index:5;pointer-events:none}
       <button onclick="setOpLang('pt');startOP()" style="flex:1;min-width:0;padding:.7rem .5rem;border-radius:100px;border:1px solid rgba(34,204,136,.3);background:rgba(34,204,136,.08);color:rgba(34,204,136,.7);font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.05em;transition:all .2s;backdrop-filter:blur(8px);white-space:nowrap">Português</button>
     </div>
     <p style="margin-top:1rem;color:#555;font-size:.7rem;letter-spacing:.3em;animation:pulse 2s infinite">SELECT LANGUAGE & START</p>
-    <div class="credit-small">監修: 村田良蔵<br>制作: 濱田優貴</div>
+    <div class="credit-small">制作: 濱田優貴</div>
   </div>
   <div class="L" id="L0" style="background:#000;opacity:1"></div>
   <div class="L" id="L-ep1"><img src="images/scenes/scene_ep1_kaido.png"></div>
@@ -270,7 +270,7 @@ canvas#edfx{position:absolute;inset:0;z-index:5;pointer-events:none}
       </a>
     </div>
 
-    <div style="text-align:center;color:#333;font-size:.55rem;padding:2rem 0">監修: 村田良蔵 / 制作: 濱田優貴</div>
+    <div style="text-align:center;color:#333;font-size:.55rem;padding:2rem 0">制作: 濱田優貴</div>
   </div>
 </div>
 <div id="ed">
@@ -485,7 +485,7 @@ async function buildStory(){const b=document.getElementById('storyBody');for(let
 let edLang='ja';
 function setEdLang(l){edLang=l;var src=l==='en'?'music/ed_en.mp3':l==='pt'?'music/ed_pt.mp3':'music/ed_new.mp3';eda.querySelector('source').src=src;eda.load()}
 function startED(){if(window.flowTrack)flowTrack('ed_start');document.getElementById('story').classList.remove('on');document.getElementById('ed').classList.add('on');const ec=document.getElementById('edfx'),ex=ec.getContext('2d');rsz(ec);addEventListener('resize',()=>rsz(ec));let ep=[];function ea(){ex.clearRect(0,0,ec.width,ec.height);ep=ep.filter(p=>{p.dr(ex);return p.up()});requestAnimationFrame(ea)}ea();setInterval(()=>{if(!eda.paused)ep.push(new Pt('snow'))},120);
-const cr=document.getElementById('edCr');cr.innerHTML=`<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p class="big">FLOW</p><p>&nbsp;</p><p class="h">「もう一回」</p><p>Ending Theme</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">CAST</p><p>流 — 主人公</p><p>理央 — ライバル</p><p>ルシアーノ・サントス — 師匠</p><p>凛 — 同志</p><p>SAGE — AI</p><p>海堂陽一 — 消えた師匠</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">STAFF</p><p>監修 — 村田良蔵</p><p>制作 — 濱田優貴</p><p>制作協力 — Enabler DAO</p><p>&nbsp;</p><p>キャラクターデザイン — Gemini AI</p><p>音楽制作 — Suno AI</p><p>脚本・演出 — Claude</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">SPECIAL THANKS</p><p>Brazilian Jiu-Jitsu Community</p><p>All Martial Artists</p><p>&nbsp;</p><p>&nbsp;</p><p class="final">流れる水は、終わらない。</p><p>&nbsp;</p><p>&nbsp;</p><p class="tiny">Produced with Claude Code + Gemini + Suno — 2026</p>`;
+const cr=document.getElementById('edCr');cr.innerHTML=`<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p class="big">FLOW</p><p>&nbsp;</p><p class="h">「もう一回」</p><p>Ending Theme</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">CAST</p><p>流 — 主人公</p><p>理央 — ライバル</p><p>ルシアーノ・サントス — 師匠</p><p>凛 — 同志</p><p>SAGE — AI</p><p>海堂陽一 — 消えた師匠</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">STAFF</p><p>制作 — 濱田優貴</p><p>制作協力 — Enabler DAO</p><p>&nbsp;</p><p>キャラクターデザイン — Gemini AI</p><p>音楽制作 — Suno AI</p><p>脚本・演出 — Claude</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">SPECIAL THANKS</p><p>Brazilian Jiu-Jitsu Community</p><p>All Martial Artists</p><p>&nbsp;</p><p>&nbsp;</p><p class="final">流れる水は、終わらない。</p><p>&nbsp;</p><p>&nbsp;</p><p class="tiny">Produced with Claude Code + Gemini + Suno — 2026</p>`;
 let sy=innerHeight;function sc(){if(!eda.paused){sy-=.7;cr.style.transform=`translateY(${sy}px)`;requestAnimationFrame(sc)}}
 // ED lyrics (Whisper-synced)
 const ED_EN={
