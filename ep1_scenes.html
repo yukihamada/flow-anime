@@ -432,95 +432,32 @@
 </div>
 
 <script>
+// 話の順番通りに並べた全シーン
 const SCENES = [
-  {
-    id: "scene07_victor_armbar",
-    label: "シーン1: ヴィクトルの腕十字（作業的な勝利）",
-    patterns: [
-      { id: "", label: "A" }
-    ],
-    single: true
-  },
-  {
-    id: "scene01_sage_hud",
-    label: "シーン2: SAGEのHUD視点",
-    patterns: [
-      { id: "a", label: "パターン A" },
-      { id: "b", label: "パターン B" }
-    ]
-  },
-  {
-    id: "scene08_kaido_no_earpiece",
-    label: "シーン3: 海堂がイヤピースを外す",
-    patterns: [
-      { id: "", label: "A" }
-    ],
-    single: true
-  },
-  {
-    id: "scene09_sage_glitch",
-    label: "シーン4: SAGEグリッチ「PREDICTION: UNSTABLE」",
-    patterns: [
-      { id: "", label: "A" }
-    ],
-    single: true
-  },
-  {
-    id: "scene02_kaido_sweep",
-    label: "シーン5: 海堂のスイープ・水柱",
-    patterns: [
-      { id: "a", label: "パターン A" },
-      { id: "b", label: "パターン B" }
-    ]
-  },
-  {
-    id: "scene10_kaido_gone",
-    label: "シーン6: 翌日、海堂は消えた",
-    patterns: [
-      { id: "", label: "A" }
-    ],
-    single: true
-  },
-  {
-    id: "scene03_nagare_classroom",
-    label: "シーン7: 流の日常・教室",
-    patterns: [
-      { id: "a", label: "パターン A" },
-      { id: "b", label: "パターン B" }
-    ]
-  },
-  {
-    id: "scene11_left_hand",
-    label: "シーン8: 流の左手",
-    patterns: [
-      { id: "", label: "A" }
-    ],
-    single: true
-  },
-  {
-    id: "scene04_closed_dojo",
-    label: "シーン9: 閉鎖された道場",
-    patterns: [
-      { id: "a", label: "パターン A" },
-      { id: "b", label: "パターン B" }
-    ]
-  },
-  {
-    id: "scene05_flashback_child",
-    label: "シーン5: 幼少期回想",
-    patterns: [
-      { id: "a", label: "パターン A" },
-      { id: "b", label: "パターン B" }
-    ]
-  },
-  {
-    id: "scene06_night_resolve",
-    label: "シーン6: 夜の決意",
-    patterns: [
-      { id: "a", label: "パターン A" },
-      { id: "b", label: "パターン B" }
-    ]
-  }
+  // ── Aパート：SAGEの世界 ──
+  { id: "scene19_sage_arena_opening", label: "01 アリーナ冒頭 — SAGEの支配する世界", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene07_victor_armbar",      label: "02 ヴィクトルの腕十字 — 作業的な勝利", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene12_ceo_vip",            label: "03 SAGE CEO — VIPシート「99.8%」", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene01_sage_hud",           label: "04 SAGEのHUD視点", patterns: [{ id: "a", label: "A: ヴィクトル一人称" }, { id: "b", label: "B: アリーナ全景" }] },
+  { id: "scene08_kaido_no_earpiece",  label: "05 海堂がイヤピースを外す", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene09_sage_glitch",        label: "06 SAGEグリッチ「PREDICTION: UNSTABLE」", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene13_sweep_moment",       label: "07 海堂のスイープ — 水柱爆発の瞬間", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene14_crowd_silence",      label: "08 観客の静寂 — 4万人が息を飲む", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene02_kaido_sweep",        label: "09 畳に残る水墨画の残像", patterns: [{ id: "a", label: "A: 水柱アップ" }, { id: "b", label: "B: 残像＋幼い流" }] },
+  { id: "scene10_kaido_gone",         label: "10 翌日、海堂は消えた — 空の道場", single: true, patterns: [{ id: "", label: "" }] },
+  // ── Bパート：流の日常 ──
+  { id: "scene20_nagare_left_arm_school", label: "11 学校の流 — 左腕を見る同級生", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene03_nagare_classroom",   label: "12 教室でスマホを見る流", patterns: [{ id: "a", label: "A: 全体" }, { id: "b", label: "B: スマホ画面" }] },
+  { id: "scene16_nagare_walk_home",   label: "13 帰り道 — 道場のシャッターが見える", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene04_closed_dojo",        label: "14 閉鎖された道場の前に立つ流", patterns: [{ id: "a", label: "A: 後ろ姿" }, { id: "b", label: "B: 手を伸ばす" }] },
+  // ── 回想 ──
+  { id: "scene18_kaido_portrait",     label: "15 海堂陽一 — 失われた師のポートレート", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene15_kaido_humming",      label: "16 海堂の鼻歌 — 幸せそうに技を教える", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene05_flashback_child",    label: "17 幼少期回想 — 「もう一回」", patterns: [{ id: "a", label: "A: 撫でるシーン" }, { id: "b", label: "B: 夕暮れの道場" }] },
+  // ── 現在・夜 ──
+  { id: "scene11_left_hand",          label: "18 流の左手 — 動かない指", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene17_phone_zoom",         label: "19 夜、映像を拡大する流", single: true, patterns: [{ id: "", label: "" }] },
+  { id: "scene06_night_resolve",      label: "20 夜の決意 — 流の目", patterns: [{ id: "a", label: "A: 手と黒帯" }, { id: "b", label: "B: 目のアップ" }] },
 ];
 
 // State: sceneId -> chosen pattern id
