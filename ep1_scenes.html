@@ -409,7 +409,7 @@
   <div class="progress-bar">
     <div class="progress-fill" id="progressFill"></div>
   </div>
-  <div class="progress-label">選択済み: <span id="progressCount">0</span> / 6 シーン</div>
+  <div class="progress-label">選択済み: <span id="progressCount">0</span> / <span id="totalCount">0</span> シーン</div>
 </header>
 
 <main id="sceneContainer"></main>
@@ -434,32 +434,72 @@
 <script>
 const SCENES = [
   {
+    id: "scene07_victor_armbar",
+    label: "シーン1: ヴィクトルの腕十字（作業的な勝利）",
+    patterns: [
+      { id: "", label: "A" }
+    ],
+    single: true
+  },
+  {
     id: "scene01_sage_hud",
-    label: "シーン1: SAGEのHUD視点",
+    label: "シーン2: SAGEのHUD視点",
     patterns: [
       { id: "a", label: "パターン A" },
       { id: "b", label: "パターン B" }
     ]
+  },
+  {
+    id: "scene08_kaido_no_earpiece",
+    label: "シーン3: 海堂がイヤピースを外す",
+    patterns: [
+      { id: "", label: "A" }
+    ],
+    single: true
+  },
+  {
+    id: "scene09_sage_glitch",
+    label: "シーン4: SAGEグリッチ「PREDICTION: UNSTABLE」",
+    patterns: [
+      { id: "", label: "A" }
+    ],
+    single: true
   },
   {
     id: "scene02_kaido_sweep",
-    label: "シーン2: 海堂のスイープ・水柱",
+    label: "シーン5: 海堂のスイープ・水柱",
     patterns: [
       { id: "a", label: "パターン A" },
       { id: "b", label: "パターン B" }
     ]
+  },
+  {
+    id: "scene10_kaido_gone",
+    label: "シーン6: 翌日、海堂は消えた",
+    patterns: [
+      { id: "", label: "A" }
+    ],
+    single: true
   },
   {
     id: "scene03_nagare_classroom",
-    label: "シーン3: 流の日常・教室",
+    label: "シーン7: 流の日常・教室",
     patterns: [
       { id: "a", label: "パターン A" },
       { id: "b", label: "パターン B" }
     ]
   },
   {
+    id: "scene11_left_hand",
+    label: "シーン8: 流の左手",
+    patterns: [
+      { id: "", label: "A" }
+    ],
+    single: true
+  },
+  {
     id: "scene04_closed_dojo",
-    label: "シーン4: 閉鎖された道場",
+    label: "シーン9: 閉鎖された道場",
     patterns: [
       { id: "a", label: "パターン A" },
       { id: "b", label: "パターン B" }
@@ -505,8 +545,14 @@ function renderScenes() {
     container.appendChild(section);
 
     const grid = section.querySelector(`#grid-${scene.id}`);
+    // single-image scenes: auto-select
+    if (scene.single) {
+      selections[scene.id] = "";
+      updateProgress();
+    }
     scene.patterns.forEach(pat => {
-      const imgSrc = `images/ep1/${scene.id}_${pat.id}.png`;
+      const suffix = pat.id ? `_${pat.id}` : "";
+      const imgSrc = `images/ep1/${scene.id}${suffix}.png`;
       const card = document.createElement('div');
       card.className = 'pattern-card';
       card.dataset.scene = scene.id;
@@ -521,6 +567,7 @@ function renderScenes() {
         </div>
         <div class="selected-overlay"></div>
       `;
+      if (scene.single) card.classList.add('selected');
       card.addEventListener('click', () => selectPattern(scene.id, pat.id));
       grid.appendChild(card);
     });
@@ -597,6 +644,7 @@ document.getElementById('btnConfirm').addEventListener('click', () => {
 
 // Init
 renderScenes();
+document.getElementById('totalCount').textContent = SCENES.length;
 updateProgress();
 </script>
 </body>
