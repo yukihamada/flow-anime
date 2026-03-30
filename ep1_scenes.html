@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1話「残像」— シーン画像選択</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0a0a0f;
+    --surface:   #111118;
+    --card:      #16161f;
+    --border:    #2a2a3a;
+    --gold:      #c8a96e;
+    --gold-dim:  #8a7048;
+    --text:      #ddd8c8;
+    --muted:     #666070;
+    --selected:  #c8a96e;
+    --selected-bg: rgba(200,169,110,0.12);
+    --error-bg:  #1a1010;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 6rem;
+  }
+
+  /* Header */
+  header {
+    padding: 2.5rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #0d0d16 0%, var(--bg) 100%);
+  }
+  .header-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  header h1 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  header p {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    margin-top: 1.2rem;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .progress-label span {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* Main layout */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* Scene section */
+  .scene {
+    margin-bottom: 3.5rem;
+  }
+  .scene-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .scene-number {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .scene-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .scene-status {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .scene-status.chosen {
+    color: var(--gold);
+  }
+
+  /* Image grid */
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) {
+    .pattern-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Pattern card */
+  .pattern-card {
+    position: relative;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--card);
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .pattern-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(200,169,110,0.12);
+  }
+  .pattern-card.selected {
+    border-color: var(--selected);
+    background: var(--selected-bg);
+    box-shadow: 0 0 0 1px var(--selected), 0 8px 32px rgba(200,169,110,0.2);
+  }
+
+  /* Checkmark badge */
+  .check-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #0a0a0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .pattern-card.selected .check-badge {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Pattern label */
+  .pattern-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(10,10,15,0.75);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(200,169,110,0.3);
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    z-index: 5;
+  }
+  .pattern-card.selected .pattern-label {
+    background: rgba(200,169,110,0.2);
+    border-color: var(--gold);
+  }
+
+  /* Image container */
+  .img-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 */
+    background: var(--card);
+  }
+  .img-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .img-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--error-bg);
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align: center;
+    padding: 1rem;
+  }
+  .img-placeholder .placeholder-icon {
+    font-size: 2rem;
+    opacity: 0.4;
+  }
+
+  /* Selected overlay */
+  .selected-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(200,169,110,0.06);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .pattern-card.selected .selected-overlay { opacity: 1; }
+
+  /* Bottom CTA bar */
+  .cta-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 100;
+  }
+  .cta-counter {
+    font-size: 0.78rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .cta-counter strong {
+    color: var(--gold);
+  }
+  .cta-btn {
+    margin-left: auto;
+    background: var(--gold);
+    color: #0a0a0f;
+    border: none;
+    border-radius: 6px;
+    padding: 0.65rem 1.8rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .cta-btn:hover:not(:disabled) {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+  .cta-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* Summary modal */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .overlay.open {
+    display: flex;
+  }
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .summary-card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+  .summary-card .subtitle {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .summary-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.8rem;
+  }
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  .summary-item .s-label {
+    flex: 1;
+    color: var(--text);
+  }
+  .summary-item .s-choice {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .summary-item .s-check {
+    font-size: 1rem;
+  }
+  .summary-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+  .btn-close {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-close:hover {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+  .btn-confirm {
+    background: var(--gold);
+    color: #0a0a0f;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .btn-confirm:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">FLOW / Episode 1</div>
+  <h1>第1話「残像」— シーン画像選択</h1>
+  <p>各シーンのA・Bパターンから1枚を選択してください。クリックで選択、確定ボタンで結果を確認できます。</p>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-label">選択済み: <span id="progressCount">0</span> / 6 シーン</div>
+</header>
+
+<main id="sceneContainer"></main>
+
+<div class="cta-bar">
+  <div class="cta-counter">選択済み: <strong id="ctaCount">0</strong> / 6</div>
+  <button class="cta-btn" id="ctaBtn" disabled>選択を確定する</button>
+</div>
+
+<div class="overlay" id="summaryOverlay">
+  <div class="summary-card">
+    <h2>選択サマリー</h2>
+    <div class="subtitle">以下のパターンが選択されています</div>
+    <ul class="summary-list" id="summaryList"></ul>
+    <div class="summary-actions">
+      <button class="btn-close" id="btnClose">戻る</button>
+      <button class="btn-confirm" id="btnConfirm">確定する ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCENES = [
+  {
+    id: "scene01_sage_hud",
+    label: "シーン1: SAGEのHUD視点",
+    patterns: [
+      { id: "a", label: "パターン A" },
+      { id: "b", label: "パターン B" }
+    ]
+  },
+  {
+    id: "scene02_kaido_sweep",
+    label: "シーン2: 海堂のスイープ・水柱",
+    patterns: [
+      { id: "a", label: "パターン A" },
+      { id: "b", label: "パターン B" }
+    ]
+  },
+  {
+    id: "scene03_nagare_classroom",
+    label: "シーン3: 流の日常・教室",
+    patterns: [
+      { id: "a", label: "パターン A" },
+      { id: "b", label: "パターン B" }
+    ]
+  },
+  {
+    id: "scene04_closed_dojo",
+    label: "シーン4: 閉鎖された道場",
+    patterns: [
+      { id: "a", label: "パターン A" },
+      { id: "b", label: "パターン B" }
+    ]
+  },
+  {
+    id: "scene05_flashback_child",
+    label: "シーン5: 幼少期回想",
+    patterns: [
+      { id: "a", label: "パターン A" },
+      { id: "b", label: "パターン B" }
+    ]
+  },
+  {
+    id: "scene06_night_resolve",
+    label: "シーン6: 夜の決意",
+    patterns: [
+      { id: "a", label: "パターン A" },
+      { id: "b", label: "パターン B" }
+    ]
+  }
+];
+
+// State: sceneId -> chosen pattern id
+const selections = {};
+
+function renderScenes() {
+  const container = document.getElementById('sceneContainer');
+  SCENES.forEach((scene, idx) => {
+    const section = document.createElement('section');
+    section.className = 'scene';
+    section.id = `scene-${scene.id}`;
+
+    section.innerHTML = `
+      <div class="scene-header">
+        <span class="scene-number">Scene ${String(idx+1).padStart(2,'0')}</span>
+        <span class="scene-title">${scene.label}</span>
+        <span class="scene-status" id="status-${scene.id}">未選択</span>
+      </div>
+      <div class="pattern-grid" id="grid-${scene.id}"></div>
+    `;
+
+    container.appendChild(section);
+
+    const grid = section.querySelector(`#grid-${scene.id}`);
+    scene.patterns.forEach(pat => {
+      const imgSrc = `images/ep1/${scene.id}_${pat.id}.png`;
+      const card = document.createElement('div');
+      card.className = 'pattern-card';
+      card.dataset.scene = scene.id;
+      card.dataset.pattern = pat.id;
+      card.innerHTML = `
+        <div class="pattern-label">${pat.label}</div>
+        <div class="check-badge">✓</div>
+        <div class="img-wrap">
+          <img src="${imgSrc}" alt="${scene.label} ${pat.label}"
+               onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><div class=&quot;placeholder-icon&quot;>🎬</div><div>${scene.label}<br>${pat.label}</div><div style=&quot;font-size:0.65rem;margin-top:0.3rem&quot;>画像未生成</div></div>'"
+          >
+        </div>
+        <div class="selected-overlay"></div>
+      `;
+      card.addEventListener('click', () => selectPattern(scene.id, pat.id));
+      grid.appendChild(card);
+    });
+  });
+}
+
+function selectPattern(sceneId, patternId) {
+  selections[sceneId] = patternId;
+
+  // Update card states in this scene's grid
+  document.querySelectorAll(`.pattern-card[data-scene="${sceneId}"]`).forEach(card => {
+    card.classList.toggle('selected', card.dataset.pattern === patternId);
+  });
+
+  // Update scene status label
+  const statusEl = document.getElementById(`status-${sceneId}`);
+  if (statusEl) {
+    statusEl.textContent = patternId === 'a' ? 'パターン A 選択済み' : 'パターン B 選択済み';
+    statusEl.classList.add('chosen');
+  }
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(selections).length;
+  document.getElementById('progressCount').textContent = count;
+  document.getElementById('ctaCount').textContent = count;
+  document.getElementById('progressFill').style.width = `${(count / SCENES.length) * 100}%`;
+  document.getElementById('ctaBtn').disabled = count < SCENES.length;
+}
+
+function buildSummary() {
+  const list = document.getElementById('summaryList');
+  list.innerHTML = '';
+  SCENES.forEach(scene => {
+    const chosen = selections[scene.id];
+    const li = document.createElement('li');
+    li.className = 'summary-item';
+    const choiceLabel = chosen === 'a' ? 'パターン A' : chosen === 'b' ? 'パターン B' : '未選択';
+    li.innerHTML = `
+      <span class="s-label">${scene.label}</span>
+      <span class="s-choice">${choiceLabel}</span>
+      <span class="s-check">${chosen ? '✓' : '—'}</span>
+    `;
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('ctaBtn').addEventListener('click', () => {
+  buildSummary();
+  document.getElementById('summaryOverlay').classList.add('open');
+});
+
+document.getElementById('btnClose').addEventListener('click', () => {
+  document.getElementById('summaryOverlay').classList.remove('open');
+});
+
+document.getElementById('summaryOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('summaryOverlay')) {
+    document.getElementById('summaryOverlay').classList.remove('open');
+  }
+});
+
+document.getElementById('btnConfirm').addEventListener('click', () => {
+  const lines = SCENES.map(scene => {
+    const chosen = selections[scene.id];
+    const label = chosen === 'a' ? 'パターンA' : chosen === 'b' ? 'パターンB' : '未選択';
+    return `${scene.label}: ${label} ✓`;
+  });
+  alert('確定しました!\n\n' + lines.join('\n'));
+  document.getElementById('summaryOverlay').classList.remove('open');
+});
+
+// Init
+renderScenes();
+updateProgress();
+</script>
+</body>
+</html>
