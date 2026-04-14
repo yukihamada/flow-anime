@@ -354,6 +354,35 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
 
 /* ── FLOW Enhancement Pack ── */
 
+/* SAGE panel scan-line + blinking badge */
+.sage-scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(68,221,255,.35), transparent);
+  animation: scanDown 3s linear infinite;
+  top: -2px;
+}
+@keyframes scanDown {
+  0%   { top: -2px; opacity: 0 }
+  5%   { opacity: 1 }
+  95%  { opacity: 1 }
+  100% { top: 100%; opacity: 0 }
+}
+.system-active-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 100px;
+  background: rgba(255,68,68,.12); border: 1px solid rgba(255,68,68,.3);
+  font-size: .58rem; font-weight: 700; letter-spacing: .18em; color: #ff4466;
+  text-transform: uppercase;
+}
+.blink-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #ff4466; flex-shrink: 0;
+  animation: blinkRed 1s step-end infinite;
+}
+@keyframes blinkRed { 0%,100%{opacity:1} 50%{opacity:0} }
+
 /* Cinematic scan lines on hero */
 .hero::after{content:'';position:absolute;inset:0;
   background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.022) 3px,rgba(0,0,0,.022) 4px);
@@ -546,11 +575,34 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto">
 
-    <div style="background:linear-gradient(135deg,rgba(68,221,255,.04),rgba(8,8,13,.8));border:1px solid rgba(68,221,255,.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s" onmouseover="this.style.borderColor='rgba(68,221,255,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(68,221,255,.15)';this.style.transform=''">
+    <div id="sagePanel" style="background:linear-gradient(135deg,rgba(68,221,255,.04),rgba(8,8,13,.8));border:1px solid rgba(68,221,255,.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s" onmouseover="this.style.borderColor='rgba(68,221,255,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(68,221,255,.15)';this.style.transform=''">
+      <!-- Scan-line overlay -->
+      <div style="position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;border-radius:20px">
+        <div class="sage-scanline"></div>
+      </div>
       <div style="position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at 100% 0%,rgba(68,221,255,.08),transparent)"></div>
-      <div style="font-size:2rem;margin-bottom:1rem">🤖</div>
-      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#44ddff;letter-spacing:.1em;margin-bottom:.8rem">AI支配</div>
-      <p style="font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.9">SAGE社が開発した予測AI「MARS」は、あらゆる格闘技の試合を99.8%の精度で解析する。選手たちはイヤピースからリアルタイムで最適解を受け取り、試合は「確認作業」となった。スポーツから<em style="color:rgba(255,255,255,.75)">不確実性</em>が消えた世界。</p>
+      <div style="position:relative;z-index:2">
+        <div style="font-size:2rem;margin-bottom:.8rem">🤖</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:.8rem;flex-wrap:wrap">
+          <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#44ddff;letter-spacing:.1em">AI支配</div>
+          <div class="system-active-badge">
+            <span class="blink-dot"></span>
+            SYSTEM ACTIVE
+          </div>
+        </div>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.9;margin-bottom:1.2rem">SAGE社が開発した予測AI「MARS」は、あらゆる格闘技の試合を99.8%の精度で解析する。選手たちはイヤピースからリアルタイムで最適解を受け取り、試合は「確認作業」となった。スポーツから<em style="color:rgba(255,255,255,.75)">不確実性</em>が消えた世界。</p>
+        <!-- SAGE THREAT LEVEL bar -->
+        <div style="background:rgba(0,0,0,.4);border:1px solid rgba(68,221,255,.15);border-radius:10px;padding:12px 14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:.62rem;color:#44ddff;letter-spacing:.25em;font-weight:700">SAGE THREAT LEVEL</span>
+            <span id="sageThreatPct" style="font-family:'Dela Gothic One',sans-serif;font-size:.9rem;color:#44ddff">0%</span>
+          </div>
+          <div style="height:6px;background:rgba(68,221,255,.08);border-radius:3px;overflow:hidden">
+            <div id="sageThreatBar" style="height:100%;width:0%;background:linear-gradient(90deg,#22cc88,#44ddff,#ff4466);border-radius:3px;transition:width 2s cubic-bezier(.16,1,.3,1)"></div>
+          </div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.2);margin-top:6px;letter-spacing:.05em">MARS v4.2 — 全格闘技データベース解析中</div>
+        </div>
+      </div>
     </div>
 
     <div style="background:linear-gradient(135deg,rgba(204,51,68,.04),rgba(8,8,13,.8));border:1px solid rgba(204,51,68,.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s" onmouseover="this.style.borderColor='rgba(204,51,68,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(204,51,68,.15)';this.style.transform=''">
@@ -866,6 +918,152 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
     </div>
   </div>
 </section>
+
+<!-- ===== ORIGINAL SOUNDTRACK SECTION ===== -->
+<section id="soundtrack" class="reveal" style="padding:5rem 2rem;max-width:1100px;margin:0 auto">
+  <div class="stitle">ORIGINAL SOUNDTRACK</div>
+  <div class="ssub">AIの時代に生まれた音楽 ── 流の旅を彩る3つの楽曲</div>
+
+  <!-- Featured track -->
+  <div style="background:linear-gradient(135deg,rgba(74,158,255,.06),rgba(124,92,255,.06));border:1px solid rgba(74,158,255,.2);border-radius:24px;padding:2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;pointer-events:none">
+      <!-- Waveform SVG -->
+      <svg style="position:absolute;bottom:0;left:0;right:0;width:100%;height:80px;opacity:.08" viewBox="0 0 1200 80" preserveAspectRatio="none">
+        <path d="M0,40 Q50,10 100,40 Q150,70 200,40 Q250,10 300,40 Q350,70 400,35 Q450,5 500,40 Q550,75 600,38 Q650,8 700,40 Q750,72 800,38 Q850,6 900,40 Q950,74 1000,38 Q1050,5 1100,40 Q1150,72 1200,40 L1200,80 L0,80 Z" fill="url(#waveGrad)"/>
+        <defs><linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4a9eff"/><stop offset="50%" stop-color="#7c5cff"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>
+      </svg>
+    </div>
+    <div style="position:relative;z-index:2;display:flex;align-items:center;gap:2rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:250px">
+        <div style="font-size:.65rem;color:#4a9eff;letter-spacing:.4em;text-transform:uppercase;margin-bottom:.5rem;font-weight:700">OPENING THEME — FEATURED</div>
+        <div style="font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.3rem,3vw,1.9rem);letter-spacing:.08em;margin-bottom:.4rem">0.2%の証明</div>
+        <div style="font-size:.82rem;color:#888;margin-bottom:1.2rem">作詞・作曲: FLOW Project × AI &nbsp;·&nbsp; 3分47秒</div>
+        <!-- Fake audio player -->
+        <div id="mainPlayer" style="background:rgba(0,0,0,.4);border:1px solid rgba(74,158,255,.2);border-radius:100px;padding:12px 20px;display:flex;align-items:center;gap:14px;max-width:460px;cursor:pointer" onclick="togglePlay('mainPlayer',this)">
+          <div class="play-icon" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4a9eff,#7c5cff);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:6px">
+              <div class="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#4a9eff,#00d4ff);border-radius:2px;transition:width .3s"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#555"><span class="time-cur">0:00</span><span>3:47</span></div>
+          </div>
+          <div style="font-size:.7rem;color:#4a9eff;letter-spacing:.05em">▶ PLAY</div>
+        </div>
+      </div>
+      <!-- Waveform bars animation -->
+      <div class="waveform-bars" style="display:flex;align-items:center;gap:3px;height:60px;flex-shrink:0">
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#00d4ff,#4a9eff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#00d4ff,#4a9eff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#7c5cff,#00d4ff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#7c5cff,#00d4ff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#00d4ff,#4a9eff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#00d4ff,#4a9eff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#7c5cff,#ff6b9d)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#7c5cff,#ff6b9d)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+        <div class="wb" style="width:4px;border-radius:2px;background:linear-gradient(180deg,#4a9eff,#7c5cff)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Track list -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px">
+
+    <!-- Track 1 (already featured above, mini version) -->
+    <div style="background:var(--s1);border:1px solid #1a1a2a;border-radius:16px;padding:20px;display:flex;gap:14px;align-items:center;transition:all .25s;cursor:pointer"
+         onmouseover="this.style.borderColor='rgba(74,158,255,.35)';this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.borderColor='#1a1a2a';this.style.transform=''"
+         onclick="togglePlay('track1',this)">
+      <div id="track1" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(74,158,255,.2),rgba(124,92,255,.2));display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#4a9eff"><polygon points="8,5 19,12 8,19"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.6rem;color:#4a9eff;letter-spacing:.3em;font-weight:700;margin-bottom:3px">OPENING</div>
+        <div style="font-weight:800;font-size:.95rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">0.2%の証明</div>
+        <div style="font-size:.72rem;color:#555;margin-top:2px">3:47 · Suno AI</div>
+        <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px;margin-top:8px;overflow:hidden">
+          <div class="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#4a9eff,#00d4ff);border-radius:2px;transition:width .3s"></div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:#444">EP 1</div>
+    </div>
+
+    <!-- Track 2 -->
+    <div style="background:var(--s1);border:1px solid #1a1a2a;border-radius:16px;padding:20px;display:flex;gap:14px;align-items:center;transition:all .25s;cursor:pointer"
+         onmouseover="this.style.borderColor='rgba(124,92,255,.35)';this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.borderColor='#1a1a2a';this.style.transform=''"
+         onclick="togglePlay('track2',this)">
+      <div id="track2" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,92,255,.2),rgba(0,212,255,.2));display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#7c5cff"><polygon points="8,5 19,12 8,19"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.6rem;color:#7c5cff;letter-spacing:.3em;font-weight:700;margin-bottom:3px">BGM</div>
+        <div style="font-weight:800;font-size:.95rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">フロウ -Flow State-</div>
+        <div style="font-size:.72rem;color:#555;margin-top:2px">4:12 · Suno AI</div>
+        <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px;margin-top:8px;overflow:hidden">
+          <div class="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#7c5cff,#00d4ff);border-radius:2px;transition:width .3s"></div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:#444">EP 10</div>
+    </div>
+
+    <!-- Track 3 -->
+    <div style="background:var(--s1);border:1px solid #1a1a2a;border-radius:16px;padding:20px;display:flex;gap:14px;align-items:center;transition:all .25s;cursor:pointer"
+         onmouseover="this.style.borderColor='rgba(0,212,255,.35)';this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.borderColor='#1a1a2a';this.style.transform=''"
+         onclick="togglePlay('track3',this)">
+      <div id="track3" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(74,158,255,.2));display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#00d4ff"><polygon points="8,5 19,12 8,19"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.6rem;color:#00d4ff;letter-spacing:.3em;font-weight:700;margin-bottom:3px">ENDING</div>
+        <div style="font-weight:800;font-size:.95rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">海 -Umi-</div>
+        <div style="font-size:.72rem;color:#555;margin-top:2px">3:58 · Suno AI</div>
+        <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px;margin-top:8px;overflow:hidden">
+          <div class="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#00d4ff,#4a9eff);border-radius:2px;transition:width .3s"></div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:#444">EP 12</div>
+    </div>
+
+  </div>
+  <div class="divider" style="margin-top:3rem"></div>
+</section>
+
+<style>
+/* Waveform bars animation */
+.waveform-bars .wb {
+  animation: wbPulse 1.2s ease infinite;
+  transform-origin: bottom center;
+}
+.waveform-bars .wb:nth-child(1)  { animation-delay:.0s;  height:20px }
+.waveform-bars .wb:nth-child(2)  { animation-delay:.1s;  height:35px }
+.waveform-bars .wb:nth-child(3)  { animation-delay:.2s;  height:50px }
+.waveform-bars .wb:nth-child(4)  { animation-delay:.15s; height:40px }
+.waveform-bars .wb:nth-child(5)  { animation-delay:.25s; height:55px }
+.waveform-bars .wb:nth-child(6)  { animation-delay:.05s; height:45px }
+.waveform-bars .wb:nth-child(7)  { animation-delay:.3s;  height:30px }
+.waveform-bars .wb:nth-child(8)  { animation-delay:.12s; height:58px }
+.waveform-bars .wb:nth-child(9)  { animation-delay:.22s; height:42px }
+.waveform-bars .wb:nth-child(10) { animation-delay:.08s; height:60px }
+.waveform-bars .wb:nth-child(11) { animation-delay:.18s; height:35px }
+.waveform-bars .wb:nth-child(12) { animation-delay:.28s; height:50px }
+.waveform-bars .wb:nth-child(13) { animation-delay:.06s; height:25px }
+.waveform-bars .wb:nth-child(14) { animation-delay:.16s; height:45px }
+.waveform-bars .wb:nth-child(15) { animation-delay:.26s; height:18px }
+@keyframes wbPulse {
+  0%,100% { transform: scaleY(1); opacity:.7 }
+  50% { transform: scaleY(.35); opacity:.4 }
+}
+.waveform-bars.paused .wb { animation-play-state: paused }
+</style>
 
 <!-- FOOTER -->
 <footer>
@@ -1357,6 +1555,74 @@ var staggerObserver = new IntersectionObserver(function(entries) {
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.chars-grid,.flow-grid,.scenes-grid,.kv-grid,.ep-timeline').forEach(function(el) { staggerObserver.observe(el); });
+
+// ======================== SAGE Threat Level ========================
+(function() {
+  var triggered = false;
+  var panel = document.getElementById('sagePanel');
+  if (!panel) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && !triggered) {
+        triggered = true;
+        // Count up to 99.8%
+        var bar = document.getElementById('sageThreatBar');
+        var pct = document.getElementById('sageThreatPct');
+        if (!bar || !pct) return;
+        // Start animation after short delay
+        setTimeout(function() {
+          bar.style.width = '99.8%';
+          // Number counter
+          var start = 0;
+          var end = 99.8;
+          var dur = 2000;
+          var step = 16;
+          var inc = (end * step) / dur;
+          var cur = 0;
+          var t = setInterval(function() {
+            cur = Math.min(cur + inc, end);
+            pct.textContent = cur.toFixed(1) + '%';
+            if (cur >= end) { pct.textContent = '99.8%'; clearInterval(t); }
+          }, step);
+        }, 300);
+        obs.unobserve(panel);
+      }
+    });
+  }, { threshold: 0.4 });
+  obs.observe(panel);
+})();
+
+// ======================== Fake Audio Player ========================
+var activeTrack = null;
+var playInterval = null;
+function togglePlay(id, container) {
+  var bars = document.querySelector('.waveform-bars');
+  if (activeTrack === id) {
+    // pause
+    activeTrack = null;
+    clearInterval(playInterval);
+    if (bars) bars.classList.add('paused');
+    container.querySelector('.play-icon, #'+id)?.querySelector('svg polygon,svg path') && void 0;
+    return;
+  }
+  activeTrack = id;
+  if (bars) bars.classList.remove('paused');
+  // animate progress bar
+  var progBars = container.querySelectorAll('.progress-bar');
+  var progress = 0;
+  clearInterval(playInterval);
+  playInterval = setInterval(function(){
+    progress += 0.15;
+    if (progress > 100) { progress = 0; }
+    progBars.forEach(function(pb){ pb.style.width = progress + '%'; });
+    // update time display
+    var timeEl = container.querySelector('.time-cur');
+    if (timeEl) {
+      var secs = Math.floor((progress / 100) * 227);
+      timeEl.textContent = Math.floor(secs/60) + ':' + String(secs%60).padStart(2,'0');
+    }
+  }, 200);
+}
 
 // ======================== Init ========================
 setLang(LANG);

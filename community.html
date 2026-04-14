@@ -171,6 +171,82 @@ section{max-width:1100px;margin:0 auto;padding:70px 24px}
 .footnote{text-align:center;padding:48px 24px;color:#333;font-size:.8rem;line-height:1.8}
 .footnote a{color:#444}
 
+/* ===== NEW SECTIONS ===== */
+
+/* Why Join */
+.why-join-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.wj-card{background:linear-gradient(135deg,rgba(74,158,255,.06),rgba(124,92,255,.04));
+  border:1px solid rgba(74,158,255,.18);border-radius:20px;padding:32px;position:relative;overflow:hidden;transition:all .3s}
+.wj-card:hover{border-color:rgba(74,158,255,.45);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.wj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.wj-card:nth-child(1)::before{background:linear-gradient(90deg,#4a9eff,#00d4ff)}
+.wj-card:nth-child(2)::before{background:linear-gradient(90deg,#22cc88,#00bbaa)}
+.wj-card:nth-child(3)::before{background:linear-gradient(90deg,#7c5cff,#ff6b9d)}
+.wj-num{font-family:'Dela Gothic One',sans-serif;font-size:3rem;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(74,158,255,.12));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:.5rem}
+.wj-title{font-weight:900;font-size:1.15rem;color:#fff;margin-bottom:10px}
+.wj-body{font-size:.88rem;color:#888;line-height:1.75}
+.wj-tag{display:inline-block;margin-top:14px;padding:4px 12px;border-radius:100px;font-size:.65rem;font-weight:700;letter-spacing:.08em}
+.tag-vote{background:rgba(74,158,255,.12);color:#4a9eff;border:1px solid rgba(74,158,255,.25)}
+.tag-fund{background:rgba(34,204,136,.12);color:#22cc88;border:1px solid rgba(34,204,136,.25)}
+.tag-create{background:rgba(124,92,255,.12);color:#7c5cff;border:1px solid rgba(124,92,255,.25)}
+
+/* Vote UI */
+.vote-container{background:var(--s1);border:1px solid rgba(74,158,255,.15);border-radius:20px;padding:36px;max-width:780px;margin:0 auto}
+.vote-question{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.2rem,3vw,1.7rem);letter-spacing:.06em;margin-bottom:8px}
+.vote-ep{font-size:.72rem;color:var(--ac2);letter-spacing:.3em;text-transform:uppercase;margin-bottom:28px}
+.vote-options{display:flex;flex-direction:column;gap:14px}
+.vote-option{position:relative;background:#0d0d18;border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.vote-option:hover{border-color:rgba(74,158,255,.3)}
+.vote-option.selected{border-color:var(--ac);box-shadow:0 0 20px rgba(74,158,255,.15)}
+.vo-bar{position:absolute;inset:0;border-radius:12px;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+.vo-inner{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
+.vo-left{display:flex;align-items:center;gap:14px}
+.vo-icon{font-size:1.5rem}
+.vo-name{font-weight:800;font-size:.95rem;color:#fff}
+.vo-desc{font-size:.75rem;color:#999;margin-top:2px}
+.vo-pct{font-family:'Dela Gothic One',sans-serif;font-size:1.3rem;color:#fff;flex-shrink:0}
+.vote-total{text-align:right;font-size:.72rem;color:#444;margin-top:14px;letter-spacing:.05em}
+.vote-disclaimer{font-size:.7rem;color:#333;text-align:center;margin-top:10px}
+
+/* Creator Cards */
+.creator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.creator-card{background:var(--s1);border:1px solid #1a1a2a;border-radius:16px;padding:24px;
+  transition:all .25s;position:relative;overflow:hidden}
+.creator-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.creator-card:hover{border-color:rgba(74,158,255,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.creator-card:hover::after{opacity:1}
+.creator-card:nth-child(1)::after{background:linear-gradient(90deg,#4a9eff,#00d4ff)}
+.creator-card:nth-child(2)::after{background:linear-gradient(90deg,#ff6b9d,#ff4488)}
+.creator-card:nth-child(3)::after{background:linear-gradient(90deg,#ffd700,#ffaa33)}
+.creator-card:nth-child(4)::after{background:linear-gradient(90deg,#22cc88,#00bbaa)}
+.cc-icon{font-size:2.2rem;margin-bottom:14px}
+.cc-role{font-size:.6rem;letter-spacing:.35em;color:var(--dim);text-transform:uppercase;margin-bottom:6px;font-weight:700}
+.cc-title{font-weight:900;font-size:1.05rem;color:#fff;margin-bottom:8px}
+.cc-body{font-size:.84rem;color:#888;line-height:1.65;margin-bottom:18px}
+.cc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.cc-tag{padding:3px 9px;border-radius:100px;font-size:.65rem;font-weight:700;background:rgba(255,255,255,.05);color:#777;border:1px solid rgba(255,255,255,.06)}
+.cc-apply{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:100px;
+  border:1px solid rgba(74,158,255,.3);background:transparent;color:var(--ac);font-size:.8rem;
+  font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none}
+.cc-apply:hover{background:rgba(74,158,255,.08);border-color:var(--ac2);color:var(--ac2)}
+
+/* Testimonials */
+.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.testimonial-card{background:var(--s1);border:1px solid #1a1a2a;border-radius:16px;padding:28px;
+  position:relative;transition:all .25s}
+.testimonial-card:hover{border-color:rgba(74,158,255,.2);transform:translateY(-3px)}
+.testi-quote{font-size:.95rem;color:#ccc;line-height:1.8;margin-bottom:18px;position:relative;padding-left:20px}
+.testi-quote::before{content:'"';position:absolute;left:0;top:-4px;font-size:2rem;color:var(--ac);font-family:'Dela Gothic One',sans-serif;line-height:1}
+.testi-person{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;font-weight:900;border:2px solid rgba(255,255,255,.06)}
+.testi-name{font-weight:800;font-size:.88rem;color:#fff}
+.testi-role{font-size:.72rem;color:var(--dim);margin-top:2px}
+.testi-belt{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:100px;font-size:.6rem;font-weight:700;vertical-align:middle}
+
 /* Task board */
 .task-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
 @media(max-width:700px){.task-board{grid-template-columns:1fr}}
@@ -595,6 +671,228 @@ section{max-width:1100px;margin:0 auto;padding:70px 24px}
 
 <div class="divider"></div>
 
+<!-- ===== WHY JOIN ===== -->
+<section class="reveal">
+  <div class="sec-label">Why Participate</div>
+  <h2 class="sec-title">参加する理由</h2>
+  <p class="sec-sub">FLOWコミュニティに参加することで得られる、3つの特別な体験。</p>
+  <div class="why-join-grid">
+    <div class="wj-card">
+      <div class="wj-num">01</div>
+      <div class="wj-title">物語投票権</div>
+      <div class="wj-body">サポーターだけが参加できる「ストーリー分岐投票」。Season 2のラスボス、理央の結末、流が使う技——あなたの1票が物語の行方を変える。誰も同じ結末に誘導しない。本当の民主的な物語創作。</div>
+      <span class="wj-tag tag-vote">STORY VOTE</span>
+    </div>
+    <div class="wj-card">
+      <div class="wj-num">02</div>
+      <div class="wj-title">クラファン早期アクセス</div>
+      <div class="wj-body">CAMPFIREクラウドファンディング開始の72時間前に、事前登録者だけへ特別通知。プラチナリターン（命名権・収益分配協議枠）は先着順のため、早期通知が決定的なアドバンテージになる。</div>
+      <span class="wj-tag tag-fund">EARLY ACCESS</span>
+    </div>
+    <div class="wj-card">
+      <div class="wj-num">03</div>
+      <div class="wj-title">クリエイター参加</div>
+      <div class="wj-body">BGM、ファンアート、脚本アイデア、BJJ技術監修——あなたのスキルがFLOWの制作に直接組み込まれる。採用作品には公式クレジット掲載。アニメIPの「共同創作者」として名前が残る。</div>
+      <span class="wj-tag tag-create">CO-CREATOR</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== STORY VOTE ===== -->
+<section class="reveal">
+  <div class="sec-label">Community Vote — Week 12</div>
+  <h2 class="sec-title">今週の投票</h2>
+  <p class="sec-sub">ep9「波」——地区大会決勝で流が使う技は何か？ あなたの投票が次のシーン設計に反映される。</p>
+
+  <div class="vote-container">
+    <div class="vote-ep">SEASON 1 / EPISODE 9 — 波</div>
+    <div class="vote-question">流が地区大会決勝で使う技は？</div>
+    <div style="font-size:.82rem;color:#555;margin-bottom:28px">投票期間: 2026年4月14日〜4月21日 &nbsp;·&nbsp; 集計後、脚本に反映</div>
+
+    <div class="vote-options" id="voteOptions">
+
+      <div class="vote-option" onclick="castVote(this, 0)" data-votes="847">
+        <div class="vo-bar" style="width:47%;background:linear-gradient(90deg,rgba(74,158,255,.15),rgba(74,158,255,.05))"></div>
+        <div class="vo-inner">
+          <div class="vo-left">
+            <div class="vo-icon">🌊</div>
+            <div>
+              <div class="vo-name">ベリンボロ（360°回転テイクダウン）</div>
+              <div class="vo-desc">超高速の回転系技。AIが一番読めない「視覚的に異常な動き」</div>
+            </div>
+          </div>
+          <div class="vo-pct">47%</div>
+        </div>
+      </div>
+
+      <div class="vote-option" onclick="castVote(this, 1)" data-votes="612">
+        <div class="vo-bar" style="width:34%;background:linear-gradient(90deg,rgba(124,92,255,.15),rgba(124,92,255,.05))"></div>
+        <div class="vo-inner">
+          <div class="vo-left">
+            <div class="vo-icon">🕷</div>
+            <div>
+              <div class="vo-name">スパイダーガード → 三角絞め</div>
+              <div class="vo-desc">凛直伝の足技。左腕の不全を完全に活かした「感覚柔術の結晶」</div>
+            </div>
+          </div>
+          <div class="vo-pct">34%</div>
+        </div>
+      </div>
+
+      <div class="vote-option" onclick="castVote(this, 2)" data-votes="344">
+        <div class="vo-bar" style="width:19%;background:linear-gradient(90deg,rgba(255,107,157,.12),rgba(255,107,157,.04))"></div>
+        <div class="vo-inner">
+          <div class="vo-left">
+            <div class="vo-icon">💧</div>
+            <div>
+              <div class="vo-name">ラプラス → 腕十字（フロウ初発動）</div>
+              <div class="vo-desc">流の体が「水」になる瞬間。AIが「ERR」を初めて表示する伝説的シーン</div>
+            </div>
+          </div>
+          <div class="vo-pct">19%</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vote-total">総投票数: <strong id="totalVoteCount" style="color:var(--ac2)">1,803</strong> 票 &nbsp;·&nbsp; 残り <strong style="color:#ffd700">5日</strong></div>
+    <div class="vote-disclaimer">投票は1デバイス1回。結果は脚本制作の参考データとして使用します。</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== CREATOR RECRUITMENT ===== -->
+<section class="reveal">
+  <div class="sec-label">Open Positions</div>
+  <h2 class="sec-title">クリエイター募集</h2>
+  <p class="sec-sub">FLOWはプロとアマ、どちらも歓迎。あなたのスキルが物語を形にする。採用作品は公式クレジット掲載。</p>
+
+  <div class="creator-grid">
+    <div class="creator-card reveal">
+      <div class="cc-icon">🎨</div>
+      <div class="cc-role">Visual Arts</div>
+      <div class="cc-title">アニメーター / イラストレーター</div>
+      <div class="cc-body">戦闘シーンのキーフレーム、キャラクター表情集、背景美術。AIで生成したコンテを元にした仕上げも大歓迎。柔術の動きを知っていればさらに理想。</div>
+      <div class="cc-tags">
+        <span class="cc-tag">Clip Studio</span>
+        <span class="cc-tag">After Effects</span>
+        <span class="cc-tag">Live 2D</span>
+      </div>
+      <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="cc-apply">応募する →</a>
+    </div>
+
+    <div class="creator-card reveal">
+      <div class="cc-icon">🎵</div>
+      <div class="cc-role">Sound & Music</div>
+      <div class="cc-title">作曲家 / サウンドデザイナー</div>
+      <div class="cc-body">OP「0.2%の証明」スタイルの電子音楽、BGM楽曲、試合シーンのSFXデザイン。DAWで制作できれば応募OK。採用楽曲はフル版にクレジット記載。</div>
+      <div class="cc-tags">
+        <span class="cc-tag">FL Studio</span>
+        <span class="cc-tag">Logic Pro</span>
+        <span class="cc-tag">Ableton</span>
+      </div>
+      <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="cc-apply">応募する →</a>
+    </div>
+
+    <div class="creator-card reveal">
+      <div class="cc-icon">🎙</div>
+      <div class="cc-role">Voice Acting</div>
+      <div class="cc-title">声優 / ナレーター</div>
+      <div class="cc-body">試作PV用の流・凛・ルシアーノの声。プロ経験不問、表現力重視。宅録環境があればOK。将来のフル版アニメでのキャスティングも検討します。</div>
+      <div class="cc-tags">
+        <span class="cc-tag">宅録可</span>
+        <span class="cc-tag">感情表現</span>
+        <span class="cc-tag">日本語ネイティブ</span>
+      </div>
+      <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="cc-apply">応募する →</a>
+    </div>
+
+    <div class="creator-card reveal">
+      <div class="cc-icon">🥋</div>
+      <div class="cc-role">Technical Advisor</div>
+      <div class="cc-title">BJJ技術監修</div>
+      <div class="cc-body">試合シーンの技名・グリップ・ポジションの正確性を監修。青帯以上推奨。柔術を知らない人に「あれは本物だ」と思わせる描写に欠かせない役割。リモートOK。</div>
+      <div class="cc-tags">
+        <span class="cc-tag">BJJ青帯以上</span>
+        <span class="cc-tag">動画レビュー</span>
+        <span class="cc-tag">リモート可</span>
+      </div>
+      <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="cc-apply">応募する →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="reveal">
+  <div class="sec-label">Community Voices</div>
+  <h2 class="sec-title">コミュニティの声</h2>
+  <p class="sec-sub">BJJプラクティショナー、アニメファン、クリエイターから届いた声。</p>
+
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="testi-quote">「柔術をやってる人間として、ここまで寝技の本質を理解したアニメ企画は見たことない。ベリンボロのシーンで声が出た。絶対完成させてほしい。」</div>
+      <div class="testi-person">
+        <div class="testi-avatar" style="background:rgba(74,158,255,.15);color:#4a9eff">田</div>
+        <div>
+          <div class="testi-name">田中 篤史</div>
+          <div class="testi-role">BJJプラクティショナー <span class="testi-belt" style="background:rgba(74,158,255,.15);color:#4a9eff">青帯</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testi-quote">"The AI vs human theme hits different when it's grounded in actual BJJ technique. SAGE's 99.8% prediction rate is genuinely terrifying. This deserves Crunchyroll."</div>
+      <div class="testi-person">
+        <div class="testi-avatar" style="background:rgba(124,92,255,.15);color:#7c5cff">M</div>
+        <div>
+          <div class="testi-name">Marcus T.</div>
+          <div class="testi-role">BJJ Purple Belt · Los Angeles</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testi-quote">「コミュニティが物語を決めるというコンセプトが好きで事前登録しました。投票でベリンボロが勝ったらその技のシーンが生まれるって、今まで見たことない体験。」</div>
+      <div class="testi-person">
+        <div class="testi-avatar" style="background:rgba(255,215,0,.12);color:#ffd700">山</div>
+        <div>
+          <div class="testi-name">山田 麗</div>
+          <div class="testi-role">アニメファン・クラファンサポーター</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testi-quote">"I've been following @flow_bjj since day one. The world-building around SAGE and the underground dojos is incredibly detailed. This is what BJJ needs."</div>
+      <div class="testi-person">
+        <div class="testi-avatar" style="background:rgba(34,204,136,.12);color:#22cc88">G</div>
+        <div>
+          <div class="testi-name">Gabriel M.</div>
+          <div class="testi-role">BJJ Brown Belt · São Paulo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testi-quote">「音楽制作者として参加しています。「0.2%の証明」のスタイルが最高で、BGMのコンペに出しました。コミュニティが実際に制作に関われる仕組みが本物だと感じる。」</div>
+      <div class="testi-person">
+        <div class="testi-avatar" style="background:rgba(255,107,157,.12);color:#ff6b9d">小</div>
+        <div>
+          <div class="testi-name">小林 悠</div>
+          <div class="testi-role">DTMクリエイター・BGMコンペ参加中</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- Footer -->
 <div class="footnote">
   <p>FLOW — BJJ × AI Original Anime Project</p>
@@ -648,6 +946,30 @@ function handleRegister() {
 document.getElementById('email-input').addEventListener('keydown', e => {
   if(e.key === 'Enter') handleRegister()
 })
+
+// ===== Vote System =====
+var voted = false;
+var voteCounts = [847, 612, 344];
+var totalVotes = 1803;
+
+function castVote(el, idx) {
+  if (voted) return;
+  voted = true;
+  voteCounts[idx]++;
+  totalVotes++;
+  var total = voteCounts.reduce((a,b)=>a+b,0);
+  var options = document.querySelectorAll('.vote-option');
+  options.forEach(function(opt, i) {
+    var pct = Math.round((voteCounts[i]/total)*100);
+    opt.querySelector('.vo-bar').style.width = pct + '%';
+    opt.querySelector('.vo-pct').textContent = pct + '%';
+    if (i === idx) {
+      opt.classList.add('selected');
+      opt.style.borderColor = 'var(--ac2)';
+    }
+  });
+  document.getElementById('totalVoteCount').textContent = totalVotes.toLocaleString();
+}
 </script>
 </body>
 </html>

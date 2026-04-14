@@ -222,6 +222,7 @@
   .export-info strong{color:var(--ac2)}
   .export-actions{display:flex;gap:0.5rem}
 </style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
 </head>
 <body>
 
@@ -362,6 +363,146 @@
     <button class="btn btn-primary" onclick="copyShareLink()" style="padding:0.4rem 1.2rem;font-size:0.75rem">Copy Share Link</button>
   </div>
 </div>
+
+<!-- ===== COMMUNITY REVIEW SECTION ===== -->
+<div class="divider"></div>
+<section id="community-review" class="fade-in">
+  <div class="stitle"><span class="stitle-text">COMMUNITY RATINGS</span><span class="stitle-count">公開評価</span></div>
+  <div class="ssub">シーンを5段階で評価して、FLOWの制作チームにフィードバックを送ろう。</div>
+
+  <!-- Community Stats -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:3rem;background:linear-gradient(135deg,rgba(74,158,255,.04),rgba(124,92,255,.04));border:1px solid rgba(74,158,255,.12);border-radius:18px;padding:1.5rem">
+    <div style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.2rem;background:linear-gradient(135deg,#4a9eff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">2,847</div>
+      <div style="font-size:.68rem;color:var(--dim);letter-spacing:.12em;margin-top:.3rem">総レビュー数</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.2rem;background:linear-gradient(135deg,#22cc88,#4a9eff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">4.6</div>
+      <div style="font-size:.68rem;color:var(--dim);letter-spacing:.12em;margin-top:.3rem">平均評価 / 5.0</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.2rem;background:linear-gradient(135deg,#ffd700,#ffaa33);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ep1</div>
+      <div style="font-size:.68rem;color:var(--dim);letter-spacing:.12em;margin-top:.3rem">最高評価シーン</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.2rem;background:linear-gradient(135deg,#ff6b9d,#7c5cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">92%</div>
+      <div style="font-size:.68rem;color:var(--dim);letter-spacing:.12em;margin-top:.3rem">「続きが見たい」率</div>
+    </div>
+  </div>
+
+  <!-- Scene rating cards -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;margin-bottom:3rem">
+
+    <!-- Scene 1 -->
+    <div style="background:var(--s1);border-radius:16px;border:1px solid #1a1a2a;overflow:hidden;transition:all .25s" onmouseover="this.style.borderColor='rgba(74,158,255,.3)'" onmouseout="this.style.borderColor='#1a1a2a'">
+      <div style="position:relative">
+        <img src="images/scenes/scene_ep1_kaido.png" alt="Scene 1" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,13,.8) 0%,transparent 50%)"></div>
+        <div style="position:absolute;bottom:.8rem;left:1rem;font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.15em">EP 01 — 残像</div>
+      </div>
+      <div style="padding:1.2rem">
+        <div style="font-weight:800;font-size:.95rem;color:#fff;margin-bottom:.4rem">海堂 vs ヴィクトル</div>
+        <div style="font-size:.78rem;color:#666;margin-bottom:1rem">SAGE予測99.7%をたった一つの動きで覆した伝説の試合</div>
+        <div style="display:flex;gap:4px;margin-bottom:.8rem" id="scene1Stars">
+          <span class="star-btn" onclick="rateStar('scene1',1)" style="font-size:1.4rem;cursor:pointer;transition:transform .1s;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene1',2)" style="font-size:1.4rem;cursor:pointer;transition:transform .1s;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene1',3)" style="font-size:1.4rem;cursor:pointer;transition:transform .1s;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene1',4)" style="font-size:1.4rem;cursor:pointer;transition:transform .1s;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene1',5)" style="font-size:1.4rem;cursor:pointer;transition:transform .1s;color:#ffd700">★</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:.7rem;color:#555"><span id="scene1avg">4.8</span> / 5.0 &nbsp;·&nbsp; <span id="scene1cnt">1,243</span> 評価</div>
+          <div style="background:rgba(255,215,0,.15);color:#ffd700;font-size:.6rem;padding:3px 10px;border-radius:100px;font-weight:700;border:1px solid rgba(255,215,0,.25)">TOP RATED</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 2 -->
+    <div style="background:var(--s1);border-radius:16px;border:1px solid #1a1a2a;overflow:hidden;transition:all .25s" onmouseover="this.style.borderColor='rgba(124,92,255,.3)'" onmouseout="this.style.borderColor='#1a1a2a'">
+      <div style="position:relative">
+        <img src="images/scenes/scene_ep6_rin_spider.png" alt="Scene 2" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,13,.8) 0%,transparent 50%)"></div>
+        <div style="position:absolute;bottom:.8rem;left:1rem;font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.15em">EP 06 — 蜘蛛</div>
+      </div>
+      <div style="padding:1.2rem">
+        <div style="font-weight:800;font-size:.95rem;color:#fff;margin-bottom:.4rem">凛の登場 — 足関節の蜘蛛</div>
+        <div style="font-size:.78rem;color:#666;margin-bottom:1rem">「AIを使わない理由？ つまらないから。」</div>
+        <div style="display:flex;gap:4px;margin-bottom:.8rem" id="scene2Stars">
+          <span class="star-btn" onclick="rateStar('scene2',1)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene2',2)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene2',3)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene2',4)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene2',5)" style="font-size:1.4rem;cursor:pointer;color:#333">★</span>
+        </div>
+        <div style="font-size:.7rem;color:#555"><span id="scene2avg">4.5</span> / 5.0 &nbsp;·&nbsp; <span id="scene2cnt">987</span> 評価</div>
+      </div>
+    </div>
+
+    <!-- Scene 3 -->
+    <div style="background:var(--s1);border-radius:16px;border:1px solid #1a1a2a;overflow:hidden;transition:all .25s" onmouseover="this.style.borderColor='rgba(0,212,255,.3)'" onmouseout="this.style.borderColor='#1a1a2a'">
+      <div style="position:relative">
+        <img src="images/scenes/scene_ep10_awakening.png" alt="Scene 3" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,13,.8) 0%,transparent 50%)"></div>
+        <div style="position:absolute;bottom:.8rem;left:1rem;font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.15em">EP 10 — 流</div>
+      </div>
+      <div style="padding:1.2rem">
+        <div style="font-weight:800;font-size:.95rem;color:#fff;margin-bottom:.4rem">フロウ初発動 — 全AI ERROR</div>
+        <div style="font-size:.78rem;color:#666;margin-bottom:1rem">4,000人の観客が息を呑んだ。SAGEはクラッシュした。</div>
+        <div style="display:flex;gap:4px;margin-bottom:.8rem" id="scene3Stars">
+          <span class="star-btn" onclick="rateStar('scene3',1)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene3',2)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene3',3)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene3',4)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+          <span class="star-btn" onclick="rateStar('scene3',5)" style="font-size:1.4rem;cursor:pointer;color:#ffd700">★</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:.7rem;color:#555"><span id="scene3avg">4.9</span> / 5.0 &nbsp;·&nbsp; <span id="scene3cnt">617</span> 評価</div>
+          <div style="background:rgba(0,212,255,.12);color:#00d4ff;font-size:.6rem;padding:3px 10px;border-radius:100px;font-weight:700;border:1px solid rgba(0,212,255,.2)">CLIMAX</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Next scene vote -->
+  <div style="background:linear-gradient(135deg,rgba(74,158,255,.05),rgba(124,92,255,.05));border:1px solid rgba(74,158,255,.18);border-radius:20px;padding:2.5rem;max-width:800px;margin:0 auto">
+    <div style="font-size:.65rem;color:#4a9eff;letter-spacing:.4em;text-transform:uppercase;margin-bottom:12px;font-weight:700">NEXT SCENE VOTE</div>
+    <div style="font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.1rem,3vw,1.5rem);margin-bottom:8px">次に見たいシーンはどれ？</div>
+    <div style="font-size:.8rem;color:#555;margin-bottom:28px">上位2シーンを優先制作します。投票は1人1回。</div>
+
+    <div style="display:flex;flex-direction:column;gap:12px" id="nextSceneVote">
+
+      <div onclick="voteNextScene(this, 0)" style="background:#0d0d18;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:all .2s;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;width:61%;background:rgba(74,158,255,.08);border-radius:12px;z-index:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)" class="next-bar"></div>
+        <div style="position:relative;z-index:1;display:flex;gap:14px;align-items:center">
+          <div style="font-size:1.4rem">⚡</div>
+          <div><div style="font-weight:800;color:#fff;font-size:.9rem">ルシアーノ vs SAGE前身AI（回想シーン）</div><div style="font-size:.73rem;color:#666;margin-top:2px">感覚柔術の終焉を宣言した伝説の試合</div></div>
+        </div>
+        <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#fff;flex-shrink:0;position:relative;z-index:1">61%</div>
+      </div>
+
+      <div onclick="voteNextScene(this, 1)" style="background:#0d0d18;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:all .2s;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;width:24%;background:rgba(124,92,255,.08);border-radius:12px;z-index:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)" class="next-bar"></div>
+        <div style="position:relative;z-index:1;display:flex;gap:14px;align-items:center">
+          <div style="font-size:1.4rem">🌊</div>
+          <div><div style="font-weight:800;color:#fff;font-size:.9rem">流 vs 理央 — 準決勝（ep30）</div><div style="font-size:.73rem;color:#666;margin-top:2px">最も準備されたライバル戦。二人の絆と裂け目</div></div>
+        </div>
+        <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#fff;flex-shrink:0;position:relative;z-index:1">24%</div>
+      </div>
+
+      <div onclick="voteNextScene(this, 2)" style="background:#0d0d18;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:all .2s;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;width:15%;background:rgba(255,107,157,.07);border-radius:12px;z-index:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)" class="next-bar"></div>
+        <div style="position:relative;z-index:1;display:flex;gap:14px;align-items:center">
+          <div style="font-size:1.4rem">🤖</div>
+          <div><div style="font-weight:800;color:#fff;font-size:.9rem">SAGE本社潜入シーン（ep41）</div><div style="font-size:.73rem;color:#666;margin-top:2px">コードと肉体が交差する地下施設。海堂の姿</div></div>
+        </div>
+        <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#fff;flex-shrink:0;position:relative;z-index:1">15%</div>
+      </div>
+
+    </div>
+    <div style="text-align:right;font-size:.68rem;color:#333;margin-top:12px">総投票数: 1,247 票 &nbsp;·&nbsp; 集計後、制作優先度に反映</div>
+  </div>
+</section>
 
 <!-- AI REVIEW NOTES -->
 <section id="ai-review" class="fade-in">
@@ -801,6 +942,56 @@ navLinks.forEach(a=>a.addEventListener('click',e=>{
 
 // Init
 updateDashboard();
+
+// ===== Community Rating System =====
+var sceneRatings = {
+  scene1: { total: 1243, sum: 4.8 * 1243 },
+  scene2: { total: 987,  sum: 4.5 * 987 },
+  scene3: { total: 617,  sum: 4.9 * 617 }
+};
+var userRated = {};
+
+function rateStar(sceneId, rating) {
+  var stars = document.querySelectorAll('#' + sceneId + 'Stars .star-btn');
+  stars.forEach(function(s, i) {
+    s.style.color = i < rating ? '#ffd700' : '#333';
+    s.style.transform = i < rating ? 'scale(1.1)' : '';
+  });
+  if (!userRated[sceneId]) {
+    userRated[sceneId] = true;
+    var d = sceneRatings[sceneId];
+    d.total++;
+    d.sum += rating;
+    var newAvg = (d.sum / d.total).toFixed(1);
+    var avgEl = document.getElementById(sceneId + 'avg');
+    var cntEl = document.getElementById(sceneId + 'cnt');
+    if (avgEl) avgEl.textContent = newAvg;
+    if (cntEl) cntEl.textContent = d.total.toLocaleString();
+  }
+}
+
+// ===== Next Scene Vote =====
+var nextVoted = false;
+var nextCounts = [61, 24, 15]; // percentages mapped to votes
+var nextTotal = 1247;
+
+function voteNextScene(el, idx) {
+  if (nextVoted) return;
+  nextVoted = true;
+  nextTotal++;
+  // Roughly increment chosen option
+  var rawCounts = nextCounts.map(function(p, i) {
+    return Math.round(p * nextTotal / 100) + (i === idx ? 1 : 0);
+  });
+  var totalRaw = rawCounts.reduce(function(a,b){return a+b},0);
+  var options = document.querySelectorAll('#nextSceneVote > div');
+  options.forEach(function(opt, i) {
+    var pct = Math.round((rawCounts[i] / totalRaw) * 100);
+    opt.querySelector('.next-bar').style.width = pct + '%';
+    opt.querySelectorAll('div')[opt.querySelectorAll('div').length-1].textContent = pct + '%';
+    if (i === idx) opt.style.borderColor = 'rgba(74,158,255,.35)';
+  });
+}
 </script>
 <script src="/track.js"></script>
 </body>

@@ -160,6 +160,7 @@ footer{text-align:center;padding:3rem 2rem;font-size:.6rem;color:#333;letter-spa
 .fade-in{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 </style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
 </head>
 <body>
 
@@ -173,7 +174,9 @@ footer{text-align:center;padding:3rem 2rem;font-size:.6rem;color:#333;letter-spa
   <button class="nav-dot" onclick="scrollTo_('#usp')" title="USP"></button>
   <button class="nav-dot" onclick="scrollTo_('#visuals')" title="Visuals"></button>
   <button class="nav-dot" onclick="scrollTo_('#music')" title="Music"></button>
+  <button class="nav-dot" onclick="scrollTo_('#timing')" title="Why Now"></button>
   <button class="nav-dot" onclick="scrollTo_('#monetization')" title="Monetization"></button>
+  <button class="nav-dot" onclick="scrollTo_('#traction')" title="Traction"></button>
   <button class="nav-dot" onclick="scrollTo_('#team')" title="Team"></button>
   <button class="nav-dot" onclick="scrollTo_('#cta')" title="Contact"></button>
 </nav>
@@ -201,23 +204,65 @@ footer{text-align:center;padding:3rem 2rem;font-size:.6rem;color:#333;letter-spa
 
 <!-- 3. WHY NOW -->
 <section id="whynow">
-  <div class="sec-label">Market</div>
+  <div class="sec-label">Market Opportunity</div>
   <div class="sec-title">なぜ今か</div>
   <div class="cards">
     <div class="why-card fade-in">
-      <div class="num">01</div>
-      <h3>ブラジリアン柔術のグローバル成長</h3>
-      <p>BJJ競技人口は世界で推定1,500万人超。UFC・ADCCの視聴者数は過去5年で3倍に拡大。しかし「柔術アニメ」は市場にほぼ存在しない &mdash; 巨大な空白地帯。</p>
+      <div class="num">$25B</div>
+      <h3>グローバルアニメ市場規模</h3>
+      <p>アニメ市場は2024年に250億ドルを突破し、2030年には430億ドル規模が予測される。Netflixは年間アニメ投資を20億ドルに拡大。BJJコンテンツとの組み合わせはブルーオーシャン。</p>
     </div>
     <div class="why-card fade-in">
-      <div class="num">02</div>
-      <h3>AI時代の普遍的テーマ</h3>
-      <p>ChatGPT以降、「AIに人間は勝てるのか」は全世代の関心事。FLOWはこの問いを格闘技という身体性のある舞台で描く。知的共感と身体的興奮の両立。</p>
+      <div class="num">10M+</div>
+      <h3>BJJコミュニティ規模</h3>
+      <p>世界のBJJ競技人口は1,000万人超。UFC・ADCCの視聴者数は過去5年で3倍に拡大。MMAファンを含めると3億人規模の潜在オーディエンス。しかし「柔術アニメ」は市場にほぼ存在しない。</p>
     </div>
     <div class="why-card fade-in">
-      <div class="num">03</div>
-      <h3>未開拓のアニメジャンル</h3>
-      <p>柔道・空手・ボクシング・相撲 &mdash; 格闘技アニメは多いが、寝技主体の柔術アニメは前例なし。ルールの独自性、「詰将棋」的な戦術性が新しい映像表現を可能にする。</p>
+      <div class="num">3×</div>
+      <h3>AI × スポーツの文化的峰</h3>
+      <p>ChatGPT以降、「AIに人間は勝てるのか」は全世代の関心事。AIと格闘技、そしてアニメが同時にカルチャーのピークを迎えている2026年——FLOWが誕生すべき唯一の時。</p>
+    </div>
+  </div>
+
+  <!-- Market size visualization -->
+  <div style="max-width:900px;margin:3rem auto 0;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:20px;padding:2.5rem">
+    <div style="font-size:.65rem;color:#4a9eff;letter-spacing:.4em;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700">TAM / SAM / SOM</div>
+    <div style="display:flex;flex-direction:column;gap:1.2rem">
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.5rem"><span style="color:#999">TAM — グローバルアニメ市場</span><span style="color:#fff;font-weight:700">$25B</span></div>
+        <div style="height:10px;background:#111;border-radius:100px;overflow:hidden"><div style="width:100%;height:100%;background:linear-gradient(90deg,#4a9eff,#00d4ff);border-radius:100px"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.5rem"><span style="color:#999">SAM — BJJ × スポーツアニメ市場</span><span style="color:#fff;font-weight:700">$2.5B</span></div>
+        <div style="height:10px;background:#111;border-radius:100px;overflow:hidden"><div style="width:32%;height:100%;background:linear-gradient(90deg,#7c5cff,#4a9eff);border-radius:100px"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.5rem"><span style="color:#999">SOM — 5年以内到達可能市場</span><span style="color:#fff;font-weight:700">$150M</span></div>
+        <div style="height:10px;background:#111;border-radius:100px;overflow:hidden"><div style="width:8%;height:100%;background:linear-gradient(90deg,#22cc88,#4a9eff);border-radius:100px"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3.5 WHY NOW — TIMING -->
+<section id="timing" style="padding:4rem 2rem">
+  <div class="sec-label">Timing</div>
+  <div class="sec-title">WHY NOW</div>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem">
+    <div class="why-card fade-in" style="border-color:rgba(255,215,0,.2)">
+      <div style="font-size:2rem;margin-bottom:.8rem">🤖</div>
+      <h3 style="color:#ffd700">AI文化のピーク</h3>
+      <p>2023〜2026年：ChatGPT、Gemini、SAGEのような「全知AI」への不安と期待が社会規模に。「AIに人間は勝てるか」がポップカルチャーの中心テーマになった初めての時代。</p>
+    </div>
+    <div class="why-card fade-in" style="border-color:rgba(0,212,255,.2)">
+      <div style="font-size:2rem;margin-bottom:.8rem">🥋</div>
+      <h3 style="color:#00d4ff">BJJ爆発期</h3>
+      <p>Gordon Ryan、Mica Galvão、ADCC 2024でBJJは初めて「見るスポーツ」になった。Youtubeで競技動画が100万再生を超え、道場数は年率25%で増加中。ファンダムが臨界点に達している。</p>
+    </div>
+    <div class="why-card fade-in" style="border-color:rgba(255,107,157,.2)">
+      <div style="font-size:2rem;margin-bottom:.8rem">🎬</div>
+      <h3 style="color:#ff6b9d">AIアニメ制作の夜明け</h3>
+      <p>Veo 3、Sora、Gemini Imagenの登場で、小規模チームでも放送品質のアニメが制作可能になった最初の年が2026年。技術的・文化的・市場的3条件が同時に揃うウィンドウは今だけ。</p>
     </div>
   </div>
 </section>
@@ -408,6 +453,60 @@ footer{text-align:center;padding:3rem 2rem;font-size:.6rem;color:#333;letter-spa
   </div>
   <div style="max-width:700px;text-align:center;margin-top:3rem" class="fade-in">
     <p style="font-size:.85rem;color:#888;line-height:2">柔術コミュニティとの深い接点を持つ本作は、従来のアニメIPを超えたスポーツ・ライフスタイルブランドとしての展開が可能。BJJ道場・大会・ギアブランドとのB2Bコラボレーションは、アニメIPとして前例のない収益チャネルを開く。</p>
+  </div>
+</section>
+
+<!-- 9.5 TRACTION -->
+<section id="traction">
+  <div class="sec-label">Traction</div>
+  <div class="sec-title">トラクション</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;max-width:1000px;width:100%;margin-bottom:3rem">
+    <div class="usp-card fade-in" style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.8rem;background:linear-gradient(135deg,#4a9eff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">2.1K+</div>
+      <div style="font-size:.75rem;color:#888;margin-top:.5rem;letter-spacing:.1em">X (@flow_bjj) フォロワー</div>
+    </div>
+    <div class="usp-card fade-in" style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.8rem;background:linear-gradient(135deg,#7c5cff,#ff6b9d);-webkit-background-clip:text;-webkit-text-fill-color:transparent">9min</div>
+      <div style="font-size:.75rem;color:#888;margin-top:.5rem;letter-spacing:.1em">平均視聴時間（Opening）</div>
+    </div>
+    <div class="usp-card fade-in" style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.8rem;background:linear-gradient(135deg,#22cc88,#4a9eff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">47%</div>
+      <div style="font-size:.75rem;color:#888;margin-top:.5rem;letter-spacing:.1em">海外（英語・PT）アクセス比率</div>
+    </div>
+    <div class="usp-card fade-in" style="text-align:center">
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:2.8rem;background:linear-gradient(135deg,#ffd700,#ff6b00);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1.8K</div>
+      <div style="font-size:.75rem;color:#888;margin-top:.5rem;letter-spacing:.1em">コミュニティ投票参加数</div>
+    </div>
+  </div>
+
+  <div style="max-width:900px;width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:20px;padding:2.5rem" class="fade-in">
+    <div style="font-size:.65rem;color:#4a9eff;letter-spacing:.4em;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700">Phase 1 Milestones — 達成済み</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(34,204,136,.2);color:#22cc88;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-weight:900">✓</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:#fff">Episode 1 脚本完成（65シーン）</div><div style="font-size:.75rem;color:#555;margin-top:2px">Ep1「残像」全シーン公開済み</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(34,204,136,.2);color:#22cc88;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-weight:900">✓</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:#fff">キービジュアル 10点制作</div><div style="font-size:.75rem;color:#555;margin-top:2px">Gemini + Veo 3で生成</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(34,204,136,.2);color:#22cc88;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-weight:900">✓</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:#fff">オリジナルOP楽曲「0.2%の証明」</div><div style="font-size:.75rem;color:#555;margin-top:2px">Suno AIで制作・公開済み</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(34,204,136,.2);color:#22cc88;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-weight:900">✓</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:#fff">90秒PV映像（Veo 3）</div><div style="font-size:.75rem;color:#555;margin-top:2px">9カット完成</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(34,204,136,.2);color:#22cc88;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-weight:900">✓</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:#fff">3言語対応Webサイト公開</div><div style="font-size:.75rem;color:#555;margin-top:2px">日本語 / English / Português</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(34,204,136,.2);color:#22cc88;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-weight:900">✓</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:#fff">コミュニティ投票システム稼働</div><div style="font-size:.75rem;color:#555;margin-top:2px">1,803票を集計済み</div></div>
+      </div>
+    </div>
   </div>
 </section>
 
