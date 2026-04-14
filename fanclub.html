@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/fanclub">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="FLOW ファンクラブ — 制作の舞台裏">
+<meta property="og:description" content="FLOWがどうやって生まれたか。実際のプロンプト・セッションログを全公開。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:url" content="https://flow-anime.com/fanclub">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flow_bjj">
+<title>FLOW ファンクラブ — 制作の舞台裏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08080d;--s1:#111119;--s2:#1a1a26;--s3:#222233;
+  --ac:#4a9eff;--ac2:#00d4ff;--ac3:#7c5cff;
+  --tx:#e8e8f0;--dim:#7777aa;--gold:#f0c040;--red:#ff4466
+}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(74,158,255,.15);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Dela Gothic One',sans-serif;font-size:1.2rem;color:var(--ac2);text-decoration:none;letter-spacing:.1em}
+.nav-links{display:flex;gap:16px;align-items:center}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:.8rem;transition:color .2s}
+.nav-links a:hover{color:var(--tx)}
+.nav-badge{background:linear-gradient(135deg,var(--gold),#e07010);color:#000;font-size:.65rem;font-weight:900;padding:2px 8px;border-radius:20px;letter-spacing:.05em}
+
+/* HERO */
+.hero{padding:120px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(74,158,255,.08),transparent)}
+.hero-badge{display:inline-block;background:rgba(240,192,64,.15);border:1px solid rgba(240,192,64,.4);color:var(--gold);font-size:.75rem;font-weight:700;padding:4px 16px;border-radius:20px;letter-spacing:.1em;margin-bottom:20px}
+.hero h1{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2rem,6vw,3.5rem);line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1rem;color:var(--dim);max-width:560px;margin:0 auto 32px;line-height:1.7}
+
+/* SECTION COMMON */
+section{max-width:800px;margin:0 auto;padding:60px 24px}
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:.2em;color:var(--ac);text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Dela Gothic One',sans-serif;font-size:1.6rem;margin-bottom:24px;line-height:1.2}
+h3{font-size:1.1rem;font-weight:700;margin:32px 0 12px;color:var(--ac2)}
+p{line-height:1.9;color:#c8c8e0;margin-bottom:16px;font-size:.95rem}
+.divider{border:none;border-top:1px solid var(--s3);margin:48px 0}
+
+/* INTRO CARD */
+.intro-card{background:linear-gradient(135deg,var(--s2),var(--s1));border:1px solid rgba(74,158,255,.2);border-radius:16px;padding:32px;margin-bottom:40px;position:relative;overflow:hidden}
+.intro-card::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,212,255,.06),transparent);pointer-events:none}
+.intro-card .label{font-size:.7rem;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+.intro-card .title{font-family:'Dela Gothic One',sans-serif;font-size:1.8rem;color:var(--ac2);margin-bottom:4px}
+.intro-card .subtitle{font-size:.85rem;color:var(--dim);margin-bottom:20px}
+.intro-card p{margin-bottom:0;font-size:.9rem}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{background:var(--s3);border-radius:6px;padding:4px 10px;font-size:.75rem;color:var(--dim)}
+.tag.hi{background:rgba(74,158,255,.15);color:var(--ac);border:1px solid rgba(74,158,255,.25)}
+
+/* TIMELINE / STEPS */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--s3);position:relative}
+.step:last-child{border-bottom:none}
+.step-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--ac3),var(--ac));display:flex;align-items:center;justify-content:center;font-family:'Dela Gothic One',sans-serif;font-size:.85rem;color:#fff;margin-top:2px}
+.step-body{flex:1}
+.step-label{font-size:.7rem;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.step-title{font-weight:700;font-size:1rem;margin-bottom:8px}
+.step-body p{font-size:.88rem;margin-bottom:0}
+
+/* PROMPT BLOCK */
+.prompt-block{background:var(--s1);border:1px solid var(--s3);border-left:3px solid var(--ac);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0;font-family:monospace;font-size:.85rem;color:#aad4ff;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.prompt-you{border-left-color:var(--gold);color:#f0d080}
+.prompt-claude{border-left-color:var(--ac);color:#aad4ff}
+.prompt-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px;opacity:.7}
+
+/* STEP 4 FADE CONTAINER */
+.step-fade-wrap{position:relative;overflow:hidden}
+.step-fade-overlay{
+  position:absolute;bottom:0;left:0;right:0;height:180px;
+  background:linear-gradient(to bottom,transparent,var(--bg));
+  pointer-events:none;
+  z-index:2
+}
+
+/* PAYWALL */
+.paywall{max-width:800px;margin:0 auto;padding:0 24px 80px;text-align:center}
+.paywall-dots{font-size:1.4rem;letter-spacing:.3em;color:var(--dim);margin-bottom:8px}
+.paywall-hint{font-size:.82rem;color:var(--dim);margin-bottom:40px}
+.paywall-card{
+  background:linear-gradient(135deg,rgba(74,158,255,.08),rgba(124,92,255,.08));
+  border:1px solid rgba(74,158,255,.3);
+  border-radius:20px;
+  padding:48px 32px;
+  position:relative;
+  overflow:hidden
+}
+.paywall-card::before{
+  content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(74,158,255,.06),transparent);
+  pointer-events:none
+}
+.paywall-lock{font-size:2.8rem;margin-bottom:16px}
+.paywall-card h2{
+  font-family:'Dela Gothic One',sans-serif;font-size:1.5rem;
+  background:linear-gradient(135deg,#fff,var(--ac2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:12px
+}
+.paywall-card .desc{font-size:.9rem;color:var(--dim);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.8}
+.paywall-locked-list{
+  background:rgba(255,255,255,.03);border:1px solid var(--s3);
+  border-radius:12px;padding:20px 24px;margin:0 auto 32px;
+  max-width:460px;text-align:left;
+  font-size:.85rem;color:var(--dim);line-height:2
+}
+.paywall-locked-list li{list-style:none;padding:2px 0}
+.paywall-locked-list li::before{content:'🔒 ';opacity:.6}
+
+/* BENEFIT CARDS */
+.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:0 auto 36px;max-width:600px}
+.benefit-card{background:var(--s2);border:1px solid var(--s3);border-radius:12px;padding:20px 16px;text-align:center}
+.benefit-card .b-icon{font-size:1.6rem;margin-bottom:8px}
+.benefit-card .b-name{font-size:.85rem;font-weight:700;color:var(--tx);margin-bottom:4px}
+.benefit-card .b-status{font-size:.7rem;padding:2px 8px;border-radius:4px;display:inline-block;font-weight:700}
+.status-live{background:rgba(68,255,136,.15);color:#44ff88}
+.status-soon{background:rgba(74,158,255,.15);color:var(--ac)}
+
+/* INLINE LOGIN FORM */
+.login-form{max-width:400px;margin:0 auto 8px}
+.login-step{display:none}
+.login-step.active{display:block}
+.login-input{
+  width:100%;padding:14px 16px;
+  background:rgba(8,8,13,.8);
+  border:1px solid rgba(74,158,255,.25);border-radius:10px;
+  color:var(--tx);font-size:1rem;outline:none;
+  transition:border .2s;margin-bottom:12px;
+  font-family:'Noto Sans JP',sans-serif
+}
+.login-input:focus{border-color:var(--ac)}
+.btn-fanclub{
+  width:100%;padding:14px 20px;border-radius:10px;
+  background:linear-gradient(135deg,var(--ac3),var(--ac));
+  color:#fff;font-size:.95rem;font-weight:700;
+  border:none;cursor:pointer;transition:opacity .2s;
+  font-family:'Noto Sans JP',sans-serif
+}
+.btn-fanclub:hover{opacity:.88}
+.btn-fanclub:disabled{opacity:.5;cursor:not-allowed}
+.login-msg{font-size:.8rem;min-height:20px;margin-top:8px;color:var(--ac2)}
+.login-msg.err{color:var(--red)}
+.btn-back{background:none;border:none;color:var(--dim);font-size:.75rem;cursor:pointer;margin-top:10px;text-decoration:underline;font-family:'Noto Sans JP',sans-serif}
+.login-hint{font-size:.75rem;color:var(--dim);margin-top:16px;line-height:1.6}
+
+/* FOOTER */
+footer{border-top:1px solid var(--s3);padding:32px 24px;text-align:center;color:var(--dim);font-size:.78rem;margin-top:80px}
+footer a{color:var(--ac);text-decoration:none}
+
+@media(max-width:600px){
+  .nav-links a:not(:last-child){display:none}
+  .hero{padding:100px 16px 40px}
+  section{padding:40px 16px}
+  .paywall{padding:0 16px 60px}
+  .paywall-card{padding:36px 20px}
+  .benefits-grid{grid-template-columns:repeat(2,1fr)}
+  .btn-fanclub{width:100%;justify-content:center}
+}
+</style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">FLOW</a>
+  <div class="nav-links">
+    <a href="/opening.html">OP映像</a>
+    <a href="/review.html">レビュー</a>
+    <a href="https://x.com/flow_bjj" target="_blank">𝕏 @flow_bjj</a>
+    <span class="nav-badge">FAN CLUB</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">★ FAN CLUB 限定コンテンツ</div>
+  <h1>FLOWの全て、<br>語ります。</h1>
+  <p class="hero-sub">アニメ企画「FLOW」がどうやって生まれたか。実際のプロンプト・セッションログを全公開。これを読めば、あなたも明日から同じことができます。</p>
+</div>
+
+<!-- FLOW INTRO -->
+<section id="intro">
+  <div class="section-label">About FLOW</div>
+  <h2>「FLOW」とは何か</h2>
+
+  <div class="intro-card">
+    <div class="label">ORIGINAL ANIME PROJECT</div>
+    <div class="title">FLOW（フロウ）</div>
+    <div class="subtitle">全60話・5シーズン / 2030年 / BJJ × AI</div>
+    <p>AIが全ての格闘技を解析し尽くした2030年。左腕が不自由な17歳の少年「流（ながれ）」が、機械には読めない「フロウ」の柔術で世界の頂点を目指す——オリジナルアニメ企画です。</p>
+    <div class="tag-row">
+      <span class="tag hi">全60話構成</span>
+      <span class="tag hi">5シーズン</span>
+      <span class="tag hi">3言語対応</span>
+      <span class="tag">BJJ × AI SF</span>
+      <span class="tag">オープンソース</span>
+      <span class="tag">Gemini生成ビジュアル</span>
+      <span class="tag">Suno主題歌</span>
+    </div>
+  </div>
+
+  <p>スタジオも、アニメーターも、作曲家もいません。制作したのは<strong>僕（濱田優貴）一人</strong>と、AIツール群。かかった時間は実働数日。</p>
+  <p>このページでは、「FLOW」がどうやって生まれたかを<strong>実際のClaude Codeのセッションログ</strong>から再現して全公開します。</p>
+</section>
+
+<hr class="divider">
+
+<!-- HOW IT WAS BUILT -->
+<section id="how">
+  <div class="section-label">Behind The Scenes</div>
+  <h2>こうして作った — 実際のログ公開</h2>
+  <p style="color:var(--dim);font-size:.85rem">※ 以下は実際のClaude Codeセッションログ（~/.claude/projects/）から抜粋した、本当に打ったプロンプトです。タイポも原文のままです。</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-label">Session 872fad1e · Day 1</div>
+        <div class="step-title">市場調査から始まった</div>
+        <div class="prompt-label prompt-you">YOU</div>
+        <div class="prompt-block prompt-you">どんなアニメだったら今一番流行るか分析して教えてください</div>
+        <p>Claudeは近年のメガヒット（進撃・鬼滅・呪術・フリーレン）を横断分析して「異能バトル×現代社会問題」「弱者の戦略家型主人公」「謎解き+伏線回収」という必須要素を返してきました。</p>
+        <div class="prompt-label prompt-you">YOU</div>
+        <div class="prompt-block prompt-you">柔術要素は？</div>
+        <div class="prompt-label prompt-claude">CLAUDE</div>
+        <div class="prompt-block prompt-claude">BJJ主軸のアニメはゼロ — 完全ブルーオーシャン
+寝技の攻防は「チェスのような頭脳戦」として描ける
+帯色がそのままランク制と完全一致
+海外BJJ人口が急成長中</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-label">Session 872fad1e · Day 1</div>
+        <div class="step-title">「FLOW」が生まれた一言</div>
+        <div class="prompt-label prompt-you">YOU</div>
+        <div class="prompt-block prompt-you">ヒット作品かなんがえてまずは要素から</div>
+        <div class="prompt-label prompt-you">YOU</div>
+        <div class="prompt-block prompt-you">お願いします。オリジナルも付け加えて。お願い。</div>
+        <div class="prompt-label prompt-claude">CLAUDE → FLOW誕生</div>
+        <div class="prompt-block prompt-claude">タイトル: 「FLOW」（フロウ）
+コンセプト: 「身体のチェス」×「AIが支配する格闘技界」×「失われた師匠の技」
+
+1話のアバン: 師匠が「AIに一切頼らない読めない柔術」で世界王者を破る。
+直後、師匠が失踪する。
+
+主人公の欠落: 身体の左半分の感覚が鈍い（幼少期の事故）。
+右半身だけで組む異形のガードが逆にAIの予測から外れる。
+
+独自システム「フロウ」: 技と技の「間」に入る意識状態。
+AIが分節できない連続する水の流れ。</div>
+        <p>市場分析→ジャンル絞り込み→要素抽出→一言でオリジナル化、という流れ。プロンプトは合計4つ、数十分でした。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-label">Session 872fad1e · Day 1</div>
+        <div class="step-title">Geminiでキャラクターとストーリーを並列生成</div>
+        <div class="prompt-label prompt-you">YOU（タイポあり）</div>
+        <div class="prompt-block prompt-you">geminidewebできれいに作っていきたいんだけれど
+まずは主人公のキャラクターを5枚ぐらいそれぞれキャラクターシート
+作ってみせてほしい
+それと並行してストーリーに必要なものは作っていってほしい</div>
+        <p>「並行して」の一言でClaudeが<strong>サブエージェントを4つ同時起動</strong>。流/理央/ルシアーノ/凛/SAGEの5キャラ画像生成とS1全12話の脚本執筆を並列処理。実際に使ったキャラプロンプトがこれです：</p>
+        <div class="prompt-label prompt-claude">Geminiへの画像生成プロンプト（流）</div>
+        <div class="prompt-block prompt-claude">Anime character sheet, full body front and side view,
+clean white background, modern seinen anime style
+(Jujutsu Kaisen / Blue Lock quality level)
+
+Character: NAGARE - Male, 17 years old
+168cm, 62kg, messy black hair falling over left eye
+Left arm has faint surgical scars.
+Asymmetric posture - right side more developed.
+
+Signature pose: Low seated guard, right hand gripping collar,
+left hand OPEN and sensing/feeling (not gripping)
+
+Key item: A worn black belt wrapped around wrist like a bracelet
+Vibe: Water - fluid, quiet, unpredictable</div>
+        <div class="prompt-label prompt-claude">Geminiへの画像生成プロンプト（理央）</div>
+        <div class="prompt-block prompt-claude">platinum silver hair slicked back precisely, ice blue eyes,
+PERFECT posture. Everything symmetrical and optimized.
+Key item: Earpiece displaying AI analysis data (subtle HUD glow)
+Vibe: Machine - precise, efficient, overwhelming</div>
+        <p>「Vibe: Water」「Vibe: Machine」という一行がビジュアルの方向性を決定。対比がそのまま絵に出ます。</p>
+      </div>
+    </div>
+
+    <!-- STEP 4 with fade -->
+    <div class="step-fade-wrap">
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-label">Session 872fad1e · Day 1</div>
+          <div class="step-title">S2〜S5を並列で一気に書く</div>
+          <div class="prompt-label prompt-you">YOU（タイポあり）</div>
+          <div class="prompt-block prompt-you">全部一kに</div>
+          <p>「一気に」のタイポ。それでも伝わって、Claudeが<strong>4エージェントを並列起動</strong>してS2〜S5の脚本を同時執筆。ターミナルに通知が連続で流れてきます：</p>
+          <div class="prompt-label prompt-claude">ターミナルログ（実際）</div>
+          <div class="prompt-block prompt-claude">Agent "Write S3 episode guide" completed ✓
+Agent "Write S4 episode guide" completed ✓
+Agent "Write S5 final episode guide" completed ✓</div>
+        </div>
+      </div>
+      <div class="step-fade-overlay"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PAYWALL -->
+<div class="paywall">
+  <div class="paywall-dots">・・・</div>
+  <p class="paywall-hint">ステップ5〜8、プロンプト全一覧、気づいたこと、ロードマップ、使用ツール詳細 ・・・</p>
+
+  <div class="paywall-card">
+    <div class="paywall-lock">🔐</div>
+    <h2>ここから先は会員限定</h2>
+    <p class="desc">続きはすべて <strong style="color:var(--ac2)">yukihamada.jp ファンクラブ</strong> で読めます。<br>Suno CAPTCHAの顛末、Whisperで歌詞タイミングを合わせた方法、「マルセロ→ルシアーノ」108箇所一括変換の実話など、制作の全記録を公開中。</p>
+
+    <ul class="paywall-locked-list">
+      <li>ステップ5: Sunoで主題歌生成 → CAPTCHAに引っかかった話</li>
+      <li>ステップ6: キャラ名ミス → 108箇所一括変換の実話</li>
+      <li>ステップ7: SEO/OGP/多言語化を「ダメ出しして」で自動修正</li>
+      <li>ステップ8: ストーリーの厳しめレビュー → 全面再構築</li>
+      <li>実際のプロンプト全18件 完全一覧</li>
+      <li>Gemini/Veo3/Whisper/Suno 使い方のコツ</li>
+      <li>FLOW ロードマップ（フェーズ1〜5）</li>
+    </ul>
+
+    <p style="font-size:.85rem;color:var(--dim);margin-bottom:24px;line-height:1.6">会員になると、制作の裏側コンテンツに加え、以下のベネフィットもすべて利用できます：</p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="b-icon">🎬</div>
+        <div class="b-name">メイキング映像</div>
+        <span class="b-status status-live">公開中</span>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">🎵</div>
+        <div class="b-name">未公開楽曲</div>
+        <span class="b-status status-soon">COMING SOON</span>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">💬</div>
+        <div class="b-name">会員限定レター<br><span style="font-size:.72rem;font-weight:400;color:var(--dim)">月1回</span></div>
+        <span class="b-status status-soon">COMING SOON</span>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">🎤</div>
+        <div class="b-name">Q&Aセッション</div>
+        <span class="b-status status-soon">COMING SOON</span>
+      </div>
+    </div>
+
+    <!-- Inline email login/register form -->
+    <div class="login-form">
+      <!-- Step 1: Email -->
+      <div class="login-step active" id="fc-step1">
+        <input type="email" class="login-input" id="fc-email" placeholder="メールアドレスを入力" autocomplete="email">
+        <button class="btn-fanclub" id="fc-send-btn" onclick="fcSendOtp()">認証コードを送る</button>
+        <div class="login-msg" id="fc-msg1"></div>
+        <p class="login-hint">未登録の方もそのまま入力してください。入会ページに進みます。</p>
+      </div>
+      <!-- Step 2: OTP -->
+      <div class="login-step" id="fc-step2">
+        <input type="text" class="login-input" id="fc-otp" placeholder="6桁のコードを入力" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+        <button class="btn-fanclub" id="fc-verify-btn" onclick="fcVerifyOtp()">ログインして続きを読む</button>
+        <div class="login-msg" id="fc-msg2"></div>
+        <button class="btn-back" onclick="fcGoBack()">← メールアドレスを変更</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+let fcEmail = '';
+async function fcSendOtp() {
+  const email = document.getElementById('fc-email').value.trim();
+  if (!email || !email.includes('@')) {
+    fcSetMsg('fc-msg1', '有効なメールアドレスを入力してください', true); return;
+  }
+  const btn = document.getElementById('fc-send-btn');
+  btn.disabled = true; btn.textContent = '送信中...';
+  fcSetMsg('fc-msg1', '');
+  try {
+    const r = await fetch('https://yukihamada.jp/api/fanclub/otp/send', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email})
+    });
+    const d = await r.json();
+    if (d.ok) {
+      fcEmail = email;
+      document.getElementById('fc-step1').classList.remove('active');
+      document.getElementById('fc-step2').classList.add('active');
+      document.getElementById('fc-otp').focus();
+    } else {
+      fcSetMsg('fc-msg1', d.error || 'エラーが発生しました。', true);
+      btn.disabled = false; btn.textContent = '認証コードを送る';
+    }
+  } catch(e) {
+    fcSetMsg('fc-msg1', '通信エラーが発生しました。', true);
+    btn.disabled = false; btn.textContent = '認証コードを送る';
+  }
+}
+async function fcVerifyOtp() {
+  const code = document.getElementById('fc-otp').value.trim();
+  if (!code || code.length !== 6) {
+    fcSetMsg('fc-msg2', '6桁のコードを入力してください', true); return;
+  }
+  const btn = document.getElementById('fc-verify-btn');
+  btn.disabled = true; btn.textContent = '確認中...';
+  fcSetMsg('fc-msg2', '');
+  try {
+    const r = await fetch('https://yukihamada.jp/api/fanclub/otp/verify', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email: fcEmail, code})
+    });
+    const d = await r.json();
+    if (d.ok) {
+      fcSetMsg('fc-msg2', 'ログイン成功！ リダイレクト中...');
+      setTimeout(() => location.href = 'https://yukihamada.jp/fanclub/members', 500);
+    } else if (d.needs_subscription && d.checkout_url) {
+      fcSetMsg('fc-msg2', '入会ページに移動します...');
+      setTimeout(() => location.href = d.checkout_url, 800);
+    } else {
+      fcSetMsg('fc-msg2', d.error || 'コードが正しくありません。', true);
+      btn.disabled = false; btn.textContent = 'ログインして続きを読む';
+    }
+  } catch(e) {
+    fcSetMsg('fc-msg2', '通信エラーが発生しました。', true);
+    btn.disabled = false; btn.textContent = 'ログインして続きを読む';
+  }
+}
+function fcGoBack() {
+  document.getElementById('fc-step2').classList.remove('active');
+  document.getElementById('fc-step1').classList.add('active');
+  const btn = document.getElementById('fc-send-btn');
+  btn.disabled = false; btn.textContent = '認証コードを送る';
+  fcSetMsg('fc-msg1', '');
+}
+function fcSetMsg(id, text, isErr) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'login-msg' + (isErr ? ' err' : '');
+}
+document.getElementById('fc-email').addEventListener('keydown', e => { if (e.key === 'Enter') fcSendOtp(); });
+document.getElementById('fc-otp').addEventListener('keydown', e => { if (e.key === 'Enter') fcVerifyOtp(); });
+</script>
+</div>
+
+<footer>
+  <p>© 2025 濱田優貴 / FLOW Anime Project — <a href="https://flow-anime.com">flow-anime.com</a></p>
+  <p style="margin-top:8px">制作の全記録は <a href="https://yukihamada.jp/fanclub">yukihamada.jp/fanclub</a> で公開中</p>
+</footer>
+
+</body>
+</html>

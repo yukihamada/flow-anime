@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLOW PV v2 — 9カット</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080d;color:#e8e8f0;font-family:-apple-system,'Noto Sans JP',sans-serif;padding:20px;max-width:1000px;margin:0 auto}
+h1{font-size:1.5em;font-weight:800;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.sub{color:#555;font-size:.85em;text-align:center;margin-bottom:28px}
+.new-badge{display:inline-block;background:linear-gradient(135deg,#ff4466,#ff9500);color:#fff;font-size:.6em;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:8px;vertical-align:middle}
+.clip{margin-bottom:24px;background:#111119;border-radius:14px;overflow:hidden;border:1px solid #1a1a2a}
+.clip.new-clip{border-color:rgba(255,68,102,.3)}
+.clip video{width:100%;display:block}
+.clip-info{padding:14px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.clip-num{width:30px;height:30px;border-radius:50%;background:#4a9eff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8em;font-weight:800;flex-shrink:0}
+.clip-title{font-weight:700;font-size:.95em;color:#fff}
+.clip-section{font-size:.65em;color:#4a9eff;background:rgba(74,158,255,.1);padding:2px 8px;border-radius:6px}
+.clip-dialogue{margin:0 16px 14px;padding:10px 12px;background:#0a0a12;border-radius:8px;border-left:3px solid #22cc88;font-size:.88em;color:#ccc;line-height:1.6}
+.clip-dialogue .speaker{font-size:.72em;color:#22cc88;font-weight:600;margin-bottom:2px}
+.clip-dialogue.ai-voice{border-left-color:#4a9eff}
+.clip-dialogue.ai-voice .speaker{color:#4a9eff}
+audio{width:100%;margin:20px 0}
+.audio-label{text-align:center;font-size:.85em;color:#888;margin-bottom:4px}
+.section-break{margin:32px 0 16px;padding:8px 14px;background:rgba(74,158,255,.06);border-left:3px solid #4a9eff;border-radius:0 8px 8px 0;font-size:.85em;font-weight:700;color:#4a9eff}
+</style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
+</head>
+<body>
+
+<h1>FLOW PV v2 — 9カット</h1>
+<div class="sub">フィードバック反映版。AI制御シーン追加 / 誇張技演出 / 理央のイヤピース</div>
+
+<div class="audio-label">OP「0.2%の証明」</div>
+<audio controls preload="metadata">
+  <source src="music/op_new.mp3" type="audio/mpeg">
+</audio>
+
+<div class="section-break">INTRO — 道場</div>
+
+<div class="clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/02_dojo_dawn.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">1</span><span class="clip-title">道場の夜明け</span><span class="clip-section">INTRO</span></div>
+  <div class="clip-dialogue">（環境音 — 鳥の声、風、静寂）</div>
+</div>
+
+<div class="clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/04_nagare_bandage.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">2</span><span class="clip-title">流の包帯</span><span class="clip-section">VERSE1</span></div>
+  <div class="clip-dialogue"><div class="speaker">流</div>「この左手にはまだ熱があるんだ」</div>
+</div>
+
+<div class="section-break">AI CONTROL — SAGEが選手を支配する</div>
+
+<div class="clip new-clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/new_ai_control.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">3</span><span class="clip-title">SAGE AI制御</span><span class="clip-section">NEW</span><span class="new-badge">NEW</span></div>
+  <div class="clip-dialogue ai-voice"><div class="speaker">SAGE AI</div>「Target acquired. ARM BAR — Success rate 94.7%. Executing optimal sequence.」<br>選手の体にワイヤーフレーム骨格。指示通りにロボットのように動く。</div>
+</div>
+
+<div class="section-break">VERSE — 流の孤独</div>
+
+<div class="clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/05_nagare_tatami.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">4</span><span class="clip-title">畳に立つ流</span><span class="clip-section">VERSE1</span></div>
+  <div class="clip-dialogue"><div class="speaker">流</div>「畳の上に立つ理由がある」</div>
+</div>
+
+<div class="section-break">CHORUS — フロウ覚醒＋誇張バトル</div>
+
+<div class="clip new-clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/new_flow_dragon.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">5</span><span class="clip-title">水龍のフロウ</span><span class="clip-section">NEW</span><span class="new-badge">NEW</span></div>
+  <div class="clip-dialogue"><div class="speaker">流</div>水のエネルギーが龍の形で噴出。ERROR画面が砕け散る。畳が割れる。</div>
+</div>
+
+<div class="clip new-clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/new_scissor_sweep.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">6</span><span class="clip-title">誇張スイープ</span><span class="clip-section">NEW</span><span class="new-badge">NEW</span></div>
+  <div class="clip-dialogue">シザースイープ → 水の刃 → 相手が3回転で吹っ飛ぶ → 水柱噴出。キャプ翼級。</div>
+</div>
+
+<div class="clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/20_submission.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">7</span><span class="clip-title">極め技</span><span class="clip-section">CHORUS</span></div>
+  <div class="clip-dialogue"><div class="speaker">流</div>「これが俺の柔術だ」</div>
+</div>
+
+<div class="section-break">VERSE2 — 仲間とライバル</div>
+
+<div class="clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/23_rin_walk.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">8</span><span class="clip-title">凛の街歩き</span><span class="clip-section">VERSE2</span></div>
+  <div class="clip-dialogue"><div class="speaker">凛</div>「足を取ったら終わり。つまらないから、AIなんて使わない」</div>
+</div>
+
+<div class="clip new-clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/new_rio_earpiece.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">9</span><span class="clip-title">理央 — イヤピースを外す</span><span class="clip-section">NEW</span><span class="new-badge">NEW</span></div>
+  <div class="clip-dialogue"><div class="speaker">理央</div>AIのHUDが視界から消えていく。裸眼で初めて世界を見る。静かだが決定的な瞬間。</div>
+</div>
+
+<div class="section-break">OUTRO</div>
+
+<div class="clip">
+  <video controls playsinline preload="metadata"><source src="videos/pv_veo3/30_logo_final.mp4" type="video/mp4"></video>
+  <div class="clip-info"><span class="clip-num">10</span><span class="clip-title">FLOWロゴ</span><span class="clip-section">OUTRO</span></div>
+  <div class="clip-dialogue">（水滴がFLOWの文字を形成。フェードアウト。）</div>
+</div>
+
+</body>
+</html>

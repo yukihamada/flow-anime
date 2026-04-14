@@ -9,11 +9,12 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- OGP -->
-<meta property="og:title" content="FLOW — BJJ x AI Original Anime">
-<meta property="og:description" content="AIが格闘技を支配する2030年。左腕が壊れた少年が、予測不能の柔術で世界の頂点を目指す。全60話のオリジナルアニメ企画。">
+<meta property="og:title" content="AIに読めない体が、唯一の武器だった。— FLOW">
+<meta property="og:description" content="2030年、AIが格闘技を制す世界。左腕を失った少年・流が持つのは、AIに絶対に予測できない「人間の動き」だけ。全60話 × 5シーズンのオリジナルアニメ企画。">
 <meta property="og:image" content="https://flow-anime.com/images/og_image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FLOW — AIと人間の境界線に立つ少年。BJJ × AI Original Anime">
 <meta property="og:url" content="https://flow-anime.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FLOW">
@@ -24,9 +25,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@flow_bjj">
 <meta name="twitter:creator" content="@flow_bjj">
-<meta name="twitter:title" content="FLOW — BJJ x AI Anime | 60 Episodes">
-<meta name="twitter:description" content="What if BJJ had its own anime? AI controls fighting in 2030. One boy fights with something AI can't predict. 60 episodes, original soundtrack.">
+<meta name="twitter:title" content="The only weapon AI can't read. — FLOW Anime">
+<meta name="twitter:description" content="2030. AI dominates every sport. One boy with a broken arm fights with something no algorithm can predict. 60 episodes. Original soundtrack. BJJ × AI.">
 <meta name="twitter:image" content="https://flow-anime.com/images/og_image.png">
+<meta name="twitter:image:alt" content="FLOW — A boy standing between the AI world and the human world. BJJ × AI Original Anime">
 <!-- SEO -->
 <meta name="description" content="FLOW — AIが格闘技を支配する2030年。左腕が壊れた少年が、AIに読めない柔術で世界の頂点を目指す。全60話のオリジナルアニメ企画。">
 <meta name="keywords" content="FLOW, BJJ, anime, jiu-jitsu, AI, 柔術, アニメ, martial arts, original anime">
@@ -349,7 +351,85 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   .intro{padding:5rem 1.2rem}
   .ep-num{min-width:2.5rem;font-size:1.2rem}
 }
+
+/* ── FLOW Enhancement Pack ── */
+
+/* Cinematic scan lines on hero */
+.hero::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.022) 3px,rgba(0,0,0,.022) 4px);
+  pointer-events:none;z-index:1}
+
+/* Vignette inside hero */
+.hero-bg::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 60%,transparent 30%,rgba(0,0,0,.55) 100%);
+  z-index:1;pointer-events:none}
+
+/* Character cards: color-matched glow */
+.char-card[data-char="nagare"]:hover{border-color:#3366cc !important;box-shadow:0 24px 56px rgba(0,0,0,.6),0 0 40px rgba(51,102,204,.3)}
+.char-card[data-char="rio"]:hover{border-color:#99bbee !important;box-shadow:0 24px 56px rgba(0,0,0,.6),0 0 40px rgba(153,187,238,.25)}
+.char-card[data-char="luciano"]:hover{border-color:#cc8844 !important;box-shadow:0 24px 56px rgba(0,0,0,.6),0 0 40px rgba(204,136,68,.3)}
+.char-card[data-char="rin"]:hover{border-color:#cc3344 !important;box-shadow:0 24px 56px rgba(0,0,0,.6),0 0 40px rgba(204,51,68,.3)}
+.char-card[data-char="sage"]:hover{border-color:#44ddff !important;box-shadow:0 24px 56px rgba(0,0,0,.6),0 0 40px rgba(68,221,255,.25)}
+
+/* SAGE: animated scan line */
+@keyframes sageScanLine{0%{top:-4px;opacity:.8}100%{top:104%;opacity:0}}
+.sage-scan{position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 0%,rgba(68,221,255,.7) 50%,transparent 100%);
+  animation:sageScanLine 2.8s 1.2s ease-in-out;pointer-events:none;z-index:3}
+.sage-badge{position:absolute;top:.55rem;right:.55rem;font-size:.48rem;color:#44ddff;
+  letter-spacing:.15em;opacity:0;transition:opacity .25s;font-family:monospace;
+  text-shadow:0 0 6px rgba(68,221,255,.8);text-transform:uppercase}
+.char-card[data-char="sage"]:hover .sage-badge{opacity:1}
+.char-card[data-char="sage"]{overflow:hidden}
+
+/* Flow power bars */
+.flow-power{margin-top:.65rem;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.flow-power-fill{height:100%;border-radius:2px;transform:scaleX(0);transform-origin:left;
+  transition:transform 1.3s .15s cubic-bezier(.16,1,.3,1)}
+.flow-power.vis .flow-power-fill{transform:scaleX(1)}
+
+/* Hero typewriter */
+@keyframes typeExpand{from{max-width:0;opacity:1}to{max-width:600px;opacity:1}}
+.hero-tag-tw{overflow:hidden;white-space:nowrap;max-width:0;opacity:0;display:inline-block;
+  animation:typeExpand 2.2s 1.6s steps(42,end) forwards}
+.tw-cursor{display:inline-block;width:2px;height:.9em;background:var(--ac2);margin-left:1px;
+  vertical-align:-.05em;animation:twBlink .65s step-end infinite;
+  opacity:0;animation-delay:1.6s;animation-fill-mode:forwards}
+@keyframes twBlink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes twFadeOut{to{opacity:0}}
+.tw-cursor.done{animation:twFadeOut .4s 3.8s forwards}
+
+/* Stitle animated underline */
+.stitle{position:relative;display:inline-block;padding-bottom:.25rem}
+.stitle::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;
+  background:linear-gradient(90deg,var(--ac),var(--ac2));
+  transition:width 1.1s .1s cubic-bezier(.16,1,.3,1)}
+.reveal.visible .stitle::after,.stitle.instant::after{width:100%}
+
+/* Divider ambient pulse */
+@keyframes divPulse{0%,100%{opacity:.25}50%{opacity:.7}}
+.divider{animation:divPulse 5s ease-in-out infinite}
+
+/* Episode item hover */
+.ep-item:hover .ep-body h4{color:var(--ac2)}
+.ep-body h4{transition:color .2s}
+
+/* Play button pulse */
+@keyframes playGlow{0%,100%{box-shadow:0 0 40px rgba(74,158,255,.5)}
+  50%{box-shadow:0 0 70px rgba(74,158,255,.85),0 0 100px rgba(74,158,255,.2)}}
+.play-btn{animation:playGlow 2.8s ease-in-out infinite}
+.opening-card:hover .play-btn{animation:none;transform:scale(1.12)!important}
+
+/* Mobile chars: horizontal scroll snap */
+@media(max-width:560px){
+  .chars-grid{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;padding-bottom:.8rem;grid-template-columns:unset;gap:.8rem}
+  .char-card{min-width:150px;flex-shrink:0;scroll-snap-align:start}
+  .chars-grid::-webkit-scrollbar{height:2px}
+  .chars-grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)}
+}
 </style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
 </head>
 <body>
 
@@ -363,6 +443,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
     <a href="#episodes" class="nav-link" data-i18n="nav_episodes">Episodes</a>
     <a href="#scenes" class="nav-link" data-i18n="nav_scenes">Scenes</a>
     <a href="pitch.html" class="nav-link">Pitch</a>
+    <a href="community.html" class="nav-link">Community</a>
   </div>
   <div class="nav-right">
     <div class="lang-sw">
@@ -388,6 +469,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   <a href="#episodes" onclick="closeMenu()" data-i18n="nav_episodes">Episodes</a>
   <a href="#scenes" onclick="closeMenu()" data-i18n="nav_scenes">Scenes</a>
   <a href="pitch.html" onclick="closeMenu()">Pitch Deck</a>
+  <a href="community.html" onclick="closeMenu()">Community</a>
   <a href="review.html" onclick="closeMenu()" data-i18n="nav_review">Review & Vote</a>
   <div class="mobile-lang">
     <button class="lang-btn" onclick="setLang('ja');closeMenu()">JP</button>
@@ -408,17 +490,26 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   <canvas id="particles"></canvas>
   <div class="hero-eyebrow">BJJ x AI ORIGINAL ANIME</div>
   <div class="hero-title glitch" data-text="FLOW">FLOW</div>
-  <div class="hero-tag" data-i18n="hero_tag">AIに読めない柔術で、世界の頂点へ</div>
+  <div class="hero-tag"><span class="hero-tag-tw" data-i18n="hero_tag">AIが全選手を操る2030年。たった一人、AIを壊す少年がいる。</span><span class="tw-cursor"></span></div>
+  <div style="width:100%;max-width:960px;margin:20px auto 0;position:relative;border-radius:6px;overflow:hidden;box-shadow:0 12px 60px rgba(0,0,0,.7)">
+    <video autoplay muted loop playsinline style="width:100%;display:block" poster="images/keyvisual/kv_main.png">
+      <source src="flow_pv_final.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;top:0;left:0;right:0;height:12%;background:linear-gradient(#08080d,transparent);pointer-events:none"></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:12%;background:linear-gradient(transparent,#08080d);pointer-events:none"></div>
+  </div>
+  <div style="margin-bottom:.8rem;opacity:0;animation:fadeUp .8s 1.1s ease forwards">
+    <span style="font-size:.75rem;color:rgba(255,255,255,.35);letter-spacing:.15em">平均視聴 <strong style="color:rgba(74,158,255,.7)">9分</strong> &nbsp;·&nbsp; 全60話 × 5シーズン &nbsp;·&nbsp; オリジナルサウンドトラック</span>
+  </div>
   <div class="hero-cta">
-    <a href="opening.html" class="btn btn-p">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
-      <span data-i18n="hero_watch">Opening</span>
+    <a href="opening.html" class="btn btn-p" style="font-size:1rem;padding:1rem 2.6rem;letter-spacing:.05em">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
+      <span data-i18n="hero_watch">Opening を今すぐ見る</span>
     </a>
     <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="btn btn-x">
       <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       @flow_bjj
     </a>
-    <a href="#episodes" class="btn btn-g" data-i18n="hero_episodes">60 Episodes</a>
   </div>
   <div class="scroll-hint">
     SCROLL
@@ -430,10 +521,12 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
 <div class="intro reveal">
   <div class="intro-year">2030</div>
   <p class="intro-text" data-i18n-html="intro_text">
-    AIが格闘技を支配する<strong>2030年</strong>。<br>
-    予測精度<strong>99.8%</strong>のAI「SAGE」が全ての試合を解析する時代。<br><br>
+    AI企業「SAGE」が格闘技を支配する<strong>2030年</strong>。<br>
+    予測精度<strong>99.8%</strong>。試合は始まる前に結果が決まり、<br>
+    観客はスコアボードの「確認」を眺めるだけだった。<br><br>
     左腕が壊れた17歳の少年 <strong>流（ながれ）</strong>は、<br>
-    AIに読めない唯一の武器 ── <strong>"フロウ"</strong> で世界の頂点を目指す。
+    世界でただ一人、SAGEが絶対に予測できない動きを持つ ──<br>
+    それが <strong>"フロウ"</strong>、水のように流れる、AIの外側に存在する人間の動き。
   </p>
   <div class="stats">
     <div class="stat"><div class="stat-num" data-count="60">0</div><div class="stat-label">EPISODES</div></div>
@@ -442,6 +535,45 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
     <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">ORIGINAL SONGS</div></div>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<!-- 2030 WORLD SECTION -->
+<section id="world" class="reveal" style="padding:5rem 2rem">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="stitle instant" style="font-size:clamp(1.4rem,3.5vw,2rem);letter-spacing:.35em">2030 — THE WORLD</div>
+    <div class="ssub">AIが支配する社会。その亀裂から、抵抗が生まれる。</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto">
+
+    <div style="background:linear-gradient(135deg,rgba(68,221,255,.04),rgba(8,8,13,.8));border:1px solid rgba(68,221,255,.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s" onmouseover="this.style.borderColor='rgba(68,221,255,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(68,221,255,.15)';this.style.transform=''">
+      <div style="position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at 100% 0%,rgba(68,221,255,.08),transparent)"></div>
+      <div style="font-size:2rem;margin-bottom:1rem">🤖</div>
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#44ddff;letter-spacing:.1em;margin-bottom:.8rem">AI支配</div>
+      <p style="font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.9">SAGE社が開発した予測AI「MARS」は、あらゆる格闘技の試合を99.8%の精度で解析する。選手たちはイヤピースからリアルタイムで最適解を受け取り、試合は「確認作業」となった。スポーツから<em style="color:rgba(255,255,255,.75)">不確実性</em>が消えた世界。</p>
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(204,51,68,.04),rgba(8,8,13,.8));border:1px solid rgba(204,51,68,.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s" onmouseover="this.style.borderColor='rgba(204,51,68,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(204,51,68,.15)';this.style.transform=''">
+      <div style="position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at 100% 0%,rgba(204,51,68,.08),transparent)"></div>
+      <div style="font-size:2rem;margin-bottom:1rem">🌊</div>
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#cc3344;letter-spacing:.1em;margin-bottom:.8rem">地下抵抗</div>
+      <p style="font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.9">SAGEの監視が届かない地下道場で、AI不使用の柔術家たちが静かに技を磨く。「感覚柔術」と呼ばれる旧来のスタイルは時代遅れとされ、公式大会への出場も事実上禁じられている。だが彼らには、AIが決して学べないものがある。</p>
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(74,158,255,.04),rgba(8,8,13,.8));border:1px solid rgba(74,158,255,.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s" onmouseover="this.style.borderColor='rgba(74,158,255,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(74,158,255,.15)';this.style.transform=''">
+      <div style="position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at 100% 0%,rgba(74,158,255,.08),transparent)"></div>
+      <div style="font-size:2rem;margin-bottom:1rem">🔥</div>
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:#4a9eff;letter-spacing:.1em;margin-bottom:.8rem">人間の証明</div>
+      <p style="font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.9">予測不能な動き ─ <em style="color:rgba(255,255,255,.75)">「フロウ」</em> ─ は、AIのデータに存在しない次元にある。それは訓練で作るものではなく、痛みと不完全さの中から自然に湧き出るもの。壊れた腕を持つ少年だけが、その扉の前に立っていた。</p>
+    </div>
+
+  </div>
+  <style>
+  @media(max-width:700px){
+    #world [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important}
+  }
+  </style>
+</section>
 
 <div class="divider"></div>
 
@@ -454,6 +586,34 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
     <div class="opening-overlay">
       <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div>
       <div class="opening-label" data-i18n="watch_opening">WATCH OPENING</div>
+    </div>
+  </a>
+  <div style="text-align:center;margin-top:16px;color:#555;font-size:.82rem">
+    平均 <strong style="color:#4a9eff">9分</strong> 視聴 — OP曲「0.2%の証明」収録
+  </div>
+</section>
+
+<!-- EPISODE 1 BANNER -->
+<section id="episode1-banner" class="reveal" style="padding:4rem 2rem 2rem;max-width:1000px;margin:0 auto">
+  <a href="/episode1.html" style="display:block;position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(200,169,110,.2);transition:all .4s;text-decoration:none"
+     onmouseover="this.style.borderColor='rgba(200,169,110,.6)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,.5)'"
+     onmouseout="this.style.borderColor='rgba(200,169,110,.2)';this.style.transform='';this.style.boxShadow=''">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:#000">
+      <img src="/images/ep1/frames/a_070_kaido_entrance.png" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+      <img src="/images/ep1/frames/a_120_sweep_explosion.png" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+      <img src="/images/ep1/frames/b_225_kaido_headpat.png" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.85) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 2.5rem">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem">
+        <span style="background:linear-gradient(135deg,#c8a96e,#e8c88e);color:#000;font-size:.6rem;font-weight:800;padding:4px 10px;border-radius:4px;letter-spacing:.1em">NEW</span>
+        <span style="color:rgba(255,255,255,.5);font-size:.7rem;letter-spacing:.15em">SEASON 1 &mdash; EPISODE 01</span>
+      </div>
+      <div style="font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#fff;letter-spacing:.1em">第1話「残像」</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.85rem;margin-top:.3rem;line-height:1.6">65シーン完全版 — AIが柔術を支配する2030年。伝説の柔術家・海堂がSAGEを破壊し、消えた。</div>
+      <div style="display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;color:#c8a96e;font-size:.8rem;font-weight:700;letter-spacing:.1em">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
+        READ NOW
+      </div>
     </div>
   </a>
 </section>
@@ -472,6 +632,22 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   </div>
 </div>
 
+<!-- COMMUNITY BANNER -->
+<div style="max-width:860px;margin:0 auto 0;padding:0 20px 48px">
+  <a href="community.html" style="display:block;background:linear-gradient(135deg,rgba(74,158,255,.06),rgba(124,92,255,.06));border:1px solid rgba(74,158,255,.18);border-radius:16px;padding:24px 28px;text-decoration:none;transition:all .25s"
+     onmouseover="this.style.borderColor='rgba(74,158,255,.45)';this.style.transform='translateY(-2px)'"
+     onmouseout="this.style.borderColor='rgba(74,158,255,.18)';this.style.transform=''">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="font-size:2rem;flex-shrink:0">🌊</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:4px">一緒に作ろう — コミュニティ参加受付中</div>
+        <div style="color:#555;font-size:.82rem">クラファン事前登録 / 物語投票 / クリエイター参加 →</div>
+      </div>
+      <div style="color:#4a9eff;font-size:.8rem;font-weight:700;flex-shrink:0">community.html →</div>
+    </div>
+  </a>
+</div>
+
 <div class="divider"></div>
 
 <!-- CHARACTERS -->
@@ -479,7 +655,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   <div class="stitle" data-i18n="sec_characters">CHARACTERS</div>
   <div class="ssub" data-i18n="sec_characters_sub">AIが全てを予測する時代に、予測不能な者たち</div>
   <div class="chars-grid">
-    <div class="char-card" onclick="showModal(this)" data-quote-ja="「もう一回」── 師匠の言葉だけが、俺を前に進ませる。" data-quote-en="'One more time' — my master's words are all that keep me going." data-quote-pt="'Mais uma vez' — as palavras do mestre sao tudo que me mantem de pe.">
+    <div class="char-card" data-char="nagare" onclick="showModal(this)" data-quote-ja="「もう一回」── 師匠の言葉だけが、俺を前に進ませる。" data-quote-en="'One more time' — my master's words are all that keep me going." data-quote-pt="'Mais uma vez' — as palavras do mestre sao tudo que me mantem de pe.">
       <img src="images/characters/nagare_sheet_v2.png" alt="Nagare" loading="lazy">
       <div class="char-info">
         <div class="char-name" style="color:var(--nagare)">流 NAGARE</div>
@@ -487,7 +663,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
       </div>
       <div class="char-quote"><p data-i18n="quote_nagare">"もう一回" ── 師匠の言葉だけが、俺を前に進ませる。</p></div>
     </div>
-    <div class="char-card" onclick="showModal(this)" data-quote-ja="「感覚？ そんな曖昧なものに命を預けるのか」" data-quote-en="'Intuition? You'd trust your life to something so vague?'" data-quote-pt="'Intuicao? Voce confiaria sua vida a algo tao vago?'">
+    <div class="char-card" data-char="rio" onclick="showModal(this)" data-quote-ja="「感覚？ そんな曖昧なものに命を預けるのか」" data-quote-en="'Intuition? You'd trust your life to something so vague?'" data-quote-pt="'Intuicao? Voce confiaria sua vida a algo tao vago?'">
       <img src="images/characters/rio_sheet.png" alt="Rio" loading="lazy">
       <div class="char-info">
         <div class="char-name" style="color:var(--rio)">理央 RIO</div>
@@ -495,7 +671,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
       </div>
       <div class="char-quote"><p data-i18n="quote_rio">"感覚？ そんな曖昧なものに命を預けるのか"</p></div>
     </div>
-    <div class="char-card" onclick="showModal(this)" data-quote-ja="「柔術は完璧な体のためのものじゃない。今の体で何ができるかだ」" data-quote-en="'Jiu-jitsu isn't for perfect bodies. It's about what you can do with yours.'" data-quote-pt="'Jiu-jitsu nao e para corpos perfeitos. E sobre o que voce pode fazer com o seu.'">
+    <div class="char-card" data-char="luciano" onclick="showModal(this)" data-quote-ja="「柔術は完璧な体のためのものじゃない。今の体で何ができるかだ」" data-quote-en="'Jiu-jitsu isn't for perfect bodies. It's about what you can do with yours.'" data-quote-pt="'Jiu-jitsu nao e para corpos perfeitos. E sobre o que voce pode fazer com o seu.'">
       <img src="images/characters/marcelo_sheet.png" alt="Luciano" loading="lazy">
       <div class="char-info">
         <div class="char-name" style="color:var(--luciano)">ルシアーノ LUCIANO</div>
@@ -503,7 +679,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
       </div>
       <div class="char-quote"><p data-i18n="quote_luciano">"柔術は完璧な体のためのものじゃない。今の体で何ができるかだ"</p></div>
     </div>
-    <div class="char-card" onclick="showModal(this)" data-quote-ja="「AIを使わない理由？ つまらないから。」" data-quote-en="'Why don't I use AI? It's boring.'" data-quote-pt="'Por que nao uso IA? E entediante.'">
+    <div class="char-card" data-char="rin" onclick="showModal(this)" data-quote-ja="「AIを使わない理由？ つまらないから。」" data-quote-en="'Why don't I use AI? It's boring.'" data-quote-pt="'Por que nao uso IA? E entediante.'">
       <img src="images/characters/rin_sheet.png" alt="Rin" loading="lazy">
       <div class="char-info">
         <div class="char-name" style="color:var(--rin)">凛 RIN</div>
@@ -511,9 +687,11 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
       </div>
       <div class="char-quote"><p data-i18n="quote_rin">"AIを使わない理由？ つまらないから。"</p></div>
     </div>
-    <div class="char-card" onclick="showModal(this)" data-quote-ja="「最適解を選ばない人間が、なぜ勝つのですか？」" data-quote-en="'Why do humans who reject the optimal solution... win?'" data-quote-pt="'Por que humanos que rejeitam a solucao otima... vencem?'">
+    <div class="char-card" data-char="sage" onclick="showModal(this)" data-quote-ja="「最適解を選ばない人間が、なぜ勝つのですか？」" data-quote-en="'Why do humans who reject the optimal solution... win?'" data-quote-pt="'Por que humanos que rejeitam a solucao otima... vencem?'">
+      <div class="sage-scan"></div>
       <img src="images/characters/sage_sheet.png" alt="SAGE" loading="lazy">
-      <div class="char-info">
+      <div class="char-info" style="position:relative">
+        <div class="sage-badge">ANALYZING...</div>
         <div class="char-name" style="color:var(--sage)">SAGE</div>
         <div class="char-role" data-i18n="char_sage">AI / 予測精度99.8% / だがフロウは読めない</div>
       </div>
@@ -536,6 +714,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
         <div class="flow-nm" style="color:#6699cc">滴 Shizuku</div>
         <div class="flow-fx" data-i18n="flow_lv1">一瞬だけAI予測を外す</div>
         <div class="flow-cost" data-i18n="flow_cost1">代償: 軽い疲労</div>
+        <div class="flow-power"><div class="flow-power-fill" style="width:25%;background:linear-gradient(90deg,#6699cc,#88aadd)"></div></div>
       </div>
     </div>
     <div class="flow-card" style="border-color:#4488dd" onclick="showModal(this)">
@@ -545,6 +724,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
         <div class="flow-nm" style="color:#4488dd">流 Nagare</div>
         <div class="flow-fx" data-i18n="flow_lv2">3〜5手が連続する水の流れ</div>
         <div class="flow-cost" data-i18n="flow_cost2">代償: 左半身の痺れ</div>
+        <div class="flow-power"><div class="flow-power-fill" style="width:50%;background:linear-gradient(90deg,#4488dd,#66aaff)"></div></div>
       </div>
     </div>
     <div class="flow-card" style="border-color:#2266ee" onclick="showModal(this)">
@@ -554,6 +734,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
         <div class="flow-nm" style="color:#2266ee">渦 Uzu</div>
         <div class="flow-fx" data-i18n="flow_lv3">相手もフロウに引き込む。全AI停止</div>
         <div class="flow-cost" data-i18n="flow_cost3">代償: 意識朦朧</div>
+        <div class="flow-power"><div class="flow-power-fill" style="width:75%;background:linear-gradient(90deg,#2266ee,#4488ff)"></div></div>
       </div>
     </div>
     <div class="flow-card" style="border-color:#0044ff" onclick="showModal(this)">
@@ -563,6 +744,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
         <div class="flow-nm" style="color:#0044ff">海 Umi</div>
         <div class="flow-fx" data-i18n="flow_lv4">海堂だけが到達した未知の領域</div>
         <div class="flow-cost" data-i18n="flow_cost4">代償: ???</div>
+        <div class="flow-power"><div class="flow-power-fill" style="width:100%;background:linear-gradient(90deg,#0044ff,#4a9eff,#00d4ff)"></div></div>
       </div>
     </div>
   </div>
@@ -577,32 +759,43 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   <div class="ep-timeline">
     <div class="ep-season">
       <div class="ep-season-header" data-i18n="s1_title">SEASON 1 — 白帯篇「目覚め」</div>
-      <div class="ep-item"><div class="ep-num">01</div><div class="ep-body"><h4 data-i18n="ep01_t">残像</h4><p data-i18n="ep01_d">2030年ムラジアル決勝。伝説の柔術家・海堂がAI予測99.7%を覆す。翌日、海堂は消えた。</p><span class="ep-tag">SAGE ERROR</span></div></div>
-      <div class="ep-item"><div class="ep-num">02</div><div class="ep-body"><h4 data-i18n="ep02_t">珊瑚帯の男</h4><p data-i18n="ep02_d">流が海堂の師匠ルシアーノの道場を訪ねる。AIスクリーンのない、古いマットの地下道場。</p></div></div>
-      <div class="ep-item"><div class="ep-num">03</div><div class="ep-body"><h4 data-i18n="ep03_t">右手の世界</h4><p data-i18n="ep03_d">左半身が使えない分、右手の感覚が研ぎ澄まされていく。相手の体重移動が「わかる」。</p></div></div>
-      <div class="ep-item"><div class="ep-num">04</div><div class="ep-body"><h4 data-i18n="ep04_t">水面</h4><p data-i18n="ep04_d">初スパーリング。完敗するが、一瞬だけ力の方向が「見えた」。フロウの萌芽。</p></div></div>
-      <div class="ep-item"><div class="ep-num">05</div><div class="ep-body"><h4>SAGE</h4><p data-i18n="ep05_d">SAGE社が街中に予測AI端末を設置。流の動きだけ、SAGEが予測できない。</p><span class="ep-tag">SAGE vs INSTINCT</span></div></div>
-      <div class="ep-item"><div class="ep-num">06</div><div class="ep-body"><h4 data-i18n="ep06_t">蜘蛛</h4><p data-i18n="ep06_d">足関節の天才・凛が登場。AI不使用の異端者。「つまらないから」。</p></div></div>
-      <div class="ep-item"><div class="ep-num">07-09</div><div class="ep-body"><h4 data-i18n="ep07_t">白帯の意地</h4><p data-i18n="ep07_d">地区大会編。AI適応型選手との対戦。流は基礎だけで挑む。</p></div></div>
-      <div class="ep-item"><div class="ep-num">10</div><div class="ep-body"><h4 data-i18n="ep10_t">流</h4><p data-i18n="ep10_d">フロウ初発動。全AI画面にERRが表示される。観客、騒然。</p><span class="ep-tag">FLOW AWAKENING</span></div></div>
-      <div class="ep-item"><div class="ep-num">11-12</div><div class="ep-body"><h4 data-i18n="ep11_t">帰還</h4><p data-i18n="ep11_d">理央がルシアーノの道場に現れる。「僕と組んでくれませんか」。</p></div></div>
+      <div class="ep-item" style="cursor:pointer" onclick="location.href='/episode1.html'"><div class="ep-num">01</div><div class="ep-body"><h4 data-i18n="ep01_t">残像 <span style="font-size:.7rem;color:var(--ac2);font-weight:400">&#9654; READ NOW</span></h4><p data-i18n="ep01_d">2030年ムラジアル決勝。伝説の柔術家・海堂が、SAGE予測99.7%をたった一つの動きで崩壊させた。4万人が立ち上がり、世界が止まった夜——その翌朝、海堂は消えた。道着だけを残して。</p><span class="ep-tag">SAGE ERROR</span></div></div>
+      <div class="ep-item"><div class="ep-num">02</div><div class="ep-body"><h4 data-i18n="ep02_t">珊瑚帯の男</h4><p data-i18n="ep02_d">下北沢の路地裏。地下に続く錆びた階段。AIスクリーンが一枚もない、古い畳の道場に、白髪の男・ルシアーノがいた。流の訪問を予期していたかのように、彼は何も聞かずに「着替えてこい」と言った。</p></div></div>
+      <div class="ep-item"><div class="ep-num">03</div><div class="ep-body"><h4 data-i18n="ep03_t">右手の世界</h4><p data-i18n="ep03_d">使えない左腕が逆説的に右手を鋭くする。相手の体重が「ずれる瞬間」が、右の指先に伝わってくる。ルシアーノは言う。「AIはデータを読む。お前は体を読む。それは全然違う話だ」。</p></div></div>
+      <div class="ep-item"><div class="ep-num">04</div><div class="ep-body"><h4 data-i18n="ep04_t">水面</h4><p data-i18n="ep04_d">初スパーリング。SAGE搭載の練習相手に完膚なきまでに叩きのめされる。だが倒れた瞬間、流は気づいた——相手が動く前の、重心のわずかな揺れが「見えた」のだ。フロウの最初の滴。</p></div></div>
+      <div class="ep-item"><div class="ep-num">05</div><div class="ep-body"><h4>SAGE</h4><p data-i18n="ep05_d">SAGE社が全国の道場に義務的AI解析端末を設置。流が練習すると端末が赤くなる——「予測不能」。SAGE社のエンジニアが流の動画を回収しに来る。流は初めて自分が「何か」を持っていると知る。</p><span class="ep-tag">SAGE vs INSTINCT</span></div></div>
+      <div class="ep-item"><div class="ep-num">06</div><div class="ep-body"><h4 data-i18n="ep06_t">蜘蛛</h4><p data-i18n="ep06_d">深夜の道場に侵入者。19歳の女性・凛が、SAGE搭載の練習ロボット3台を足関節だけで沈黙させていた。「AIって、ルールの中しか動けないじゃん。つまらないから」——地下格闘シーンに君臨する"蜘蛛"。</p></div></div>
+      <div class="ep-item"><div class="ep-num">07</div><div class="ep-body"><h4 data-i18n="ep07_t">白帯の意地</h4><p data-i18n="ep07_d">地区大会。AI補助なしでのエントリーは流一人。「ハンデ」と嘲笑されながら予選を突破する。SAGE搭載の準決勝相手は流のデータを持っていない——流がSAGEの「盲点」であることが、初めて武器になる瞬間。</p></div></div>
+      <div class="ep-item"><div class="ep-num">08</div><div class="ep-body"><h4 data-i18n="ep08_t">誤差</h4><p data-i18n="ep08_d">決勝直前。SAGEが流の蓄積データから「予測モデル」を完成させたと報告される。流の優位が失われる。だがルシアーノが言う。「フロウは型じゃない。お前が変われば、AIは永遠に追いつけない」。</p><span class="ep-tag">DATA vs INSTINCT</span></div></div>
+      <div class="ep-item"><div class="ep-num">09</div><div class="ep-body"><h4 data-i18n="ep09_t">波</h4><p data-i18n="ep09_d">地区大会決勝。SAGE予測が流に追いつく一歩手前で——流の動きが変わる。意識していない。体が勝手に「水」になっていく。その試合の映像は翌日、地下格闘コミュニティで10万回再生された。</p></div></div>
+      <div class="ep-item"><div class="ep-num">10</div><div class="ep-body"><h4 data-i18n="ep10_t">流</h4><p data-i18n="ep10_d">全国大会。SAGEの最新モデルを前にした流が、初めて意識的にフロウを発動させる。アリーナ中のAI端末が同時に「ERR」を表示。4000人の観客が息を呑んだ。SAGEはクラッシュした。流は立っていた。</p><span class="ep-tag">FLOW AWAKENING</span></div></div>
+      <div class="ep-item"><div class="ep-num">11</div><div class="ep-body"><h4 data-i18n="ep11_t">銀髪の来訪者</h4><p data-i18n="ep11_d">試合の翌日、SAGE社エース・理央がルシアーノの道場に現れる。銀髪。完璧な姿勢。冷たい目。「流、君のフロウのデータが欲しい」——だが次の言葉が予想外だった。「僕と組んでくれませんか」。</p></div></div>
+      <div class="ep-item"><div class="ep-num">12</div><div class="ep-body"><h4 data-i18n="ep12_t">帰還</h4><p data-i18n="ep12_d">理央がなぜSAGE社を離れようとしているのか。彼が「最適解の先に何もなかった」と語る夜。ルシアーノの道場で、三人の間に奇妙な信頼が生まれ始める。だが—— 翌朝、SAGE社の黒い車が道場の前に停まった。</p><span class="ep-tag">ALLIANCE</span></div></div>
     </div>
     <div class="ep-season">
       <div class="ep-season-header" data-i18n="s2_title">SEASON 2 — 青帯篇「流転」</div>
-      <div class="ep-item"><div class="ep-num">13-18</div><div class="ep-body"><h4 data-i18n="ep13_t">全国への道</h4><p data-i18n="ep13_d">理央との共同練習。ルシアーノの過去が明かされる。全国大会で本物の強さと出会う。</p></div></div>
-      <div class="ep-item"><div class="ep-num">19-24</div><div class="ep-body"><h4 data-i18n="ep19_t">渦の代償</h4><p data-i18n="ep19_d">フロウLv3「渦」に到達するが、身体への代償が深刻化。流は限界と向き合う。</p><span class="ep-tag" data-i18n="ep19_tag">DARK SIDE</span></div></div>
+      <div class="ep-item"><div class="ep-num">13-15</div><div class="ep-body"><h4 data-i18n="ep13_t">全国への道</h4><p data-i18n="ep13_d">理央と流の共同訓練が始まる。AIと直感の融合を模索する二人。だがルシアーノは静かに言う——「二つは混ぜるな。お前は水であれ」。全国大会が近づく中、ルシアーノの「過去の試合映像」が見つかる。</p></div></div>
+      <div class="ep-item"><div class="ep-num">16-18</div><div class="ep-body"><h4 data-i18n="ep16_t">ルシアーノの傷</h4><p data-i18n="ep16_d">かつてルシアーノ自身もSAGEの前身AIと戦い、敗れた選手だった。SAGEに「感覚柔術の終焉」を宣言させた一戦——その相手が、SAGE社現CEOだと判明する。師匠の沈黙の意味を、流は初めて知る。</p><span class="ep-tag">BACKSTORY</span></div></div>
+      <div class="ep-item"><div class="ep-num">19-22</div><div class="ep-body"><h4 data-i18n="ep19_t">渦の代償</h4><p data-i18n="ep19_d">全国大会決勝。追い詰められた流がフロウLv3「渦」に突入する。相手を完全に飲み込む超越状態——だが試合後、左腕が完全に麻痺した。医師の宣告。「このまま続けると、二度と動かなくなる」。</p><span class="ep-tag" data-i18n="ep19_tag">DARK SIDE</span></div></div>
+      <div class="ep-item"><div class="ep-num">23-24</div><div class="ep-body"><h4 data-i18n="ep23_t">傷と帯</h4><p data-i18n="ep23_d">入院中の流に、ルシアーノが青帯を渡す。「お前はもう技術を持っている。足りないのは、なぜ戦うかだ」。同じ病室のベッドで、流は初めて海堂への手紙を書く——届かないと知りながら。</p></div></div>
     </div>
     <div class="ep-season">
       <div class="ep-season-header" data-i18n="s3_title">SEASON 3 — 紫帯篇「世界」</div>
-      <div class="ep-item"><div class="ep-num">25-36</div><div class="ep-body"><h4 data-i18n="ep25_t">世界大会</h4><p data-i18n="ep25_d">世界の猛者たちとの激突。各国のAI柔術・伝統柔術の頂点。流の柔術が世界に問いかける。</p><span class="ep-tag">WORLD CHAMPIONSHIP</span></div></div>
+      <div class="ep-item"><div class="ep-num">25-29</div><div class="ep-body"><h4 data-i18n="ep25_t">世界大会 — 予選</h4><p data-i18n="ep25_d">アブダビ世界大会。ブラジル、ロシア、韓国——各国の「AIと人間の境界」で戦う選手たちと激突。SAGE搭載の選手だけでなく、アナログの達人、山岳民族の柔術家、盲目の寝技師が流を待ち構える。</p><span class="ep-tag">WORLD CHAMPIONSHIP</span></div></div>
+      <div class="ep-item"><div class="ep-num">30-33</div><div class="ep-body"><h4 data-i18n="ep30_t">理央 vs 流</h4><p data-i18n="ep30_d">準決勝。理央 vs 流。二人は何度も練習した——だが本番では、理央がSAGEの最新モデルを起動する。「お前の動きは全部覚えた」。流は今まで見たことのない理央の顔を見る。それは恐怖の顔だった。</p><span class="ep-tag">MIRROR MATCH</span></div></div>
+      <div class="ep-item"><div class="ep-num">34-36</div><div class="ep-body"><h4 data-i18n="ep34_t">人類の証明</h4><p data-i18n="ep34_d">世界決勝。対SAGE最強モデル搭載選手。流は「海」の入り口に立つ感覚を得るが——フロウが暴走し、試合中に意識を失いかける。「流れる水は止まれない。止まったら、ただの水たまりだ」——海堂の声が聞こえた気がした。</p></div></div>
     </div>
     <div class="ep-season">
       <div class="ep-season-header" data-i18n="s4_title">SEASON 4 — 茶帯篇「真実」</div>
-      <div class="ep-item"><div class="ep-num">37-48</div><div class="ep-body"><h4 data-i18n="ep37_t">SAGEの真実</h4><p data-i18n="ep37_d">SAGEの背後にある巨大な陰謀。消えた海堂の行方。全てが一つに繋がる。</p><span class="ep-tag">SAGE REVEAL</span></div></div>
+      <div class="ep-item"><div class="ep-num">37-40</div><div class="ep-body"><h4 data-i18n="ep37_t">SAGEの真実</h4><p data-i18n="ep37_d">世界大会後、流の元に匿名の封筒が届く。中身——海堂の筆跡。「俺はここにいる。来るな」。消印は東京都内のSAGE本社近く。海堂失踪の夜に何があったのか、その真実が解き明かされ始める。</p><span class="ep-tag">SAGE REVEAL</span></div></div>
+      <div class="ep-item"><div class="ep-num">41-44</div><div class="ep-body"><h4 data-i18n="ep41_t">取り込まれた者</h4><p data-i18n="ep41_d">SAGE本社地下施設に「予測不能人間データベース」が存在すると判明。海堂はSAGEに「解析される」ため拘束されていた——フロウのアルゴリズム化を強制するために。流は凛と理央と共に、潜入を決意する。</p></div></div>
+      <div class="ep-item"><div class="ep-num">45-48</div><div class="ep-body"><h4 data-i18n="ep45_t">師匠との再会</h4><p data-i18n="ep45_d">解放された海堂は、もはや以前の海堂ではなかった。SAGEのアルゴリズムが脳に刻まれ、動きが「最適化」されている。海堂を取り戻すには——流が海堂をマットで倒すしかない。師匠 vs 弟子の、最も残酷な試合。</p><span class="ep-tag">DARKEST HOUR</span></div></div>
     </div>
     <div class="ep-season">
       <div class="ep-season-header" data-i18n="s5_title">SEASON 5 — 黒帯篇「海」</div>
-      <div class="ep-item"><div class="ep-num">49-60</div><div class="ep-body"><h4 data-i18n="ep49_t">最終決戦</h4><p data-i18n="ep49_d">人間の直感 vs 機械の最適解。流は「海」に到達できるのか。全ての答えが、マットの上に。</p><span class="ep-tag">FINAL</span></div></div>
+      <div class="ep-item"><div class="ep-num">49-53</div><div class="ep-body"><h4 data-i18n="ep49_t">フロウLv4</h4><p data-i18n="ep49_d">海堂との試合で、流は初めて「海」の領域に触れる——時間の感覚が消え、相手の動きが「水」として流れ込んでくる。だが代償は甚大。試合後、流は3日間昏睡した。「海」への到達は、命と引き換えかもしれない。</p></div></div>
+      <div class="ep-item"><div class="ep-num">54-57</div><div class="ep-body"><h4 data-i18n="ep54_t">SAGEとの最終交渉</h4><p data-i18n="ep54_d">SAGE社CEOが「流と取引」を持ちかける。「フロウのデータをくれれば、柔術から手を引く」。理央は迷う。凛は拒否する。ルシアーノは微笑んで言う——「お前が決めろ」。一番重い言葉だった。</p><span class="ep-tag">CHOICE</span></div></div>
+      <div class="ep-item"><div class="ep-num">58-60</div><div class="ep-body"><h4 data-i18n="ep58_t">最終決戦 — 人間の証明</h4><p data-i18n="ep58_d">SAGE CEOとの直接対決。マットに立つのは、CEOが「完全なフロウ搭載」と豪語する新型AI人型ロボット。観客ゼロ、記録なし。だが流は戦う——勝つためでも、証明するためでも、生き延びるためでもなく。ただ、「ここにいるため」に。</p><span class="ep-tag">FINAL</span></div></div>
     </div>
   </div>
 </section>
@@ -690,6 +883,7 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
       <div class="footer-col">
         <div class="footer-col-title" data-i18n="ft_project">Project</div>
         <a href="pitch.html">Pitch Deck</a>
+        <a href="community.html">Community</a>
         <a href="review.html" data-i18n="nav_review">Review & Vote</a>
       </div>
       <div class="footer-col">
@@ -712,6 +906,19 @@ footer{text-align:center;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,25
   </div>
 </footer>
 
+<!-- Floating CTA bar -->
+<div id="floatCta" style="position:fixed;bottom:0;left:0;right:0;z-index:90;transform:translateY(100%);transition:transform .5s cubic-bezier(.16,1,.3,1);background:linear-gradient(135deg,rgba(8,8,18,.97),rgba(12,12,28,.97));border-top:1px solid rgba(74,158,255,.15);backdrop-filter:blur(16px);padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem">
+  <div style="display:flex;flex-direction:column;gap:2px;overflow:hidden">
+    <div style="font-family:'Dela Gothic One',sans-serif;font-size:1rem;letter-spacing:.15em;background:linear-gradient(90deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap">FLOW</div>
+    <div style="font-size:.65rem;color:rgba(255,255,255,.35);white-space:nowrap;letter-spacing:.05em">AIに読めない柔術で、世界の頂点へ &nbsp;·&nbsp; 全60話</div>
+  </div>
+  <a href="opening.html" style="flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.6rem;border-radius:100px;background:linear-gradient(135deg,#4a9eff,#7c5cff);color:#fff;font-size:.85rem;font-weight:700;text-decoration:none;box-shadow:0 4px 20px rgba(74,158,255,.35);transition:all .2s;white-space:nowrap" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
+    Opening を見る
+  </a>
+  <button onclick="document.getElementById('floatCta').style.display='none'" style="flex-shrink:0;background:none;border:none;color:rgba(255,255,255,.25);font-size:1.2rem;cursor:pointer;line-height:1;padding:.2rem">&times;</button>
+</div>
+
 <!-- Modal -->
 <div class="mo" id="mo" onclick="if(event.target===this)this.classList.remove('on')">
   <div class="mo-c">
@@ -731,7 +938,7 @@ ja: {
   hero_episodes: "全60話を読む",
   nav_opening: "Opening", nav_characters: "キャラクター", nav_flowsystem: "フロウシステム",
   nav_episodes: "エピソード", nav_scenes: "シーン", nav_review: "レビュー & 投票",
-  intro_text: 'AIが格闘技を支配する<strong>2030年</strong>。<br>予測精度<strong>99.8%</strong>のAI「SAGE」が全ての試合を解析する時代。<br><br>左腕が壊れた17歳の少年 <strong>流（ながれ）</strong>は、<br>AIに読めない唯一の武器 ── <strong>"フロウ"</strong> で世界の頂点を目指す。',
+  intro_text: 'AI企業「SAGE」が格闘技を支配する<strong>2030年</strong>。<br>予測精度<strong>99.8%</strong>。試合は始まる前に結果が決まり、<br>観客はスコアボードの「確認」を眺めるだけだった。<br><br>左腕が壊れた17歳の少年 <strong>流（ながれ）</strong>は、<br>世界でただ一人、SAGEが絶対に予測できない動きを持つ ──<br>それが <strong>"フロウ"</strong>、水のように流れる、AIの外側に存在する人間の動き。',
   sec_opening: "OPENING", sec_opening_sub: "オリジナル主題歌付きオープニング映像を体験",
   watch_opening: "OPENING を見る",
   inline_cta: '<strong>FLOW</strong>の最新情報をいち早くお届け',
@@ -757,20 +964,31 @@ ja: {
   sec_episodes: "EPISODES", sec_episodes_sub: "全5シーズン・60話の壮大な物語",
   s1_title: 'SEASON 1 — 白帯篇「目覚め」', s2_title: 'SEASON 2 — 青帯篇「流転」',
   s3_title: 'SEASON 3 — 紫帯篇「世界」', s4_title: 'SEASON 4 — 茶帯篇「真実」', s5_title: 'SEASON 5 — 黒帯篇「海」',
-  ep01_t: "残像", ep01_d: "2030年ムラジアル決勝。伝説の柔術家・海堂がAI予測99.7%を覆す。翌日、海堂は消えた。",
-  ep02_t: "珊瑚帯の男", ep02_d: "流が海堂の師匠ルシアーノの道場を訪ねる。AIスクリーンのない、古いマットの地下道場。",
-  ep03_t: "右手の世界", ep03_d: '左半身が使えない分、右手の感覚が研ぎ澄まされていく。相手の体重移動が「わかる」。',
-  ep04_t: "水面", ep04_d: '初スパーリング。完敗するが、一瞬だけ力の方向が「見えた」。フロウの萌芽。',
-  ep05_d: "SAGE社が街中に予測AI端末を設置。流の動きだけ、SAGEが予測できない。",
-  ep06_t: "蜘蛛", ep06_d: '足関節の天才・凛が登場。AI不使用の異端者。「つまらないから」。',
-  ep07_t: "白帯の意地", ep07_d: "地区大会編。AI適応型選手との対戦。流は基礎だけで挑む。",
-  ep10_t: "流", ep10_d: "フロウ初発動。全AI画面にERRが表示される。観客、騒然。",
-  ep11_t: "帰還", ep11_d: '理央がルシアーノの道場に現れる。「僕と組んでくれませんか」。',
-  ep13_t: "全国への道", ep13_d: "理央との共同練習。ルシアーノの過去が明かされる。全国大会で本物の強さと出会う。",
-  ep19_t: "渦の代償", ep19_d: "フロウLv3「渦」に到達するが、身体への代償が深刻化。流は限界と向き合う。", ep19_tag: "フロウの闇",
-  ep25_t: "世界大会", ep25_d: "世界の猛者たちとの激突。各国のAI柔術・伝統柔術の頂点。流の柔術が世界に問いかける。",
-  ep37_t: "SAGEの真実", ep37_d: "SAGEの背後にある巨大な陰謀。消えた海堂の行方。全てが一つに繋がる。",
-  ep49_t: "最終決戦", ep49_d: "人間の直感 vs 機械の最適解。流は「海」に到達できるのか。全ての答えが、マットの上に。",
+  ep01_t: "残像", ep01_d: "2030年ムラジアル決勝。伝説の柔術家・海堂が、SAGE予測99.7%をたった一つの動きで崩壊させた。4万人が立ち上がり、世界が止まった夜——その翌朝、海堂は消えた。道着だけを残して。",
+  ep02_t: "珊瑚帯の男", ep02_d: "下北沢の路地裏。AIスクリーンが一枚もない地下道場に、白髪の男・ルシアーノがいた。流の訪問を予期していたかのように、何も聞かずに「着替えてこい」と言った。",
+  ep03_t: "右手の世界", ep03_d: '使えない左腕が右手を鋭くする。相手の体重が「ずれる瞬間」が指先に伝わる。「AIはデータを読む。お前は体を読む。それは全然違う話だ」。',
+  ep04_t: "水面", ep04_d: '初スパーリング。SAGE搭載の相手に完膚なきまでに叩きのめされる。だが倒れた瞬間——相手が動く前の重心の揺れが「見えた」。フロウの最初の滴。',
+  ep05_d: "SAGE社が全国の道場にAI解析端末を強制設置。流が練習すると端末が赤くなる——「予測不能」。流は初めて自分が「何か」を持っていると知る。",
+  ep06_t: "蜘蛛", ep06_d: '深夜の道場に侵入者。凛が、SAGE搭載ロボット3台を足関節だけで沈黙させていた。「AIって、ルールの中しか動けないじゃん。つまらないから」。',
+  ep07_t: "白帯の意地", ep07_d: "地区大会。AI補助なしでのエントリーは流一人。嘲笑されながら予選を突破。SAGE搭載の準決勝相手は流のデータを持っていない——流の「盲点」が初めて武器になる。",
+  ep08_t: "誤差", ep08_d: "決勝直前。SAGEが流の予測モデルを完成させたと報告される。「フロウは型じゃない。お前が変われば、AIは永遠に追いつけない」——ルシアーノの言葉だけが支えだった。",
+  ep09_t: "波", ep09_d: "地区大会決勝。SAGE予測が流に追いつく一歩手前で——流の動きが変わる。体が勝手に「水」になっていく。その試合の映像は翌日、地下格闘コミュニティで10万回再生された。",
+  ep10_t: "流", ep10_d: "全国大会。SAGEの最新モデルを前に、初めて意識的にフロウを発動。アリーナ中のAI端末が同時に「ERR」を表示。4000人の観客が息を呑んだ。SAGEはクラッシュした。流は立っていた。",
+  ep11_t: "銀髪の来訪者", ep11_d: 'SAGE社エース・理央がルシアーノの道場に現れる。「流、君のフロウのデータが欲しい」——だが次の言葉が予想外だった。「僕と組んでくれませんか」。',
+  ep12_t: "帰還", ep12_d: '理央がなぜSAGE社を離れようとしているのか。「最適解の先に何もなかった」と語る夜。三人に奇妙な信頼が生まれ始める——だが翌朝、SAGE社の黒い車が道場の前に停まった。',
+  ep13_t: "全国への道", ep13_d: "理央と流の共同訓練が始まる。AIと直感の融合を模索する二人。だがルシアーノは言う——「二つは混ぜるな。お前は水であれ」。ルシアーノの過去の試合映像が見つかる。",
+  ep16_t: "ルシアーノの傷", ep16_d: "かつてルシアーノもSAGEの前身AIと戦い、敗れた。SAGEに「感覚柔術の終焉」を宣言させた一戦——その相手が、SAGE社現CEOだと判明する。師匠の沈黙の意味を、流は初めて知る。",
+  ep19_t: "渦の代償", ep19_d: "全国大会決勝。追い詰められた流がフロウLv3「渦」に突入する——だが試合後、左腕が完全に麻痺した。「このまま続けると、二度と動かなくなる」。医師の宣告が、静寂な病室に落ちる。", ep19_tag: "フロウの闇",
+  ep23_t: "傷と帯", ep23_d: "入院中の流に、ルシアーノが青帯を渡す。「お前はもう技術を持っている。足りないのは、なぜ戦うかだ」。流は初めて海堂への手紙を書く——届かないと知りながら。",
+  ep25_t: "世界大会 — 予選", ep25_d: "アブダビ世界大会。ブラジル、ロシア、韓国——AI柔術と感覚柔術の最前線。SAGE搭載の選手だけでなく、山岳民族の柔術家、盲目の寝技師が流を待ち構える。",
+  ep30_t: "理央 vs 流", ep30_d: "準決勝。二人は何度も練習した——だが本番で理央がSAGEの最新モデルを起動する。「お前の動きは全部覚えた」。流は今まで見たことのない理央の顔を見る。それは恐怖の顔だった。",
+  ep34_t: "人類の証明", ep34_d: "世界決勝。フロウが暴走し、試合中に意識を失いかける流。「流れる水は止まれない。止まったら、ただの水たまりだ」——海堂の声が聞こえた気がした。",
+  ep37_t: "SAGEの真実", ep37_d: "世界大会後、流の元に匿名の封筒が届く——海堂の筆跡。「俺はここにいる。来るな」。消印はSAGE本社近く。海堂失踪の夜の真実が解き明かされ始める。",
+  ep41_t: "取り込まれた者", ep41_d: "SAGE本社地下に「予測不能人間データベース」が存在と判明。海堂はフロウのアルゴリズム化を強制するため拘束されていた。流は凛と理央と共に、潜入を決意する。",
+  ep45_t: "師匠との再会", ep45_d: "解放された海堂の動きが「最適化」されている。海堂を取り戻すには流が海堂を倒すしかない——師匠 vs 弟子の、最も残酷な試合。",
+  ep49_t: "フロウLv4", ep49_d: "海堂との試合で、流は初めて「海」の領域に触れる——時間の感覚が消え、相手の動きが「水」として流れ込んでくる。代償は甚大。試合後、流は3日間昏睡した。",
+  ep54_t: "SAGEとの最終交渉", ep54_d: "SAGE社CEOが流に取引を持ちかける。「フロウのデータをくれれば、柔術から手を引く」。理央は迷う。凛は拒否する。ルシアーノは微笑んで言う——「お前が決めろ」。",
+  ep58_t: "最終決戦 — 人間の証明", ep58_d: "マットに立つのは「完全フロウ搭載」の新型AI人型ロボット。観客ゼロ、記録なし。だが流は戦う——勝つためでも、証明するためでもなく。ただ、「ここにいるため」に。",
   sec_scenes: "SCENES", sec_scenes_sub: "名シーンコンセプトアート",
   sc1_t: "残像", sc1_d: "海堂 vs ヴィクトル。SAGE予測99.7%を覆す",
   sc2_t: "蜘蛛", sc2_d: "凛の登場。足関節の蜘蛛の巣",
@@ -790,7 +1008,7 @@ en: {
   hero_watch: "Watch Opening", hero_episodes: "Read 60 Episodes",
   nav_opening: "Opening", nav_characters: "Characters", nav_flowsystem: "Flow System",
   nav_episodes: "Episodes", nav_scenes: "Scenes", nav_review: "Review & Vote",
-  intro_text: 'In <strong>2030</strong>, AI dominates fighting.<br>The AI "SAGE" analyzes every match with <strong>99.8%</strong> accuracy.<br><br>A 17-year-old boy <strong>Nagare</strong>, who lost feeling in his left arm,<br>aims for the top with the only weapon AI can\'t read — <strong>"Flow."</strong>',
+  intro_text: 'In <strong>2030</strong>, the AI corporation "SAGE" dominates fighting.<br><strong>99.8%</strong> prediction accuracy. Outcomes are settled before the first grip.<br>The crowd watches scoreboards confirm what algorithms already decided.<br><br>A 17-year-old boy <strong>Nagare</strong>, left arm broken, is the only person in the world whose movement SAGE cannot predict.<br>That is <strong>"Flow"</strong> — a human motion that exists outside the AI\'s data.',
   sec_opening: "OPENING", sec_opening_sub: "Experience the opening with original theme song",
   watch_opening: "WATCH OPENING",
   inline_cta: 'Get the latest <strong>FLOW</strong> updates first',
@@ -816,20 +1034,31 @@ en: {
   sec_episodes: "EPISODES", sec_episodes_sub: "An epic story across 5 seasons and 60 episodes",
   s1_title: 'SEASON 1 — White Belt "Awakening"', s2_title: 'SEASON 2 — Blue Belt "Flux"',
   s3_title: 'SEASON 3 — Purple Belt "World"', s4_title: 'SEASON 4 — Brown Belt "Truth"', s5_title: 'SEASON 5 — Black Belt "Ocean"',
-  ep01_t: "Afterimage", ep01_d: "2030 Mundials final. Legendary fighter Kaido defies SAGE's 99.7% prediction. The next day, Kaido vanishes.",
-  ep02_t: "The Coral Belt", ep02_d: "Nagare visits Luciano's dojo — Kaido's master. An underground gym with no AI screens, just old mats.",
-  ep03_t: "Right Hand World", ep03_d: "Unable to use his left side, Nagare's right hand sharpens. He begins to 'feel' his opponent's weight shifts.",
-  ep04_t: "Surface", ep04_d: "First sparring. Complete defeat, but for one instant, he 'sees' the direction of force. The seed of Flow.",
-  ep05_d: "SAGE Corp installs prediction terminals everywhere. Nagare is the only one SAGE can't predict.",
-  ep06_t: "Spider", ep06_d: "Rin appears — a leg lock genius who refuses AI. 'Why? It's boring.'",
-  ep07_t: "White Belt Pride", ep07_d: "District tournament arc. Against AI-enhanced fighters, Nagare fights with basics alone.",
-  ep10_t: "Flow", ep10_d: "Flow activates for the first time. Every AI screen displays ERR. The crowd goes silent.",
-  ep11_t: "Return", ep11_d: 'Rio appears at Luciano\'s dojo. "Will you train with me?"',
-  ep13_t: "Road to Nationals", ep13_d: "Training with Rio. Luciano's past revealed. At nationals, Nagare meets true strength.",
-  ep19_t: "Price of the Vortex", ep19_d: "Reaching Flow Lv3 'Vortex', but the physical toll escalates. Nagare faces his limits.", ep19_tag: "DARK SIDE",
-  ep25_t: "Worlds", ep25_d: "Clashing with the world's best. AI jiu-jitsu vs traditional mastery. Nagare's jiu-jitsu challenges the world.",
-  ep37_t: "SAGE's Truth", ep37_d: "A massive conspiracy behind SAGE. The fate of the vanished Kaido. Everything connects.",
-  ep49_t: "Final Battle", ep49_d: "Human instinct vs machine optimization. Can Nagare reach 'Ocean'? All answers lie on the mat.",
+  ep01_t: "Afterimage", ep01_d: "2030 Mundials final. Legendary Kaido destroys SAGE's 99.7% prediction with a single movement. 40,000 people rise to their feet. The world stops. By morning, Kaido is gone — only his gi remains.",
+  ep02_t: "The Coral Belt", ep02_d: "A backstreet in Shimokitazawa. A rusted staircase descending underground. A dojo with no AI screens, only old mats — and Luciano, the white-haired man who seems to have been waiting.",
+  ep03_t: "Right Hand World", ep03_d: "A broken left arm sharpens the right hand. The exact moment an opponent's weight shifts travels through the fingertips. 'AI reads data. You read bodies. Those are completely different things.'",
+  ep04_t: "Surface", ep04_d: "First sparring. Completely dismantled by an AI-equipped opponent. But in the instant of falling, he sees it — the tiny shift in weight before the attack. The first drop of Flow.",
+  ep05_d: "SAGE Corp forces AI analysis terminals into every dojo. When Nagare trains, the terminal turns red: PREDICTION IMPOSSIBLE. Nagare realizes for the first time that he holds something.",
+  ep06_t: "Spider", ep06_d: "A midnight intruder at the dojo. Rin has already silenced three AI-equipped training robots using only leg locks. 'AI can only move within rules. It's boring.'",
+  ep07_t: "White Belt Pride", ep07_d: "District tournament. Nagare is the only entrant without AI assistance. Mocked from the sidelines, he advances through the bracket. His SAGE-equipped semifinal opponent has no data on him — his blind spot becomes a weapon.",
+  ep08_t: "Margin of Error", ep08_d: "Just before the final, SAGE announces it has completed a prediction model for Nagare's movements. His advantage is gone. Only one thing holds: 'Flow isn't a pattern. If you keep changing, the AI can never catch up.'",
+  ep09_t: "Wave", ep09_d: "District championship final. SAGE closes in — and then Nagare's movement changes. His body becomes water, unannounced. The match footage goes viral in underground jiu-jitsu communities overnight.",
+  ep10_t: "Flow", ep10_d: "National championship. Against SAGE's latest model, Nagare consciously activates Flow for the first time. Every AI terminal in the arena displays ERR simultaneously. 4,000 people hold their breath. SAGE crashes. Nagare is still standing.",
+  ep11_t: "Silver-Haired Visitor", ep11_d: 'SAGE Corp\'s ace, Rio, appears at Luciano\'s dojo. Silver hair. Perfect posture. Cold eyes. "I want your Flow data, Nagare." Then, unexpectedly: "Will you train with me?"',
+  ep12_t: "Return", ep12_d: 'The night Rio explains why he wants to leave SAGE: "There was nothing at the end of optimal." Three people, one dojo, a fragile alliance beginning to form. At dawn, a black SAGE Corp vehicle parks outside.',
+  ep13_t: "Road to Nationals", ep13_d: "Rio and Nagare begin training together, attempting to fuse AI and instinct. Luciano watches quietly, then speaks: 'Don't mix them. Be water.' Old footage of Luciano's past match surfaces.",
+  ep16_t: "Luciano's Wound", ep16_d: "Luciano himself once lost to SAGE's predecessor AI — the match that let SAGE declare the 'end of instinct jiu-jitsu.' The opponent in that fight: the current SAGE Corp CEO. Nagare finally understands his master's silence.",
+  ep19_t: "Price of the Vortex", ep19_d: "Nationals final. Pushed to the edge, Nagare enters Flow Lv3 'Vortex.' He wins — but afterward his left arm goes completely numb. The doctor's verdict hangs in a silent hospital room: 'If you continue, it won't move again.'", ep19_tag: "DARK SIDE",
+  ep23_t: "Wound and Belt", ep23_d: "In his hospital bed, Luciano hands Nagare a blue belt. 'You already have the technique. What you're missing is knowing why you fight.' Nagare writes his first letter to Kaido — knowing it will never arrive.",
+  ep25_t: "Worlds — Qualifying", ep25_d: "Abu Dhabi World Championship. Brazil, Russia, Korea — the frontlines where AI and instinct collide. Not just SAGE-equipped fighters: a mountain-tribe grappler, a blind submission specialist, each waiting for Nagare.",
+  ep30_t: "Rio vs Nagare", ep30_d: "Semifinals. They trained together, knew each other's rhythm — and then Rio activates SAGE's latest model. 'I know all your movements.' Nagare sees a face on Rio he has never seen before. It is the face of fear.",
+  ep34_t: "Proof of Humanity", ep34_d: "World final. Flow spirals out of control, Nagare nearly loses consciousness mid-match. Then, from somewhere: 'Flowing water can't stop. Stop and you're just a puddle.' He thought he heard Kaido's voice.",
+  ep37_t: "SAGE's Truth", ep37_d: "After the World Championship, an anonymous envelope arrives for Nagare — Kaido's handwriting. 'I'm here. Don't come.' The postmark: near SAGE HQ in Tokyo. The truth of the night Kaido vanished begins to surface.",
+  ep41_t: "The Absorbed", ep41_d: "Beneath SAGE HQ, a 'Prediction-Impossible Human Database' exists. Kaido was detained to force the algorithmization of Flow. Nagare, Rin, and Rio decide to infiltrate.",
+  ep45_t: "Reunion with the Master", ep45_d: "The freed Kaido's movements are 'optimized.' His body carries SAGE's algorithm. To bring him back, Nagare must defeat him on the mat. Master vs student — the most brutal match of both their lives.",
+  ep49_t: "Flow Lv4", ep49_d: "In the fight with Kaido, Nagare first touches the 'Ocean' state — time vanishes, the opponent's movement flows into him as water. The cost is immense. After the match, Nagare remains unconscious for three days.",
+  ep54_t: "Final Negotiation", ep54_d: "SAGE Corp CEO offers Nagare a deal: 'Give me the Flow data and I'll leave jiu-jitsu alone.' Rio hesitates. Rin refuses. Luciano smiles and says: 'You decide.' It is the heaviest sentence Nagare has ever heard.",
+  ep58_t: "Final Battle — Proof of Being Human", ep58_d: "On the mat: a new AI humanoid robot carrying 'complete Flow integration.' No audience. No records. Nagare fights — not to win, not to prove anything, not to survive. Only to be here.",
   sec_scenes: "SCENES", sec_scenes_sub: "Key scene concept art",
   sc1_t: "Afterimage", sc1_d: "Kaido vs Viktor. Defying SAGE's 99.7%",
   sc2_t: "Spider", sc2_d: "Rin's entrance. The spider's web of leg locks",
@@ -917,7 +1146,19 @@ function setLang(lang) {
   var t = T[lang] || T.ja;
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
     var key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.textContent = t[key];
+    if (t[key] !== undefined) {
+      // Special case: .hero-tag-tw uses CSS typewriter animation — update data-i18n-tw instead of textContent
+      // to avoid destroying the animation span structure
+      if (el.classList.contains('hero-tag-tw')) {
+        // Restart typewriter with new text by rebuilding the animation
+        el.style.animation = 'none';
+        el.textContent = t[key];
+        void el.offsetWidth; // reflow
+        el.style.animation = '';
+      } else {
+        el.textContent = t[key];
+      }
+    }
   });
   document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
     var key = el.getAttribute('data-i18n-html');
@@ -966,6 +1207,22 @@ Particle.prototype.draw = function() {
 for (var i = 0; i < 60; i++) particles.push(new Particle());
 function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Connection lines between nearby particles
+  for (var i = 0; i < particles.length; i++) {
+    for (var j = i + 1; j < particles.length; j++) {
+      var dx = particles[i].x - particles[j].x;
+      var dy = particles[i].y - particles[j].y;
+      var d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 90) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = 'rgba(74,158,255,' + (0.055*(1-d/90)) + ')';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
   particles.forEach(function(p) { p.update(); p.draw(); });
   requestAnimationFrame(animateParticles);
 }
@@ -1071,6 +1328,20 @@ function updateSubCount(count) {
   if (el && count > 0) el.textContent = count + ' ' + t.sub_count_text;
 }
 
+// ── Power bar observer ──
+var powerObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.flow-power').forEach(function(bar) { bar.classList.add('vis'); });
+      powerObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+var flowGrid = document.querySelector('.flow-grid');
+if (flowGrid) powerObserver.observe(flowGrid);
+
+// (enhanced particles: connections drawn inside animateParticles below)
+
 // Stagger reveal
 var staggerObserver = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) {
@@ -1089,6 +1360,38 @@ document.querySelectorAll('.chars-grid,.flow-grid,.scenes-grid,.kv-grid,.ep-time
 
 // ======================== Init ========================
 setLang(LANG);
+
+// Floating CTA: show after 4s, hide when user clicks Opening
+(function(){
+  var bar = document.getElementById('floatCta');
+  if (!bar) return;
+  setTimeout(function(){ bar.style.transform = 'translateY(0)'; }, 4000);
+  document.querySelectorAll('a[href="opening.html"]').forEach(function(a){
+    a.addEventListener('click', function(){ bar.style.transform = 'translateY(100%)'; });
+  });
+})();
+
+// Anti-bounce: pulse Opening button after 5s if user hasn't scrolled
+(function(){
+  var pulsed = false;
+  var scrolled = false;
+  window.addEventListener('scroll', function(){ scrolled = true; }, {once:true, passive:true});
+  setTimeout(function(){
+    if (pulsed || scrolled) return;
+    pulsed = true;
+    var btn = document.querySelector('a.btn.btn-p');
+    if (!btn) return;
+    btn.style.transition = 'all .25s';
+    var i = 0;
+    var pulse = setInterval(function(){
+      i++;
+      btn.style.boxShadow = i%2===0
+        ? '0 0 0 0 rgba(74,158,255,0)'
+        : '0 0 0 12px rgba(74,158,255,.35), 0 8px 40px rgba(74,158,255,.5)';
+      if (i >= 6) { clearInterval(pulse); btn.style.boxShadow = ''; }
+    }, 350);
+  }, 5000);
+})();
 </script>
 <script src="/track.js"></script>
 </body>

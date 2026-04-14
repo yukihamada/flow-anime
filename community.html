@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://flow-anime.com/community">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="FLOW — コミュニティで作るアニメ">
+<meta property="og:description" content="FLOWはコミュニティと一緒に作るアニメです。制作に参加して、物語の行方を決める権利を手に入れよう。">
+<meta property="og:image" content="https://flow-anime.com/images/og_image.png">
+<meta property="og:url" content="https://flow-anime.com/community">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FLOW — コミュニティで作るアニメ">
+<meta name="description" content="FLOWはコミュニティと一緒に作るアニメです。制作に参加して、物語の行方を決める権利を手に入れよう。">
+<title>FLOW — コミュニティ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08080d;--s1:#111119;--s2:#1a1a26;
+  --ac:#4a9eff;--ac2:#00d4ff;--ac3:#7c5cff;
+  --tx:#e8e8f0;--dim:#7777aa;
+  --green:#22cc88;--gold:#ffd700;--red:#ff4466
+}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#222233;border-radius:3px}
+a{color:var(--ac);text-decoration:none}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;height:60px;padding:0 1.2rem}
+.nav-logo{font-family:'Dela Gothic One',sans-serif;font-size:1.3rem;letter-spacing:.2em;
+  background:linear-gradient(90deg,#fff,var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:0;flex:1;margin-left:1.5rem;overflow-x:auto}
+.nav-links::-webkit-scrollbar{display:none}
+nav a.nav-link{color:var(--dim);font-size:.72rem;letter-spacing:.06em;padding:0 .6rem;line-height:60px;
+  border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+nav a.nav-link:hover,nav a.nav-link.active{color:var(--tx);border-bottom-color:var(--ac)}
+.nav-right{margin-left:auto;flex-shrink:0}
+.nav-x{display:flex;align-items:center;gap:.3rem;color:var(--dim);font-size:.7rem;transition:all .2s;
+  padding:.35rem .7rem;border:1px solid rgba(255,255,255,.1);border-radius:100px}
+.nav-x:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.nav-x svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* Page */
+.page{padding-top:60px}
+
+/* Hero */
+.hero{padding:80px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(74,158,255,.08),transparent)}
+.hero-badge{display:inline-block;padding:5px 16px;border-radius:100px;border:1px solid rgba(0,212,255,.3);
+  color:var(--ac2);font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2.5rem,8vw,5.5rem);letter-spacing:.15em;
+  background:linear-gradient(135deg,#fff,var(--ac2),var(--ac3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px}
+.hero p{font-size:clamp(.95rem,2vw,1.15rem);color:var(--dim);max-width:640px;margin:0 auto 40px;line-height:1.8}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:10px;font-size:.9rem;
+  font-weight:700;font-family:inherit;cursor:pointer;border:none;transition:all .25s;letter-spacing:.04em}
+.btn-p{background:linear-gradient(135deg,var(--ac),var(--ac3));color:#fff}
+.btn-p:hover{opacity:.85;transform:translateY(-2px)}
+.btn-g{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--tx)}
+.btn-g:hover{border-color:var(--ac);color:var(--ac)}
+
+/* Section */
+section{max-width:1100px;margin:0 auto;padding:70px 24px}
+.sec-label{font-size:.7rem;letter-spacing:.4em;color:var(--ac2);text-transform:uppercase;margin-bottom:12px}
+.sec-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);letter-spacing:.08em;margin-bottom:16px}
+.sec-sub{color:var(--dim);font-size:.95rem;line-height:1.8;max-width:700px;margin-bottom:48px}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);margin:0}
+
+/* Strategy roadmap */
+.roadmap{display:flex;flex-direction:column;gap:0;position:relative}
+.roadmap::before{content:'';position:absolute;left:28px;top:36px;bottom:36px;width:2px;
+  background:linear-gradient(180deg,var(--ac),var(--ac3),var(--green));opacity:.3}
+.phase{display:grid;grid-template-columns:56px 1fr;gap:0 24px;padding:28px 0;align-items:start}
+.phase-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;position:relative;z-index:1}
+.phase-icon.now{background:linear-gradient(135deg,var(--ac),var(--ac3));box-shadow:0 0 20px rgba(74,158,255,.4)}
+.phase-icon.near{background:linear-gradient(135deg,var(--green),#22aa66);box-shadow:0 0 20px rgba(34,204,136,.3)}
+.phase-icon.mid{background:linear-gradient(135deg,#ffaa33,#ff6600);box-shadow:0 0 20px rgba(255,170,51,.3)}
+.phase-icon.far{background:linear-gradient(135deg,var(--ac3),#cc44ff);box-shadow:0 0 20px rgba(124,92,255,.3)}
+.phase-content{padding-top:10px}
+.phase-tag{font-size:.65rem;letter-spacing:.3em;color:var(--dim);text-transform:uppercase;margin-bottom:6px}
+.phase-title{font-weight:900;font-size:1.1rem;margin-bottom:10px;color:#fff}
+.phase-body{color:#aaa;font-size:.9rem;line-height:1.7}
+.phase-items{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.phase-items li{display:flex;gap:8px;align-items:flex-start;font-size:.88rem;color:#bbb}
+.phase-items li::before{content:'→';color:var(--ac);flex-shrink:0;margin-top:1px}
+.phase-badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:.65rem;font-weight:700;
+  letter-spacing:.05em;margin-left:8px;vertical-align:middle}
+.badge-now{background:rgba(74,158,255,.15);color:var(--ac);border:1px solid rgba(74,158,255,.3)}
+.badge-q2{background:rgba(34,204,136,.12);color:var(--green);border:1px solid rgba(34,204,136,.25)}
+.badge-q3{background:rgba(255,170,51,.12);color:#ffaa33;border:1px solid rgba(255,170,51,.25)}
+.badge-q4{background:rgba(124,92,255,.12);color:var(--ac3);border:1px solid rgba(124,92,255,.25)}
+
+/* How to join */
+.join-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.join-card{background:var(--s1);border-radius:16px;border:1px solid #1a1a2a;padding:28px;
+  transition:all .25s;cursor:default}
+.join-card:hover{border-color:rgba(74,158,255,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.join-icon{font-size:2rem;margin-bottom:14px}
+.join-title{font-weight:800;font-size:1rem;margin-bottom:8px;color:#fff}
+.join-body{font-size:.87rem;color:#888;line-height:1.7;margin-bottom:16px}
+.join-perks{list-style:none;display:flex;flex-direction:column;gap:5px}
+.join-perks li{font-size:.82rem;color:#aaa;display:flex;gap:6px;align-items:flex-start}
+.join-perks li::before{content:'✦';color:var(--gold);font-size:.65rem;margin-top:2px;flex-shrink:0}
+.join-cta{margin-top:18px}
+.btn-sm{padding:8px 20px;border-radius:8px;font-size:.82rem;font-weight:700;display:inline-flex;
+  align-items:center;gap:6px;font-family:inherit;cursor:pointer;border:none;transition:all .2s}
+.btn-sm-p{background:linear-gradient(135deg,var(--ac),var(--ac3));color:#fff}
+.btn-sm-p:hover{opacity:.85}
+.btn-sm-g{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--dim)}
+.btn-sm-g:hover{border-color:var(--ac);color:var(--ac)}
+
+/* Reference projects */
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.ref-card{background:var(--s1);border-radius:14px;border:1px solid #1a1a2a;padding:22px;overflow:hidden;position:relative}
+.ref-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ref-card.dao::before{background:linear-gradient(90deg,var(--ac),var(--ac3))}
+.ref-card.crowd::before{background:linear-gradient(90deg,var(--green),#22aa66)}
+.ref-card.oss::before{background:linear-gradient(90deg,#ffaa33,#ff6600)}
+.ref-title{font-weight:800;font-size:.95rem;color:#fff;margin-bottom:4px}
+.ref-meta{font-size:.72rem;color:var(--ac2);margin-bottom:10px;letter-spacing:.05em}
+.ref-body{font-size:.85rem;color:#888;line-height:1.65;margin-bottom:12px}
+.ref-lesson{padding:10px 12px;background:#0a0a14;border-radius:8px;border-left:3px solid var(--ac);
+  font-size:.82rem;color:#bbb;line-height:1.6}
+.ref-lesson strong{color:var(--ac2);font-weight:600}
+.ref-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:700;
+  margin-bottom:10px;letter-spacing:.05em}
+.tag-dao{background:rgba(74,158,255,.12);color:var(--ac)}
+.tag-crowd{background:rgba(34,204,136,.12);color:var(--green)}
+.tag-oss{background:rgba(255,170,51,.12);color:#ffaa33}
+.tag-jp{background:rgba(255,68,102,.12);color:#ff6677}
+
+/* Crowdfund teaser */
+.crowdfund-box{background:linear-gradient(135deg,rgba(74,158,255,.06),rgba(124,92,255,.06));
+  border:1px solid rgba(74,158,255,.2);border-radius:20px;padding:48px;text-align:center;position:relative;overflow:hidden}
+.crowdfund-box::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 80% at 50% 0%,rgba(74,158,255,.07),transparent);pointer-events:none}
+.crowdfund-box h2{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.5rem,4vw,2.4rem);
+  letter-spacing:.1em;margin-bottom:16px}
+.crowdfund-box p{color:var(--dim);font-size:.95rem;line-height:1.8;max-width:560px;margin:0 auto 32px}
+.goal-bar{max-width:480px;margin:0 auto 12px}
+.goal-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--dim);margin-bottom:8px}
+.goal-track{height:8px;background:#1a1a2a;border-radius:100px;overflow:hidden}
+.goal-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--ac),var(--ac3));
+  width:0%;transition:width 1.5s cubic-bezier(.16,1,.3,1)}
+.goal-note{font-size:.75rem;color:#444;text-align:center;margin-bottom:32px}
+.register-form{display:flex;gap:10px;max-width:420px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.register-input{flex:1;min-width:200px;padding:12px 16px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--tx);font-size:.9rem;font-family:inherit}
+.register-input::placeholder{color:#444}
+.register-input:focus{outline:none;border-color:var(--ac)}
+
+/* Values */
+.values{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:32px}
+.value-card{background:var(--s1);border-radius:12px;border:1px solid #1a1a2a;padding:20px;text-align:center}
+.value-icon{font-size:1.8rem;margin-bottom:10px}
+.value-title{font-weight:800;font-size:.9rem;color:#fff;margin-bottom:6px}
+.value-body{font-size:.8rem;color:#666;line-height:1.6}
+
+/* Footnote */
+.footnote{text-align:center;padding:48px 24px;color:#333;font-size:.8rem;line-height:1.8}
+.footnote a{color:#444}
+
+/* Task board */
+.task-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+@media(max-width:700px){.task-board{grid-template-columns:1fr}}
+.task-col{background:var(--s1);border-radius:16px;border:1px solid #1a1a2a;padding:20px;display:flex;flex-direction:column;gap:10px}
+.task-col-head{font-size:.65rem;letter-spacing:.3em;font-weight:700;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid #1a1a2a;display:flex;align-items:center;gap:6px}
+.task-col-head.done{color:var(--green)}
+.task-col-head.doing{color:var(--ac2)}
+.task-col-head.todo{color:var(--dim)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;font-size:.82rem;line-height:1.5;color:#bbb;background:#0d0d16;border:1px solid transparent;transition:border-color .2s}
+.task-item:hover{border-color:rgba(255,255,255,.06)}
+.task-item.done-item{opacity:.6}
+.task-icon{flex-shrink:0;font-size:.9rem;margin-top:1px}
+.task-label{flex:1}
+.task-label strong{display:block;color:#e8e8f0;font-weight:700;margin-bottom:2px}
+.task-label span{color:#555;font-size:.75rem}
+.task-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.task-dot.done{background:var(--green)}
+.task-dot.doing{background:var(--ac2);box-shadow:0 0 6px rgba(0,212,255,.5);animation:dotPulse 2s infinite}
+.task-dot.todo{background:#333}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:640px){
+  .phase{grid-template-columns:44px 1fr;gap:0 16px}
+  .roadmap::before{left:22px}
+  .phase-icon{width:44px;height:44px;font-size:1rem}
+  .crowdfund-box{padding:32px 20px}
+  .register-form{flex-direction:column}
+  .register-input{min-width:0}
+}
+</style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">FLOW</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/#characters" class="nav-link">Characters</a>
+    <a href="/#episodes" class="nav-link">Episodes</a>
+    <a href="opening.html" class="nav-link">Opening</a>
+    <a href="pitch.html" class="nav-link">Pitch</a>
+    <a href="community.html" class="nav-link active">Community</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="nav-x">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>@flow_bjj</span>
+    </a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">Open Anime Project</div>
+  <h1>一緒に作ろう</h1>
+  <p>FLOWは最初から最後まで、コミュニティと一緒に作るアニメです。<br>
+  あなたの参加が、物語の行方を決める。</p>
+  <div class="hero-cta">
+    <a href="#join" class="btn btn-p">参加する</a>
+    <a href="#roadmap" class="btn btn-g">ロードマップを見る</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Vision -->
+<section class="reveal">
+  <div class="sec-label">Why Community</div>
+  <h2 class="sec-title">なぜコミュニティで作るのか</h2>
+  <p class="sec-sub">
+    アニメは今、変わり目にいる。AIツールの登場で、小さなチームでも高品質な映像が作れる時代が来た。
+    同時に、ストリーミングの時代に「誰かが作って誰かが見る」という一方通行の構造も変わりつつある。<br><br>
+    FLOWは最初から「作る人」と「見る人」の境界をなくす実験をする。
+    コミュニティが資金を出して、キャラクターに名前をつけて、物語の方向を決める。
+    そうやって作られたアニメは、誰にとっても「自分たちのアニメ」になる。
+  </p>
+
+  <div class="values">
+    <div class="value-card">
+      <div class="value-icon">🌊</div>
+      <div class="value-title">透明な制作</div>
+      <div class="value-body">制作の進捗・予算・意思決定をすべてオープンにする</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🗳</div>
+      <div class="value-title">民主的な物語</div>
+      <div class="value-body">サポーターが物語の分岐を投票で決める</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🎨</div>
+      <div class="value-title">参加型制作</div>
+      <div class="value-body">BGM・脚本・キャラデザのコントリビューションを受け付ける</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🔗</div>
+      <div class="value-title">収益への参加</div>
+      <div class="value-body">コアサポーターには収益分配・特別ライセンスの仕組みを設計する</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">♾</div>
+      <div class="value-title">永続するモデル</div>
+      <div class="value-body">一度のクラファンに頼らず、継続的なサポート構造を作る</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Roadmap -->
+<section id="tasks" class="reveal">
+  <div class="sec-label">Current Progress</div>
+  <h2 class="sec-title">今週のやること</h2>
+  <p class="sec-sub">FLOWの認知を広げるために、今実際にやっていること。進捗はリアルタイムで更新する。</p>
+
+  <div class="task-board">
+    <!-- 完了 -->
+    <div class="task-col">
+      <div class="task-col-head done">✓ &nbsp;完了</div>
+
+      <div class="task-item done-item">
+        <div class="task-dot done"></div>
+        <div class="task-label"><strong>OGP画像刷新</strong><span>「AIと人間の境界線に立つ少年」の絵に変更</span></div>
+      </div>
+      <div class="task-item done-item">
+        <div class="task-dot done"></div>
+        <div class="task-label"><strong>X 18件投稿</strong><span>キャラ紹介・技考証・英語・PT</span></div>
+      </div>
+      <div class="task-item done-item">
+        <div class="task-dot done"></div>
+        <div class="task-label"><strong>sitemap.xml 設置</strong><span>Google検索クロール対応</span></div>
+      </div>
+      <div class="task-item done-item">
+        <div class="task-dot done"></div>
+        <div class="task-label"><strong>ストーリー読了ログ</strong><span>どのシーズン・話まで読んだか記録開始</span></div>
+      </div>
+      <div class="task-item done-item">
+        <div class="task-dot done"></div>
+        <div class="task-label"><strong>投稿スケジュール Day30まで</strong><span>43件体制、BJJ/AI/PT向け拡充</span></div>
+      </div>
+    </div>
+
+    <!-- 進行中 -->
+    <div class="task-col">
+      <div class="task-col-head doing">● &nbsp;進行中</div>
+
+      <div class="task-item">
+        <div class="task-dot doing"></div>
+        <div class="task-label"><strong>事前登録 150人に向けて</strong><span>現在 SNS拡散フェーズ。目標達成でクラファン開始</span></div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot doing"></div>
+        <div class="task-label"><strong>X 毎日2件投稿</strong><span>キャラ・技・世界観・英語を交互に配信中</span></div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot doing"></div>
+        <div class="task-label"><strong>アクセス解析 改善ループ</strong><span>Opening 遷移率・滞在時間を毎日モニタリング</span></div>
+      </div>
+    </div>
+
+    <!-- 次にやること -->
+    <div class="task-col">
+      <div class="task-col-head todo">○ &nbsp;次にやること</div>
+
+      <div class="task-item">
+        <div class="task-dot todo"></div>
+        <div class="task-label"><strong>r/bjj に投稿</strong><span>Reddit 200万人のBJJコミュニティへ英語で投稿</span></div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot todo"></div>
+        <div class="task-label"><strong>YouTubeにPVアップ</strong><span>flow_pv_veo3.mp4 を公開、SEO対策の説明文つき</span></div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot todo"></div>
+        <div class="task-label"><strong>BJJ道場へ直接アウトリーチ</strong><span>LINEグループ・道場SNSへフィードバック依頼</span></div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot todo"></div>
+        <div class="task-label"><strong>CAMPFIRE クラファン準備</strong><span>150人登録達成後に開始予定</span></div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot todo"></div>
+        <div class="task-label"><strong>Anime Expo 出展検討</strong><span>2026年夏・LA。海外BJJコミュニティへの布石</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="roadmap" class="reveal">
+  <div class="sec-label">Production Roadmap</div>
+  <h2 class="sec-title">制作ロードマップ</h2>
+  <p class="sec-sub">4つのフェーズで、コミュニティと一緒にFLOWを育てていく。</p>
+
+  <div class="roadmap">
+    <div class="phase">
+      <div class="phase-icon now">📡</div>
+      <div class="phase-content">
+        <div class="phase-tag">Phase 1 — 2025〜2026 Q1 <span class="phase-badge badge-now">進行中</span></div>
+        <div class="phase-title">世界観をつくる</div>
+        <div class="phase-body">AIツールを使ってPV・キービジュアル・OP曲を制作。FLOWの世界観をSNSで発信して初期コミュニティを育てる。</div>
+        <ul class="phase-items">
+          <li>Veo 3でPV映像を生成（9カット完成）</li>
+          <li>Geminiでキャラクタービジュアル生成</li>
+          <li>AI作曲でOP「0.2%の証明」完成</li>
+          <li>X (@flow_bjj) でキャラ・世界観を発信</li>
+          <li>Episode 1 脚本完成</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-icon near">🎯</div>
+      <div class="phase-content">
+        <div class="phase-tag">Phase 2 — 2026 Q2〜Q3 <span class="phase-badge badge-q2">準備中</span></div>
+        <div class="phase-title">CAMPFIREでクラファン</div>
+        <div class="phase-body">Episode 1（24分）の制作費をクラウドファンディングで集める。100〜200人のコアサポーターで成立するモデル設計。参考: アニメDAO（110人・目標の156%達成）</div>
+        <ul class="phase-items">
+          <li>目標額: ¥150万〜200万（制作1話分）</li>
+          <li>リターン: エンドロールに名前 / キャラ命名権 / 先行視聴</li>
+          <li>プラチナサポーター: 物語分岐の投票権 + Discord限定チャンネル</li>
+          <li>Anime Expoへの出展準備（海外展開）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-icon mid">🗳</div>
+      <div class="phase-content">
+        <div class="phase-tag">Phase 3 — 2026 Q3〜Q4 <span class="phase-badge badge-q3">計画中</span></div>
+        <div class="phase-title">コミュニティガバナンス</div>
+        <div class="phase-body">Episode 1完成・公開後、Season 2の方向性をサポーターコミュニティが決定する仕組みを導入。NFTまたはトークン制の投票システムを検討。参考: Shibuya.xyz / Nouns DAO（創作干渉ゼロのグラントモデル）</div>
+        <ul class="phase-items">
+          <li>サポーターがSeason 2の敵キャラ・トーナメント形式を投票</li>
+          <li>コミュニティ制作：BGM・同人誌・派生コンテンツを公式に認可</li>
+          <li>コアサポーター向け収益分配スキームの設計（要別途契約）</li>
+          <li>YouTube無料公開 → 次ラウンドのクラファンへ</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-icon far">🚀</div>
+      <div class="phase-content">
+        <div class="phase-tag">Phase 4 — 2027〜 <span class="phase-badge badge-q4">長期目標</span></div>
+        <div class="phase-title">配信・グローバル展開</div>
+        <div class="phase-body">Crunchyroll / dアニメストア等の配信プラットフォームとの契約を目指す。コミュニティが育てたIPを正式ライセンス展開。参考: アニメDAO（dアニメストア2026年春配信決定）</div>
+        <ul class="phase-items">
+          <li>国内: dアニメストア / ABEMAへの売り込み</li>
+          <li>海外: Crunchyroll / Netflixアニメ部門へのピッチ</li>
+          <li>グッズ・コラボ道場との協業（BJJコミュニティ展開）</li>
+          <li>Season 2以降の継続ファンド設計</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- How to join -->
+<section id="join" class="reveal">
+  <div class="sec-label">How to Participate</div>
+  <h2 class="sec-title">参加のしかた</h2>
+  <p class="sec-sub">今すぐできること、クラファン開始後にできること。どんな形でも歓迎。</p>
+
+  <div class="join-grid">
+    <div class="join-card">
+      <div class="join-icon">📣</div>
+      <div class="join-title">SNSフォロワー</div>
+      <div class="join-body">Xをフォローして拡散。コミュニティ最初の一歩。無料で今すぐできる。</div>
+      <ul class="join-perks">
+        <li>キャラクター投票・アンケートに参加</li>
+        <li>制作裏話・ボツ案を最初に見られる</li>
+        <li>X限定キービジュアル先行公開</li>
+      </ul>
+      <div class="join-cta">
+        <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="btn-sm btn-sm-p">Xをフォロー →</a>
+      </div>
+    </div>
+
+    <div class="join-card">
+      <div class="join-icon">🎗</div>
+      <div class="join-title">クラファンサポーター</div>
+      <div class="join-body">CAMPFIREでの支援。Episode 1制作の直接の力になる。2026年Q2開始予定。</div>
+      <ul class="join-perks">
+        <li>エンドロールへの名前掲載</li>
+        <li>先行視聴権（一般公開の1週間前）</li>
+        <li>制作秘話レポートの受け取り</li>
+        <li>限定デジタルポスター</li>
+      </ul>
+      <div class="join-cta">
+        <button class="btn-sm btn-sm-g" onclick="document.getElementById('preregister').scrollIntoView({behavior:'smooth'})">事前登録 →</button>
+      </div>
+    </div>
+
+    <div class="join-card" style="border-color:rgba(74,158,255,.25)">
+      <div class="join-icon">⚡</div>
+      <div class="join-title">プラチナサポーター</div>
+      <div class="join-body">¥10,000以上の支援者。物語の方向性に直接関われる特別枠。</div>
+      <ul class="join-perks">
+        <li>キャラクター命名権（サブキャラ1体）</li>
+        <li>Season 2の物語分岐を投票で決める権利</li>
+        <li>Discord限定チャンネルへのアクセス</li>
+        <li>制作チームとのQ&Aセッション参加</li>
+        <li>将来の収益化時に優遇条件を協議（要別途合意）</li>
+      </ul>
+      <div class="join-cta">
+        <button class="btn-sm btn-sm-g" onclick="document.getElementById('preregister').scrollIntoView({behavior:'smooth'})">興味がある →</button>
+      </div>
+    </div>
+
+    <div class="join-card">
+      <div class="join-icon">🎨</div>
+      <div class="join-title">クリエイティブ参加</div>
+      <div class="join-body">BGM・ファンアート・脚本アイデアの投稿。採用されれば公式クレジットに掲載。</div>
+      <ul class="join-perks">
+        <li>BGM採用: 作品のサウンドトラックに参加</li>
+        <li>ファンアート: 公式SNSで紹介</li>
+        <li>脚本アイデア: 採用でDiscordでの対話</li>
+        <li>BJJ技術監修: 試合シーンの正確性向上</li>
+      </ul>
+      <div class="join-cta">
+        <a href="https://x.com/flow_bjj" target="_blank" rel="noopener" class="btn-sm btn-sm-g">Xで連絡 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Pre-register -->
+<section id="preregister" class="reveal">
+  <div class="crowdfund-box">
+    <h2>クラファン事前登録</h2>
+    <p>CAMPFIREでのクラウドファンディング開始をお知らせします。<br>
+    登録者には先行アクセスと特別なリターンを用意する予定です。</p>
+
+    <div class="goal-bar">
+      <div class="goal-label">
+        <span>目標: ¥1,500,000</span>
+        <span id="reg-count">0人が登録済み</span>
+      </div>
+      <div class="goal-track"><div class="goal-fill" id="goal-fill"></div></div>
+    </div>
+    <div class="goal-note">目標人数: 150人（クラファン開始の目安）</div>
+
+    <div class="register-form">
+      <input type="email" class="register-input" id="email-input" placeholder="メールアドレスを入力">
+      <button class="btn btn-p" onclick="handleRegister()">事前登録する</button>
+    </div>
+    <p id="reg-msg" style="margin-top:14px;font-size:.83rem;color:var(--green);min-height:20px"></p>
+    <p style="margin-top:12px;font-size:.75rem;color:#333">メールアドレスはクラファン開始通知のみに使用します。</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Reference projects -->
+<section class="reveal">
+  <div class="sec-label">Reference</div>
+  <h2 class="sec-title">世界の先行事例</h2>
+  <p class="sec-sub">DAOアニメ・コミュニティ制作・OSS制作の最前線から学んだこと。</p>
+
+  <div class="ref-grid">
+    <div class="ref-card dao">
+      <span class="ref-tag tag-dao">DAO</span><span class="ref-tag tag-jp" style="margin-left:6px">日本</span>
+      <div class="ref-title">アニメDAO（NEO TOKYO PUNKS）</div>
+      <div class="ref-meta">CAMPFIRE + NFT + dアニメストア配信</div>
+      <div class="ref-body">NFTコレクションを基盤にCAMPFIREでクラファン。110人・¥156万（目標の156%）でアニメを制作し、dアニメストアでの配信を決定。</div>
+      <div class="ref-lesson"><strong>FLOW的教訓:</strong> 100人のコアサポーターで1話は作れる。ストリーミング配信契約があるとコミュニティへの信頼になる。</div>
+    </div>
+
+    <div class="ref-card dao">
+      <span class="ref-tag tag-dao">DAO</span>
+      <div class="ref-title">Shibuya.xyz</div>
+      <div class="ref-meta">NFT投票 × エピソードアニメ × a16z $690万</div>
+      <div class="ref-body">NFT「Producer Pass」保有者が各エピソードのエンディングを投票で決めるアニメプラットフォーム。*White Rabbit*シリーズを制作。</div>
+      <div class="ref-lesson"><strong>FLOW的教訓:</strong> 投票参加＝感情的オーナーシップ。コンテンツ供給を止めるとトークン価値が下がる——継続的なリリースが鍵。</div>
+    </div>
+
+    <div class="ref-card dao">
+      <span class="ref-tag tag-dao">DAO</span>
+      <div class="ref-title">Nouns DAO アニメグラント</div>
+      <div class="ref-meta">創作干渉ゼロ × 50本のショートフィルム支援</div>
+      <div class="ref-body">毎日NFTオークションの収益でDAOトレジャリーを積み上げ、2024年に50本のアニメショートに$7,500〜$25,000のグラントを配布。クリエイターはIPを保持。</div>
+      <div class="ref-lesson"><strong>FLOW的教訓:</strong> 「口出しなしのグラント」が最も品質の高い作品を生む。グラント申請も戦略に含める。</div>
+    </div>
+
+    <div class="ref-card crowd">
+      <span class="ref-tag tag-crowd">クラファン</span>
+      <div class="ref-title">Lackadaisy（米）</div>
+      <div class="ref-meta">Kickstarter $33万 → シリーズ $200万+ → 160人のボランティア</div>
+      <div class="ref-body">長年のウェブコミック読者を基盤にKickstarterで10分ショートを製作。YouTubeで無料公開して大ヒット、シリーズ化に向けた第2弾クラファンで$200万超を調達。</div>
+      <div class="ref-lesson"><strong>FLOW的教訓:</strong> 先に無料コンテンツで既存ファンを作ってからクラファン。YouTube無料公開が次の資金調達を生む。</div>
+    </div>
+
+    <div class="ref-card dao">
+      <span class="ref-tag tag-dao">Web3</span>
+      <div class="ref-title">Azuki × 電通</div>
+      <div class="ref-meta">NFT保有者にキャラクター商業権 × 谷口悟朗監督</div>
+      <div class="ref-body">NFT保有者に自キャラの商業権を付与、電通とコラボしてCode Geass監督のアニメを制作。YouTube 800万再生。anime.comを買収してプラットフォーム化。</div>
+      <div class="ref-lesson"><strong>FLOW的教訓:</strong> IPをコミュニティに渡すと長期的なステークホルダーになる。有名クリエイターの参加が非Web3層を引き込む。</div>
+    </div>
+
+    <div class="ref-card oss">
+      <span class="ref-tag tag-oss">OSS</span>
+      <div class="ref-title">Bilibili AniSora</div>
+      <div class="ref-meta">Apache 2.0 × アニメ特化AI動画生成 × V3公開済み</div>
+      <div class="ref-body">bilibiliがOSSで公開したアニメ特化のAI動画生成モデル。1000万クリップで学習、スタイル転送・フレーム補間対応。ComfyUIと組み合わせてほぼゼロコストで制作可能。</div>
+      <div class="ref-lesson"><strong>FLOW的教訓:</strong> FLOWの制作パイプラインに組み込み、映像生成コストをさらに削減できる。</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Footer -->
+<div class="footnote">
+  <p>FLOW — BJJ × AI Original Anime Project</p>
+  <p style="margin-top:8px">
+    <a href="/">Home</a> · <a href="pitch.html">Pitch Deck</a> · <a href="https://x.com/flow_bjj" target="_blank" rel="noopener">@flow_bjj</a>
+  </p>
+  <p style="margin-top:16px;font-size:.72rem;color:#222">
+    © 2026 FLOW Project. All rights reserved.
+  </p>
+</div>
+
+</div><!-- .page -->
+
+<script>
+// Reveal on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
+}, {threshold:.1})
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+
+// Animate goal bar
+setTimeout(() => {
+  const fill = document.getElementById('goal-fill')
+  if(fill) fill.style.width = '4%' // 6/150 pre-registrations example
+}, 800)
+
+// Registration count (mock)
+let count = 6 // Seed number — real would come from backend
+document.getElementById('reg-count').textContent = count + '人が登録済み'
+
+function handleRegister() {
+  const input = document.getElementById('email-input')
+  const msg = document.getElementById('reg-msg')
+  const email = input.value.trim()
+  if(!email || !email.includes('@')) {
+    msg.style.color = 'var(--red)'
+    msg.textContent = '有効なメールアドレスを入力してください'
+    return
+  }
+  // In production, POST to backend
+  count++
+  input.value = ''
+  msg.style.color = 'var(--green)'
+  msg.textContent = '✓ 登録しました！クラファン開始時にお知らせします。'
+  document.getElementById('reg-count').textContent = count + '人が登録済み'
+  // Update bar
+  const pct = Math.min((count / 150) * 100, 100)
+  document.getElementById('goal-fill').style.width = pct + '%'
+}
+
+document.getElementById('email-input').addEventListener('keydown', e => {
+  if(e.key === 'Enter') handleRegister()
+})
+</script>
+</body>
+</html>

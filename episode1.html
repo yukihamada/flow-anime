@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLOW 第1話「残像」— BJJ x AI Anime</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:title" content="FLOW 第1話「残像」">
+<meta property="og:description" content="2030年。AIが格闘技を支配する世界。少年・流の物語が始まる。65シーン+BGM付き完全版。">
+<meta property="og:image" content="https://flow-anime.com/images/ep1/frames/a_120_sweep_explosion.png">
+<meta property="og:url" content="https://flow-anime.com/episode1.html">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05050a;--surface:#0c0c14;--border:#1a1a2a;
+  --gold:#c8a96e;--teal:#3af5d8;--red:#e8453c;
+  --text:#e0dcd0;--muted:#666070;
+}
+body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;line-height:1.8;overflow-x:hidden}
+
+/* Progress */
+.progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));z-index:1000;transition:width .1s}
+
+/* Scene counter */
+.scene-counter{position:fixed;top:12px;right:16px;z-index:999;font-size:.65rem;color:var(--muted);letter-spacing:.1em;background:rgba(5,5,10,.8);padding:4px 10px;border-radius:20px;backdrop-filter:blur(8px)}
+
+/* Audio control */
+.audio-ctrl{position:fixed;bottom:20px;right:20px;z-index:999;background:rgba(5,5,10,.9);border:1px solid var(--border);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;backdrop-filter:blur(8px)}
+.audio-ctrl:hover{border-color:var(--gold);transform:scale(1.1)}
+.audio-ctrl svg{width:20px;height:20px;fill:var(--text)}
+
+/* Lang switcher */
+.lbtn{padding:3px 10px;border-radius:100px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#666;font-size:.62rem;cursor:pointer;font-family:inherit;letter-spacing:.08em;transition:all .2s}
+.lbtn.active{background:var(--teal,#3af5d8);border-color:var(--teal,#3af5d8);color:#000;font-weight:700}
+.lbtn:hover:not(.active){color:#fff;border-color:rgba(255,255,255,.4)}
+
+/* Header */
+.ep-header{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.ep-header::before{content:'';position:absolute;inset:0;background:url('/images/ep1/frames/a_000_arena_ext.png') center/cover;filter:brightness(.25) saturate(.6);animation:slowZ 25s ease-in-out infinite alternate}
+@keyframes slowZ{from{transform:scale(1)}to{transform:scale(1.1)}}
+.ep-header .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,10,.3),rgba(5,5,10,.92))}
+.ep-hc{position:relative;z-index:1}
+.ep-hc .num{font-size:.7rem;letter-spacing:.5em;color:var(--teal);opacity:0;animation:fu 1s .5s forwards}
+.ep-hc h1{font-size:clamp(3rem,10vw,6rem);font-weight:900;color:#fff;letter-spacing:.2em;opacity:0;animation:fu 1s .8s forwards}
+.ep-hc .sub{font-size:clamp(.9rem,2.5vw,1.3rem);color:var(--gold);font-weight:300;letter-spacing:.25em;opacity:0;animation:fu 1s 1.1s forwards}
+.scroll-h{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.65rem;letter-spacing:.3em;animation:pulse 2s infinite;z-index:1;cursor:pointer}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Story container */
+.story{max-width:900px;margin:0 auto;padding:0 1.5rem 6rem}
+
+/* Part divider */
+.part{text-align:center;padding:5rem 0 3rem;position:relative}
+.part::before{content:'';position:absolute;top:50%;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.part .lbl{display:inline-block;background:var(--bg);padding:0 2rem;position:relative;font-size:.65rem;letter-spacing:.5em;color:var(--teal);text-transform:uppercase}
+.part .ttl{display:block;font-size:1.4rem;color:var(--gold);margin-top:.4rem;letter-spacing:.15em;font-weight:700}
+
+/* Panel */
+.panel{margin-bottom:2.5rem;opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.panel.visible{opacity:1;transform:translateY(0)}
+
+/* Image */
+.pi{position:relative;border-radius:4px;overflow:hidden;background:var(--surface);margin-bottom:.8rem}
+.pi img{width:100%;display:block}
+.pi.wide img{aspect-ratio:21/9;object-fit:cover}
+
+/* Dialogue */
+.dl{padding:1rem 1.3rem;border-left:3px solid var(--border);margin-bottom:.4rem;background:linear-gradient(90deg,rgba(17,17,25,.8),transparent);border-radius:0 4px 4px 0}
+.dl .sp{font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.2rem;text-transform:uppercase}
+.dl .ln{font-size:1rem;line-height:2}
+.dl.sage{border-left-color:var(--teal);background:linear-gradient(90deg,rgba(58,245,216,.04),transparent)}
+.dl.sage .sp{color:var(--teal)}
+.dl.sage .ln{font-family:'Courier New',monospace;font-size:.85rem;color:var(--teal)}
+
+/* Narration */
+.nr{padding:.6rem 0;font-size:.9rem;color:var(--muted);line-height:2}
+.nr em{color:var(--text);font-style:normal}
+.nr strong{color:#fff;font-weight:600}
+
+/* Monologue */
+.ml{padding:1.2rem 1.8rem;margin:.8rem 0;background:rgba(200,169,110,.03);border-radius:8px;border:1px solid rgba(200,169,110,.08);font-size:1.05rem;line-height:2.2;color:var(--text);font-style:italic;text-align:center}
+
+/* SFX */
+.sfx{text-align:center;font-size:1.8rem;font-weight:900;letter-spacing:.4em;padding:.5rem 0;background:linear-gradient(180deg,var(--red),#ff6b4a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Ink wash transition */
+.ink{height:80px;background:linear-gradient(180deg,transparent,rgba(42,40,32,.3),transparent);margin:1.5rem 0;display:flex;align-items:center;justify-content:center}
+.ink span{font-size:1.1rem;color:var(--gold);letter-spacing:.4em;opacity:.6}
+
+/* Climax: tighter spacing */
+.climax .panel{margin-bottom:1rem}
+
+/* Footer */
+.ep-footer{text-align:center;padding:4rem 2rem;border-top:1px solid var(--border)}
+.ep-footer a{display:inline-block;padding:1rem 3rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:.8rem;letter-spacing:.2em;border-radius:4px;transition:all .3s}
+.ep-footer a:hover{background:var(--gold);color:var(--bg)}
+
+@media(max-width:600px){
+  .story{padding:0 1rem 4rem}
+  .dl{padding:.8rem}
+  .ml{padding:.8rem 1rem;font-size:.95rem}
+  .panel{margin-bottom:1.5rem}
+}
+</style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
+</head>
+<body>
+
+<!-- Lang switcher -->
+<div id="lang-sw" style="position:fixed;top:12px;left:16px;z-index:1000;display:flex;gap:4px">
+  <button onclick="setLang('ja')" id="btn-ja" class="lbtn active">JP</button>
+  <button onclick="setLang('en')" id="btn-en" class="lbtn">EN</button>
+  <button onclick="setLang('pt')" id="btn-pt" class="lbtn">PT</button>
+</div>
+
+<div class="progress" id="prog"></div>
+<div class="scene-counter" id="sceneCount">1 / 77</div>
+
+<!-- Audio controls -->
+<div class="audio-ctrl" id="audioBtn" onclick="toggleAudio()" title="BGM ON/OFF">
+  <svg viewBox="0 0 24 24" id="audioIcon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+</div>
+<audio id="bgm" loop preload="auto"><source src="/music/op_new.mp3" type="audio/mpeg"></audio>
+
+<!-- ═══ HEADER ═══ -->
+<section class="ep-header" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">
+  <div class="ov"></div>
+  <div class="ep-hc">
+    <div class="num"
+      data-ja="FLOW &mdash; Season 1 Episode 1"
+      data-en="FLOW &mdash; Season 1 Episode 1"
+      data-pt="FLOW &mdash; Temporada 1 Episódio 1">FLOW &mdash; Season 1 Episode 1</div>
+    <h1
+      data-ja="残像"
+      data-en="Afterimage"
+      data-pt="Pós-Imagem">残像</h1>
+    <div class="sub"
+      data-ja="Afterimage"
+      data-en="Afterimage"
+      data-pt="Pós-Imagem">Afterimage</div>
+  </div>
+  <div class="scroll-h"
+    data-ja="SCROLL TO START"
+    data-en="SCROLL TO START"
+    data-pt="ROLAR PARA COMEÇAR">SCROLL TO START</div>
+</section>
+
+<!-- ═══ STORY ═══ -->
+<div class="story" id="story">
+
+<!-- ▸▸▸ A PART ▸▸▸ -->
+<div class="part"><span class="lbl"
+  data-ja="A Part"
+  data-en="A Part"
+  data-pt="Parte A">A Part<span class="ttl"
+  data-ja="SAGE の世界"
+  data-en="The World of SAGE"
+  data-pt="O Mundo do SAGE">SAGE の世界</span></span></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_000_arena_ext.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="2030年。関東オープン決勝。<br>暗い空の下、4万人がSAGEアリーナへ吸い込まれていく。"
+  data-en="2030. Kanto Open Championship Finals.<br>Under a darkened sky, forty thousand souls pour into the SAGE Arena."
+  data-pt="2030. Final do Kanto Open.<br>Sob um céu sombrio, quarenta mil pessoas são engolidas pelo SAGE Arena.">2030年。関東オープン決勝。<br>暗い空の下、4万人がSAGEアリーナへ吸い込まれていく。</div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_005_arena_crowd.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="巨大なホログラムが浮かぶアリーナ。天井まで届くSAGEのロゴが、ティールの光を放つ。<br><em>観客の8割がスマホで「予測スコア」を確認しながら座っていた。</em><br>試合が始まる前に、賭けは終わっている。スポーツとは何か、誰も気にしていなかった。"
+  data-en="An arena alive with towering holograms. SAGE's logo blazes teal from floor to ceiling.<br><em>Eight out of ten spectators sat checking 'prediction scores' on their phones.</em><br>The bets were settled before the match began. No one stopped to ask what sport was anymore."
+  data-pt="Uma arena dominada por hologramas gigantes. O logo do SAGE irradia teal do chão ao teto.<br><em>Oito em cada dez espectadores sentados verificando 'pontuações de previsão' nos celulares.</em><br>As apostas estavam fechadas antes de a luta começar. Ninguém se perguntava mais o que era esporte.">巨大なホログラムが浮かぶアリーナ。天井まで届くSAGEのロゴが、ティールの光を放つ。<br><em>観客の8割がスマホで「予測スコア」を確認しながら座っていた。</em><br>試合が始まる前に、賭けは終わっている。スポーツとは何か、誰も気にしていなかった。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_010_sage_boot.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="SAGE" data-en="SAGE" data-pt="SAGE">SAGE</div><div class="ln"
+  data-ja="MARS v12.4 起動完了。ニューラルリンク確立。"
+  data-en="MARS v12.4 boot complete. Neural link established."
+  data-pt="MARS v12.4 inicialização concluída. Link neural estabelecido.">MARS v12.4 起動完了。ニューラルリンク確立。</div></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_015_victor_entrance.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="SAGE搭載選手・ヴィクトル。暗いトンネルからマットへ向かう。<br><em>右目のHUDバイザーが冷たく光る。その瞳に、感情はない。</em>"
+  data-en="Victor — SAGE-enhanced competitor. He walks from the dark tunnel toward the mat.<br><em>The HUD visor over his right eye glows cold. In those eyes, there is no emotion.</em>"
+  data-pt="Victor — competidor equipado com SAGE. Emerge do túnel escuro em direção ao tatame.<br><em>O visor HUD no olho direito brilha friamente. Naqueles olhos, não há emoção alguma.</em>">SAGE搭載選手・ヴィクトル。暗いトンネルからマットへ向かう。<br><em>右目のHUDバイザーが冷たく光る。その瞳に、感情はない。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_020_victor_hud_pov.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="SAGE" data-en="SAGE" data-pt="SAGE">SAGE</div><div class="ln"
+  data-ja="右足 内側重心 94.7%。パスガード右側 推奨。"
+  data-en="Right foot, inner weight distribution 94.7%. Pass guard right side — recommended."
+  data-pt="Pé direito, centro de gravidade interno 94.7%. Passagem de guarda pelo lado direito — recomendado.">右足 内側重心 94.7%。パスガード右側 推奨。</div></div>
+<div class="nr"
+  data-ja="ヴィクトルの視界。相手の骨格がワイヤーフレームで浮かぶ。<br>関節ごとに可動域、負荷、疲労度がリアルタイム表示される。"
+  data-en="Victor's point of view. The opponent's skeleton overlaid in wireframe.<br>Each joint displays range of motion, load, and fatigue levels in real time."
+  data-pt="O ponto de vista de Victor. O esqueleto do oponente aparece em wireframe.<br>Cada articulação exibe amplitude de movimento, carga e nível de fadiga em tempo real.">ヴィクトルの視界。相手の骨格がワイヤーフレームで浮かぶ。<br>関節ごとに可動域、負荷、疲労度がリアルタイム表示される。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_025_victor_grip.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="ヴィクトルの手が相手の襟を掴む。寸分の狂いなく、最適解をなぞる。<br><strong>テキストブック通り。だがそこに個性はない。</strong>"
+  data-en="Victor's hand grips the opponent's collar. With zero deviation, tracing the optimal solution.<br><strong>Textbook perfect. But there is no personality within it.</strong>"
+  data-pt="A mão de Victor agarra a gola do oponente. Sem nenhum desvio, seguindo a solução ótima.<br><strong>Manual perfeito. Mas não há personalidade alguma nisso.</strong>">ヴィクトルの手が相手の襟を掴む。寸分の狂いなく、最適解をなぞる。<br><strong>テキストブック通り。だがそこに個性はない。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_030_sage_voice.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="SAGE" data-en="SAGE" data-pt="SAGE">SAGE</div><div class="ln"
+  data-ja="パス右 成功率 94.7%"
+  data-en="Pass right — success rate 94.7%"
+  data-pt="Passagem direita — taxa de sucesso 94.7%">パス右 成功率 94.7%</div></div>
+<div class="nr"
+  data-ja="左にリアルなパスガード。右にSAGEのワイヤーフレーム予測。<br><em>現実とデジタルが完全に一致する。もはや試合ではない。確認作業だ。</em>"
+  data-en="On the left, the real pass guard. On the right, SAGE's wireframe prediction.<br><em>Reality and digital align perfectly. This is no longer a match. It is a verification procedure.</em>"
+  data-pt="À esquerda, a passagem real. À direita, a previsão em wireframe do SAGE.<br><em>Realidade e digital coincidem perfeitamente. Isso não é mais uma luta. É um procedimento de verificação.</em>">左にリアルなパスガード。右にSAGEのワイヤーフレーム予測。<br><em>現実とデジタルが完全に一致する。もはや試合ではない。確認作業だ。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_035_opponent_helpless.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="相手が何をしても全部読まれる。タックル — 97.2%で切られる。<br>引き込み — カウンター経路3パターン表示。<em>逃げ場はない。</em>"
+  data-en="No matter what the opponent does, it is all predicted. Takedown — countered at 97.2%.<br>Pull guard — three counter paths displayed. <em>There is no escape.</em>"
+  data-pt="Não importa o que o oponente faça, tudo é previsto. Queda — defendida em 97.2%.<br>Puxar guarda — três caminhos de contra-ataque exibidos. <em>Não há saída.</em>">相手が何をしても全部読まれる。タックル — 97.2%で切られる。<br>引き込み — カウンター経路3パターン表示。<em>逃げ場はない。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_040_armbar_setup.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="腕十字のセットアップ。完璧な90度。<br><strong>無駄なエネルギーゼロ。ロボットが部品を組み立てるように。</strong>"
+  data-en="The armbar setup. A perfect ninety degrees.<br><strong>Zero wasted energy. Like a robot assembling components.</strong>"
+  data-pt="O setup da chave de braço. Noventa graus perfeitos.<br><strong>Zero energia desperdiçada. Como um robô montando peças.</strong>">腕十字のセットアップ。完璧な90度。<br><strong>無駄なエネルギーゼロ。ロボットが部品を組み立てるように。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_045_armbar_finish.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="<strong>2分。腕十字。一本。</strong><br>相手が必死にタップする。ヴィクトルの顔に表情はない。"
+  data-en="<strong>Two minutes. Armbar. Submission.</strong><br>The opponent taps desperately. Victor's face remains expressionless."
+  data-pt="<strong>Dois minutos. Chave de braço. Finalização.</strong><br>O oponente bate desesperadamente. O rosto de Victor permanece sem expressão."><strong>2分。腕十字。一本。</strong><br>相手が必死にタップする。ヴィクトルの顔に表情はない。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_047_victor_walks_away.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="ヴィクトルが立ち上がり、振り返りもせずコーナーへ歩く。<br><em>作業が終わった。それだけだ。</em>"
+  data-en="Victor rises and walks to the corner without looking back.<br><em>The task is complete. Nothing more.</em>"
+  data-pt="Victor se levanta e caminha para o canto sem olhar para trás.<br><em>A tarefa está concluída. Nada mais.</em>">ヴィクトルが立ち上がり、振り返りもせずコーナーへ歩く。<br><em>作業が終わった。それだけだ。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_050_crowd_tepid.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="会場は拍手するが、歓声は薄い。スマホを見る客、欠伸をする客。<br><em>「答え」が分かっている試合を、誰が心から応援できる？</em>"
+  data-en="The venue applauds, but the cheers are hollow. Audience members staring at phones, others yawning.<br><em>Who can genuinely cheer for a match whose outcome they already know?</em>"
+  data-pt="O público aplaude, mas as aclamações são vazias. Espectadores olhando para o celular, outros bocejando.<br><em>Quem consegue torcer de verdade por uma luta cujo resultado já é conhecido?</em>">会場は拍手するが、歓声は薄い。スマホを見る客、欠伸をする客。<br><em>「答え」が分かっている試合を、誰が心から応援できる？</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_055_ceo_smile.png" loading="lazy"></div>
+<div class="dl"><div class="sp"
+  data-ja="助手" data-en="Assistant" data-pt="Assistente">助手</div><div class="ln"
+  data-ja="今期の的中率、99.8%です。"
+  data-en="This quarter's prediction accuracy: 99.8%."
+  data-pt="A precisão de previsão deste trimestre: 99.8%.">今期の的中率、99.8%です。</div></div>
+<div class="nr"
+  data-ja="SAGE社CEOがVIP席で微笑む。その笑みに歓びはない。<em>確認</em>があるだけだ。"
+  data-en="The SAGE Corporation CEO smiles from the VIP box. There is no joy in that smile. Only <em>confirmation</em>."
+  data-pt="O CEO da SAGE Corporation sorri do camarote VIP. Não há alegria naquele sorriso. Apenas <em>confirmação</em>.">SAGE社CEOがVIP席で微笑む。その笑みに歓びはない。<em>確認</em>があるだけだ。</div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_060_narration_solved.png" loading="lazy"></div>
+<div class="ml"
+  data-ja="2030年。柔術は"解かれた" —— みんなそう思ってた。"
+  data-en="2030. Jiu-jitsu had been "solved" — or so everyone believed."
+  data-pt="2030. O jiu-jitsu havia sido "resolvido" — pelo menos era o que todos acreditavam.">2030年。柔術は"解かれた" —— みんなそう思ってた。</div></div>
+
+<!-- ── ムラジアル決勝 ── -->
+<div class="ink"><span
+  data-ja="ムラジアル決勝"
+  data-en="Mundials Final"
+  data-pt="Final do Mundial">ムラジアル決勝</span></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_065_title_card.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="ムラジアル決勝。ゴールドのスポットライトが冷たいティールを切り裂く。<br><em>この日、すべてが変わる。</em>"
+  data-en="Mundials Final. A golden spotlight slices through the cold teal.<br><em>On this day, everything changes.</em>"
+  data-pt="Final do Mundial. Um holofote dourado corta o teal frio.<br><em>Neste dia, tudo muda.</em>">ムラジアル決勝。ゴールドのスポットライトが冷たいティールを切り裂く。<br><em>この日、すべてが変わる。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_070_kaido_entrance.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="海堂陽一。白い道着に赤帯。裸足。<br><strong>イヤピースなし。バイザーなし。テクノロジーなし。</strong><br><em>彼だけが、素の人間としてマットに立った。</em>"
+  data-en="Kaido Yoichi. White gi, red belt. Bare feet.<br><strong>No earpiece. No visor. No technology.</strong><br><em>He alone stood on the mat as a pure human being.</em>"
+  data-pt="Kaido Yoichi. Quimono branco, faixa vermelha. Pés descalços.<br><strong>Sem fone de ouvido. Sem visor. Sem tecnologia.</strong><br><em>Ele, sozinho, se posicionou no tatame como um ser humano puro.</em>">海堂陽一。白い道着に赤帯。裸足。<br><strong>イヤピースなし。バイザーなし。テクノロジーなし。</strong><br><em>彼だけが、素の人間としてマットに立った。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_075_kaido_closeup.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="穏やかで優しい目。だがその奥に、獣のような鋭さが光る。<br><em>海堂は笑っていた。ここにいることが、ただ楽しいのだ。</em>"
+  data-en="Calm, gentle eyes. Yet behind them, the sharp gleam of a wild beast.<br><em>Kaido was smiling. Being here, simply, was joy enough.</em>"
+  data-pt="Olhos calmos e gentis. Mas por trás deles, o brilho afiado de uma fera selvagem.<br><em>Kaido estava sorrindo. Estar aqui, simplesmente, já era alegria suficiente.</em>">穏やかで優しい目。だがその奥に、獣のような鋭さが光る。<br><em>海堂は笑っていた。ここにいることが、ただ楽しいのだ。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_080_faceoff.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="海堂 vs ヴィクトル。白と黒。人間とシステム。<br>二人が礼をする。アリーナが息を呑む。"
+  data-en="Kaido vs. Victor. White and black. Human and system.<br>Both bow. The arena holds its breath."
+  data-pt="Kaido vs. Victor. Branco e preto. Humano e sistema.<br>Ambos se curvam. A arena prende a respiração.">海堂 vs ヴィクトル。白と黒。人間とシステム。<br>二人が礼をする。アリーナが息を呑む。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_085_sage_scan_kaido.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="SAGE" data-en="SAGE" data-pt="SAGE">SAGE</div><div class="ln"
+  data-ja="海堂陽一。予測精度 94.2%。推奨：引き込み待ち、レッグドラッグ。"
+  data-en="Kaido Yoichi. Prediction accuracy 94.2%. Recommended: await guard pull, execute leg drag."
+  data-pt="Kaido Yoichi. Precisão de previsão 94.2%. Recomendado: aguardar puxada de guarda, executar leg drag.">海堂陽一。予測精度 94.2%。推奨：引き込み待ち、レッグドラッグ。</div></div>
+<div class="nr"
+  data-ja="SAGEのワイヤーフレームが海堂の体を走査する。<br><em>AIは自信に満ちていた。</em>"
+  data-en="SAGE's wireframe scans Kaido's body.<br><em>The AI was confident.</em>"
+  data-pt="O wireframe do SAGE escaneia o corpo de Kaido.<br><em>A IA estava confiante.</em>">SAGEのワイヤーフレームが海堂の体を走査する。<br><em>AIは自信に満ちていた。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_090_match_start.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="試合開始。ヴィクトルがSAGEの指示通りに動く。<br>海堂はリラックスした構え。教科書にない、<strong>どこにも属さないスタンス。</strong>"
+  data-en="Match start. Victor moves exactly as SAGE commands.<br>Kaido adopts a relaxed stance — not from any textbook, <strong>belonging to no known system.</strong>"
+  data-pt="Início da luta. Victor se move exatamente como o SAGE ordena.<br>Kaido adota uma postura relaxada — fora de qualquer manual, <strong>não pertencendo a nenhum sistema conhecido.</strong>">試合開始。ヴィクトルがSAGEの指示通りに動く。<br>海堂はリラックスした構え。教科書にない、<strong>どこにも属さないスタンス。</strong></div></div>
+
+<!-- SAGE specificity -->
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_093_sage_analysis_detail.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="SAGEが海堂の重心を解析する。通常の選手は60/40や70/30で重心が偏る。<br>だが海堂は<strong>完全に50/50</strong>。どちらにも動ける。全方向に矢印が伸びるが、全て低確率。<br><em>AIは等確率に麻痺する。「次」が絞れない。</em>"
+  data-en="SAGE analyzes Kaido's center of gravity. Normal athletes lean 60/40 or 70/30.<br>But Kaido is <strong>perfectly 50/50</strong>. He can move in any direction. Arrows extend in all directions — all low probability.<br><em>The AI is paralyzed by equal probability. It cannot narrow down \"what comes next.\"</em>"
+  data-pt="SAGE analisa o centro de gravidade de Kaido. Atletas normais ficam 60/40 ou 70/30.<br>Mas Kaido está <strong>perfeitamente 50/50</strong>. Ele pode se mover em qualquer direção. Setas se estendem em todas as direções — todas com baixa probabilidade.<br><em>A IA fica paralisada pela equiprobabilidade. Não consegue determinar \"o que vem a seguir\".</em>">SAGEが海堂の重心を解析する。通常の選手は60/40や70/30で重心が偏る。<br>だが海堂は<strong>完全に50/50</strong>。どちらにも動ける。全方向に矢印が伸びるが、全て低確率。<br><em>AIは等確率に麻痺する。「次」が絞れない。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_095_kaido_shifts.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="SAGE" data-en="SAGE" data-pt="SAGE">SAGE</div><div class="ln"
+  data-ja="再計算中… 87.6%…"
+  data-en="Recalculating… 87.6%…"
+  data-pt="Recalculando… 87.6%…">再計算中… 87.6%…</div></div>
+<div class="nr"
+  data-ja="海堂の動きが変わり始める。体の軸がなくなる。<br>ヴィクトルのHUDに初めて揺らぎが走る。"
+  data-en="Kaido's movement begins to shift. His body's axis disappears.<br>For the first time, Victor's HUD flickers."
+  data-pt="O movimento de Kaido começa a mudar. O eixo do seu corpo desaparece.<br>Pela primeira vez, o HUD de Victor treme.">海堂の動きが変わり始める。体の軸がなくなる。<br>ヴィクトルのHUDに初めて揺らぎが走る。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_100_prediction_drops.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="SAGE" data-en="SAGE" data-pt="SAGE">SAGE</div><div class="ln"
+  data-ja="71.3%… 58.1%… 42.7%… PREDICTION: UNSTABLE"
+  data-en="71.3%… 58.1%… 42.7%… PREDICTION: UNSTABLE"
+  data-pt="71.3%… 58.1%… 42.7%… PREVISÃO: INSTÁVEL">71.3%… 58.1%… 42.7%… PREDICTION: UNSTABLE</div></div>
+<div class="nr"
+  data-ja="アリーナのスクリーンが揺れる。数字が落ちていく。<br>ヴィクトルが<strong>キャリアで初めて躊躇する。</strong>"
+  data-en="The arena screens flicker. Numbers tumbling downward.<br>Victor <strong>hesitates for the first time in his career.</strong>"
+  data-pt="As telas da arena tremem. Os números despencam.<br>Victor <strong>hesita pela primeira vez em sua carreira.</strong>">アリーナのスクリーンが揺れる。数字が落ちていく。<br>ヴィクトルが<strong>キャリアで初めて躊躇する。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_105_kaido_flow_begin.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="海堂がフロウ状態に入る。道着が水のように波打つ。足がマットに溶け込む。<br>背景が墨絵のように溶け始め、時間そのものが引き延ばされていく感覚。<br>ヴィクトルのHUDが激しくノイズを吐き出す。生まれて初めて、彼は<strong>迷う。</strong><br><em>美しく、恐ろしく、自由。AIが言語化できない何かが、そこにあった。</em>"
+  data-en="Kaido enters the Flow state. His gi ripples like water. His feet dissolve into the mat.<br>The background melts into an ink wash, and time itself seems to stretch.<br>Victor's HUD spits violent noise. For the first time in his life, he <strong>hesitates.</strong><br><em>Beautiful, terrifying, free. Something was there that AI had no language for.</em>"
+  data-pt="Kaido entra no estado de Flow. O quimono ondula como água. Seus pés se dissolvem no tatame.<br>O fundo se derrete em tinta, e o próprio tempo parece se esticar.<br>O HUD de Victor cospe ruído violento. Pela primeira vez na vida, ele <strong>hesita.</strong><br><em>Belo, aterrorizante, livre. Havia algo ali para o qual a IA não tinha palavras.</em>">海堂がフロウ状態に入る。道着が水のように波打つ。足がマットに溶け込む。<br>背景が墨絵のように溶け始め、時間そのものが引き延ばされていく感覚。<br>ヴィクトルのHUDが激しくノイズを吐き出す。生まれて初めて、彼は<strong>迷う。</strong><br><em>美しく、恐ろしく、自由。AIが言語化できない何かが、そこにあった。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_110_cross_grip.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="クロスグリップ。海堂の指がヴィクトルの襟に溶け込む。<br><em>教科書にない、あり得ない握り方。だがそこから全てが始まる。</em>"
+  data-en="Cross grip. Kaido's fingers melt into Victor's collar.<br><em>A grip that exists in no textbook, that should not exist. And yet — everything begins from here.</em>"
+  data-pt="Pegada cruzada. Os dedos de Kaido se fundem à gola de Victor.<br><em>Uma pegada que não existe em nenhum manual, que não deveria existir. E ainda assim — tudo começa daqui.</em>">クロスグリップ。海堂の指がヴィクトルの襟に溶け込む。<br><em>教科書にない、あり得ない握り方。だがそこから全てが始まる。</em></div></div>
+
+<!-- ── CLIMAX: The Sweep (high density) ── -->
+<div class="climax">
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_115_sweep_windup.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="スイープの直前。時が止まる。<br>海堂の体が、水が砕ける寸前の波のように構える。"
+  data-en="The instant before the sweep. Time stops.<br>Kaido's body coils like a wave on the verge of breaking."
+  data-pt="O instante antes da raspagem. O tempo para.<br>O corpo de Kaido se enrola como uma onda prestes a quebrar.">スイープの直前。時が止まる。<br>海堂の体が、水が砕ける寸前の波のように構える。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_116_sweep_contact.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="海堂の腰がヴィクトルの重心を捉えた瞬間。<br><em>てこ、角度、タイミング。全てが一点に収束する。</em>"
+  data-en="The moment Kaido's hips catch Victor's center of gravity.<br><em>Leverage, angle, timing. Everything converges at a single point.</em>"
+  data-pt="O momento em que o quadril de Kaido captura o centro de gravidade de Victor.<br><em>Alavanca, ângulo, timing. Tudo converge em um único ponto.</em>">海堂の腰がヴィクトルの重心を捉えた瞬間。<br><em>てこ、角度、タイミング。全てが一点に収束する。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_117_sweep_rotation_1.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="ヴィクトルの足がマットから離れる。体が30度傾く。<br>腕が本能的に伸びる。墨と水がマットから噴き出す。"
+  data-en="Victor's feet leave the mat. His body tilts thirty degrees.<br>His arms reach out instinctively. Ink and water burst upward from the mat."
+  data-pt="Os pés de Victor se levantam do tatame. Seu corpo inclina trinta graus.<br>Seus braços se estendem instintivamente. Tinta e água explodem do tatame.">ヴィクトルの足がマットから離れる。体が30度傾く。<br>腕が本能的に伸びる。墨と水がマットから噴き出す。</div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_118_sweep_apex.png" loading="lazy"></div>
+<div class="sfx"
+  data-ja="ザァァァァン——"
+  data-en="WHOOOOOM——"
+  data-pt="ZUUUUUM——">ザァァァァン——</div>
+<div class="nr"
+  data-ja="<strong>ヴィクトルの体が水平。空中で静止する一瞬。</strong><br>巨大な水柱が頂点に達する。墨が放射状に飛び散る。"
+  data-en="<strong>Victor's body is horizontal. A frozen instant suspended in air.</strong><br>A massive water column reaches its apex. Ink scatters in all directions."
+  data-pt="<strong>O corpo de Victor está horizontal. Um instante congelado suspenso no ar.</strong><br>Uma coluna d'água gigante atinge o ápice. A tinta se espalha em todas as direções."><strong>ヴィクトルの体が水平。空中で静止する一瞬。</strong><br>巨大な水柱が頂点に達する。墨が放射状に飛び散る。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_119_sweep_descent.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="落下。ヴィクトルが回転しながら落ちていく。水が滝のように流れる。<br><em>アリーナの全スクリーンが赤い ERR で埋まる。</em>"
+  data-en="The fall. Victor spirals downward. Water cascades like a waterfall.<br><em>Every screen in the arena fills with red ERR.</em>"
+  data-pt="A queda. Victor espirala para baixo. A água cai como uma cachoeira.<br><em>Cada tela da arena se preenche de ERR vermelho.</em>">落下。ヴィクトルが回転しながら落ちていく。水が滝のように流れる。<br><em>アリーナの全スクリーンが赤い ERR で埋まる。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_120_sweep_explosion.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="<strong>スイープ。畳の上に水の波紋が広がり、巨大な水柱が噴出する。</strong><br>SAGEが初めて完全にクラッシュした。"
+  data-en="<strong>Sweep. Ripples of water spread across the mat and a towering column erupts.</strong><br>SAGE crashed completely for the first time."
+  data-pt="<strong>Raspagem. Ondas de água se expandem pelo tatame e uma coluna colossal explode.</strong><br>O SAGE travou completamente pela primeira vez."><strong>スイープ。畳の上に水の波紋が広がり、巨大な水柱が噴出する。</strong><br>SAGEが初めて完全にクラッシュした。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_121_sweep_impact.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="ヴィクトルがマットに叩きつけられる。衝撃波が水のリングとなって広がる。<br>海堂は既にトップポジションへ移行している。"
+  data-en="Victor is slammed into the mat. The shockwave spreads as a ring of water.<br>Kaido has already transitioned to top position."
+  data-pt="Victor é arremessado contra o tatame. A onda de choque se expande como um anel de água.<br>Kaido já está em posição de cima.">ヴィクトルがマットに叩きつけられる。衝撃波が水のリングとなって広がる。<br>海堂は既にトップポジションへ移行している。</div></div>
+
+</div><!-- /climax -->
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_125_sweep_aftermath.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="水と墨の飛沫がまだ降り注ぐ中、海堂がヴィクトルを制圧する。<br><em>VIP席のCEOが、蒼白な顔で立ち上がった。</em>"
+  data-en="With droplets of water and ink still raining down, Kaido dominates Victor.<br><em>The CEO in the VIP box rose to his feet, his face pale.</em>"
+  data-pt="Com gotículas de água e tinta ainda caindo, Kaido domina Victor.<br><em>O CEO no camarote VIP se levantou, o rosto pálido.</em>">水と墨の飛沫がまだ降り注ぐ中、海堂がヴィクトルを制圧する。<br><em>VIP席のCEOが、蒼白な顔で立ち上がった。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_130_submission.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="クロスカラーチョーク。7分32秒。一本勝ち。<br>海堂の顔に勝利の雄叫びはない。<strong>ただ、穏やかな静けさ。</strong><br><em>美しい絵を描き終えた画家のように。</em>"
+  data-en="Cross collar choke. Seven minutes thirty-two seconds. Submission victory.<br>There is no triumphant roar on Kaido's face. <strong>Only quiet stillness.</strong><br><em>Like a painter who has just finished a beautiful work.</em>"
+  data-pt="Estrangulamento cruzado na gola. Sete minutos e trinta e dois segundos. Vitória por finalização.<br>Não há grito de triunfo no rosto de Kaido. <strong>Apenas quietude serena.</strong><br><em>Como um pintor que acabou de terminar uma obra bela.</em>">クロスカラーチョーク。7分32秒。一本勝ち。<br>海堂の顔に勝利の雄叫びはない。<strong>ただ、穏やかな静けさ。</strong><br><em>美しい絵を描き終えた画家のように。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_135_silence.png" loading="lazy"></div>
+<div class="nr" style="text-align:center;font-size:1.1rem"
+  data-ja="<strong>静寂。</strong><br>4万人が凍りついた。スクリーンは全て暗転。<br>スポットライトだけが、マットの上の男を照らしていた。"
+  data-en="<strong>Silence.</strong><br>Forty thousand people froze. Every screen went dark.<br>Only a single spotlight illuminated the man on the mat."
+  data-pt="<strong>Silêncio.</strong><br>Quarenta mil pessoas congelaram. Cada tela escureceu.<br>Apenas um único holofote iluminava o homem no tatame."><strong>静寂。</strong><br>4万人が凍りついた。スクリーンは全て暗転。<br>スポットライトだけが、マットの上の男を照らしていた。</div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/a_140_eruption.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="<strong>爆発。</strong><br>歓声が、津波のようにアリーナを呑み込んだ。涙を流す客、叫ぶ客、抱き合う客。<br><em>SAGEが初めて壊れた瞬間。人間が勝った瞬間。</em>"
+  data-en="<strong>Eruption.</strong><br>The roar swallowed the arena like a tsunami. Audience members weeping, screaming, embracing.<br><em>The moment SAGE broke for the first time. The moment a human won.</em>"
+  data-pt="<strong>Explosão.</strong><br>A ovação engoliu a arena como um tsunami. Espectadores chorando, gritando, se abraçando.<br><em>O momento em que o SAGE quebrou pela primeira vez. O momento em que um humano venceu.</em>"><strong>爆発。</strong><br>歓声が、津波のようにアリーナを呑み込んだ。涙を流す客、叫ぶ客、抱き合う客。<br><em>SAGEが初めて壊れた瞬間。人間が勝った瞬間。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_145_kaido_smile.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="スポットライトの中、海堂が観客を見上げる。穏やかな微笑み。<br>何かを呟く。カメラが捉えた口の動き——<em>「まだ、ここにいる」</em><br>誰にも意味が分からなかった。<br><em>これが、人々が海堂陽一を最後に見た瞬間だった。</em>"
+  data-en="In the spotlight, Kaido looks up at the crowd. A gentle smile.<br>He whispers something. A camera catches the shape of his lips: <em>'I'm still here.'</em><br>No one understood what it meant.<br><em>This was the last moment anyone saw Kaido Yoichi.</em>"
+  data-pt="Sob o holofote, Kaido olha para a plateia. Um sorriso gentil.<br>Ele sussurra algo. Uma câmera capta o movimento dos seus lábios: <em>'Ainda estou aqui.'</em><br>Ninguém entendeu o que significava.<br><em>Este foi o último momento em que alguém viu Kaido Yoichi.</em>">スポットライトの中、海堂が観客を見上げる。穏やかな微笑み。<br>何かを呟く。カメラが捉えた口の動き——<em>「まだ、ここにいる」</em><br>誰にも意味が分からなかった。<br><em>これが、人々が海堂陽一を最後に見た瞬間だった。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/a_150_empty_dojo.png" loading="lazy"></div>
+<div class="nr" style="text-align:center;font-size:1.15rem;padding:1.5rem 0"
+  data-ja="<strong>翌日、海堂は消えた。</strong><br><br><em>畳に置手紙が一枚。道着が壁にかかったまま。</em><br><br>手紙には一行だけあった——<br><em style='color:#c8a96e'>「もう一回、だけじゃ足りなくなった」</em><br><br>警察が調べたが、痕跡はゼロ。防犯カメラにも映っていない。<br><strong>海堂陽一は、まるで水に溶けるように、消えた。</strong>"
+  data-en="<strong>The next day, Kaido vanished.</strong><br><br><em>A single letter left on the tatami. His gi still hanging on the wall.</em><br><br>The letter contained one line:<br><em style='color:#c8a96e'>'One more time was no longer enough.'</em><br><br>Police investigated. Zero trace. Not a single security camera caught him.<br><strong>Kaido Yoichi dissolved like water and was gone.</strong>"
+  data-pt="<strong>No dia seguinte, Kaido desapareceu.</strong><br><br><em>Uma única carta deixada no tatame. O quimono ainda pendurado na parede.</em><br><br>A carta continha apenas uma linha:<br><em style='color:#c8a96e'>'Mais uma vez não era mais suficiente.'</em><br><br>A polícia investigou. Nenhum rastro. Nenhuma câmera de segurança o captou.<br><strong>Kaido Yoichi se dissolveu como água e desapareceu.</strong>"><strong>翌日、海堂は消えた。</strong><br><br><em>畳に置手紙が一枚。道着が壁にかかったまま。</em><br><br>手紙には一行だけあった——<br><em style='color:#c8a96e'>「もう一回、だけじゃ足りなくなった」</em><br><br>警察が調べたが、痕跡はゼロ。防犯カメラにも映っていない。<br><strong>海堂陽一は、まるで水に溶けるように、消えた。</strong></div></div>
+
+<!-- ▸▸▸ B PART ▸▸▸ -->
+<div class="part"><span class="lbl"
+  data-ja="B Part"
+  data-en="B Part"
+  data-pt="Parte B">B Part<span class="ttl"
+  data-ja="流の日常"
+  data-en="Nagare's Daily Life"
+  data-pt="O Cotidiano de Nagare">流の日常</span></span></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_155_title_2years.png" loading="lazy"></div>
+<div class="nr" style="text-align:center;font-size:1.1rem"
+  data-ja="<strong>2年後 —— 2032年。</strong>"
+  data-en="<strong>Two years later — 2032.</strong>"
+  data-pt="<strong>Dois anos depois — 2032.</strong>"><strong>2年後 —— 2032年。</strong></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_160_school_exterior.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="桜が散る普通の高校。笑い声、友人同士の会話。<br><em>ここにSAGEのロゴはない。ここにフロウもない。ただの日常。</em>"
+  data-en="An ordinary high school, cherry blossoms falling. Laughter, friends talking.<br><em>No SAGE logo here. No Flow here. Just ordinary life.</em>"
+  data-pt="Um colégio comum, pétalas de cerejeira caindo. Risadas, amigos conversando.<br><em>Sem logo do SAGE aqui. Sem Flow aqui. Apenas vida cotidiana.</em>">桜が散る普通の高校。笑い声、友人同士の会話。<br><em>ここにSAGEのロゴはない。ここにフロウもない。ただの日常。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_165_classroom_wide.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="昼休みの教室。グループで盛り上がる同級生たち。<br>窓際の席に、一人だけ誰とも話さない少年がいる。<strong>流（17歳）。</strong>"
+  data-en="The classroom at lunch. Classmates buzzing in groups.<br>By the window, a single boy who speaks to no one. <strong>Nagare, age seventeen.</strong>"
+  data-pt="A sala de aula na hora do almoço. Colegas animados em grupos.<br>Junto à janela, um único garoto que não fala com ninguém. <strong>Nagare, dezessete anos.</strong>">昼休みの教室。グループで盛り上がる同級生たち。<br>窓際の席に、一人だけ誰とも話さない少年がいる。<strong>流（17歳）。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_170_nagare_window.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="イヤホンをつけて、窓の外を見つめる。だが校庭は見ていない。<br><em>彼の目は、2年前のあの日を見ている。</em>"
+  data-en="Earphones in, staring out the window. But he is not looking at the schoolyard.<br><em>His eyes are seeing that day, two years ago.</em>"
+  data-pt="Com fone de ouvido, olhando pela janela. Mas ele não está vendo o pátio da escola.<br><em>Seus olhos estão vendo aquele dia, dois anos atrás.</em>">イヤホンをつけて、窓の外を見つめる。だが校庭は見ていない。<br><em>彼の目は、2年前のあの日を見ている。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_175_left_hand_desk.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="机に置かれた左手。黒い包帯に巻かれた指が、力なく曲がったまま。<br>周囲の手はペンを走らせ、キーボードを叩く。<strong>この手だけが、止まっている。</strong>"
+  data-en="His left hand on the desk. Fingers wrapped in black bandages, bent lifelessly.<br>The hands around him write with pens, type on keyboards. <strong>Only this hand is still.</strong>"
+  data-pt="A mão esquerda sobre a mesa. Os dedos envoltos em ataduras pretas, curvados sem vida.<br>As mãos ao redor escrevem com canetas, digitam em teclados. <strong>Apenas esta mão está parada.</strong>">机に置かれた左手。黒い包帯に巻かれた指が、力なく曲がったまま。<br>周囲の手はペンを走らせ、キーボードを叩く。<strong>この手だけが、止まっている。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_180_phone_replay.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="右手でスマホを握り、机の下で海堂の試合を再生する。<br><em>472回目の再生。スイープの瞬間で止まっている。いつもここで止める。</em>"
+  data-en="Right hand gripping his phone under the desk, replaying Kaido's match.<br><em>The 472nd viewing. Paused at the moment of the sweep. He always stops here.</em>"
+  data-pt="Mão direita segurando o celular embaixo da mesa, reproduzindo a luta de Kaido.<br><em>A 472ª visualização. Pausado no momento da raspagem. Ele sempre para aqui.</em>">右手でスマホを握り、机の下で海堂の試合を再生する。<br><em>472回目の再生。スイープの瞬間で止まっている。いつもここで止める。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_185_classmates_glance.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="同級生の視線が流の包帯に触れ、すぐに逸れる。ヒソヒソ声。<br><em>誰も近づかない。彼もそれを望んでいない。</em>"
+  data-en="Classmates' glances graze Nagare's bandage, then look away. Whispers.<br><em>No one approaches. He does not want them to.</em>"
+  data-pt="Os olhares dos colegas roçam a atadura de Nagare, depois desviam. Sussurros.<br><em>Ninguém se aproxima. Ele não quer que o façam.</em>">同級生の視線が流の包帯に触れ、すぐに逸れる。ヒソヒソ声。<br><em>誰も近づかない。彼もそれを望んでいない。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_190_school_bell.png" loading="lazy"></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_192_school_gate.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="校門。グループの笑い声の向こうに、一人だけの背中。<br>鞄は右肩だけ。左腕がだらりと垂れている。"
+  data-en="The school gate. Beyond the laughter of groups, one solitary back.<br>Bag on the right shoulder only. Left arm hanging limp."
+  data-pt="O portão da escola. Além das risadas dos grupos, uma única costas solitária.<br>Bolsa apenas no ombro direito. Braço esquerdo pendurado, sem vida.">校門。グループの笑い声の向こうに、一人だけの背中。<br>鞄は右肩だけ。左腕がだらりと垂れている。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_195_walk_home_street.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="帰り道。夕日が街を橙に染める。自販機が光る。電線がオレンジの空を横切る。<br><em>流は一人、人ごみの中を歩く。</em>"
+  data-en="The walk home. The setting sun paints the town orange. Vending machines glow. Power lines cross an orange sky.<br><em>Nagare walks alone through the crowd.</em>"
+  data-pt="O caminho de volta. O sol poente pinta a cidade de laranja. Máquinas de venda automática brilham. Fios de energia cruzam um céu alaranjado.<br><em>Nagare caminha sozinho pela multidão.</em>">帰り道。夕日が街を橙に染める。自販機が光る。電線がオレンジの空を横切る。<br><em>流は一人、人ごみの中を歩く。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_200_dojo_approach.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="足が止まる。錆びたシャッター。色褪せた看板。<br><strong>「海堂柔術」。</strong><br>2年間、ここは変わらない。先生だけがいない。"
+  data-en="His feet stop. A rusted shutter. A faded sign.<br><strong>\"Kaido Jiu-Jitsu.\"</strong><br>Two years, and this place has not changed. Only the teacher is gone."
+  data-pt="Os pés param. Um portão enferrujado. Uma placa desbotada.<br><strong>\"Kaido Jiu-Jitsu.\"</strong><br>Dois anos, e este lugar não mudou. Apenas o professor não está mais aqui.">足が止まる。錆びたシャッター。色褪せた看板。<br><strong>「海堂柔術」。</strong><br>2年間、ここは変わらない。先生だけがいない。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_205_dojo_closeup.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="シャッターの隅に、小さなSAGEの閉鎖認定ステッカー。<br><em>閉じることにすらSAGEが関わっている。</em>"
+  data-en="In the corner of the shutter, a small SAGE closure certification sticker.<br><em>Even in closing, SAGE is involved.</em>"
+  data-pt="No canto do portão, um pequeno adesivo de certificação de encerramento do SAGE.<br><em>Até no fechamento, o SAGE está envolvido.</em>">シャッターの隅に、小さなSAGEの閉鎖認定ステッカー。<br><em>閉じることにすらSAGEが関わっている。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_210_nagare_stands.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="後ろ姿。夕日が長い影を落とす。自転車が通り過ぎる。<br><em>2年間、流はここに通い続けている。開くはずのないシャッターの前に。</em>"
+  data-en="Seen from behind. The setting sun casts a long shadow. A bicycle passes.<br><em>For two years, Nagare has kept coming here. Standing before a shutter that will never open.</em>"
+  data-pt="Visto de costas. O sol poente projeta uma sombra longa. Uma bicicleta passa.<br><em>Por dois anos, Nagare continua vindo aqui. Parado diante de um portão que nunca se abrirá.</em>">後ろ姿。夕日が長い影を落とす。自転車が通り過ぎる。<br><em>2年間、流はここに通い続けている。開くはずのないシャッターの前に。</em></div></div>
+
+<!-- ── 回想 ── -->
+<div class="ink"><span
+  data-ja="回 想"
+  data-en="Flashback"
+  data-pt="Flashback">回 想</span></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_215_flashback_warm.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="同じ道場。だがあの頃は光に満ちていた。<br>金色の畳。壁の練習器具。玄関の小さな靴。<em>生きた場所だった。</em>"
+  data-en="The same dojo. But back then it was full of light.<br>Golden tatami. Training equipment on the walls. Small shoes by the entrance. <em>It was a living place.</em>"
+  data-pt="O mesmo dojô. Mas naquela época estava cheio de luz.<br>Tatame dourado. Equipamentos de treino nas paredes. Sapatos pequenos na entrada. <em>Era um lugar vivo.</em>">同じ道場。だがあの頃は光に満ちていた。<br>金色の畳。壁の練習器具。玄関の小さな靴。<em>生きた場所だった。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_220_child_nagare_drill.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="8歳の流。三角絞めのドリルを何度も失敗する。小さな体が崩れる。<br>左腕にはもう包帯が巻かれている。悔しそうな顔。でも泣かない。"
+  data-en="Nagare at eight years old. Failing the triangle choke drill again and again. His small body collapses.<br>His left arm is already wrapped in bandages. A frustrated face. But he does not cry."
+  data-pt="Nagare com oito anos. Errando o exercício de triângulo repetidamente. Seu pequeno corpo desmorona.<br>O braço esquerdo já está envolvido em ataduras. Um rosto frustrado. Mas ele não chora.">8歳の流。三角絞めのドリルを何度も失敗する。小さな体が崩れる。<br>左腕にはもう包帯が巻かれている。悔しそうな顔。でも泣かない。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_225_kaido_headpat.png" loading="lazy"></div>
+<div class="dl"><div class="sp"
+  data-ja="海堂" data-en="Kaido" data-pt="Kaido">海堂</div><div class="ln"
+  data-ja="よし、見てろ。"
+  data-en="Alright, watch me."
+  data-pt="Tá bom, me observa.">よし、見てろ。</div></div>
+<div class="nr"
+  data-ja="海堂がしゃがみ込み、流の頭をぽんと撫でる。<br>音符が漂う。鼻歌を歌っている。本人は気づいていない。"
+  data-en="Kaido crouches down and gives Nagare's head a gentle pat.<br>Musical notes drift by. He is humming. He does not even notice."
+  data-pt="Kaido se abaixa e dá um tapinha suave na cabeça de Nagare.<br>Notas musicais flutuam. Ele está cantarolando. Nem percebe.">海堂がしゃがみ込み、流の頭をぽんと撫でる。<br>音符が漂う。鼻歌を歌っている。本人は気づいていない。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_230_kaido_demo.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="技を見せる海堂の動きは、水のように滑らかだった。<br>幼い流が目を丸くして見つめる。口が少し開いている。"
+  data-en="Kaido's movements as he demonstrates the technique were as smooth as water.<br>Young Nagare watches with wide eyes. His mouth slightly open."
+  data-pt="Os movimentos de Kaido ao demonstrar a técnica eram suaves como água.<br>O jovem Nagare observa com olhos arregalados. A boca levemente aberta.">技を見せる海堂の動きは、水のように滑らかだった。<br>幼い流が目を丸くして見つめる。口が少し開いている。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_235_one_more_time.png" loading="lazy"></div>
+<div class="dl"><div class="sp"
+  data-ja="流（8歳）" data-en="Nagare (age 8)" data-pt="Nagare (8 anos)">流（8歳）</div><div class="ln"
+  data-ja="先生、何回やるの？"
+  data-en="Sensei, how many times do we do this?"
+  data-pt="Professor, quantas vezes a gente faz isso?">先生、何回やるの？</div></div>
+<div class="dl"><div class="sp"
+  data-ja="海堂" data-en="Kaido" data-pt="Kaido">海堂</div><div class="ln"
+  data-ja="もう一回。"
+  data-en="One more time."
+  data-pt="Mais uma vez.">もう一回。</div></div>
+<div class="nr"
+  data-ja="海堂は笑って言った。いつもそうだった。100回やっても「もう一回」。<br><em>弟子たちはうんざりしながらも、いつしかその言葉に安心を覚えていた。</em>"
+  data-en="Kaido said it with a smile. It was always like that. After a hundred reps, still \"one more time.\"<br><em>His students grew tired of it, and yet somehow the words came to feel like comfort.</em>"
+  data-pt="Kaido disse com um sorriso. Era sempre assim. Depois de cem repetições, ainda \"mais uma vez.\"<br><em>Os alunos ficavam cansados, mas de algum jeito essas palavras viraram conforto.</em>">海堂は笑って言った。いつもそうだった。100回やっても「もう一回」。<br><em>弟子たちはうんざりしながらも、いつしかその言葉に安心を覚えていた。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_240_practice_montage.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="同じドリル。何度も何度も。金色の光の中で。<br><strong>もう一回。もう一回。もう一回。</strong><br><em>反復の中に愛があった。</em>"
+  data-en="The same drill. Again and again. In golden light.<br><strong>One more time. One more time. One more time.</strong><br><em>There was love in the repetition.</em>"
+  data-pt="O mesmo exercício. Repetidamente. Sob uma luz dourada.<br><strong>Mais uma vez. Mais uma vez. Mais uma vez.</strong><br><em>Havia amor na repetição.</em>">同じドリル。何度も何度も。金色の光の中で。<br><strong>もう一回。もう一回。もう一回。</strong><br><em>反復の中に愛があった。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_245_flashback_end.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="練習の後、畳の上で眠ってしまった流。<br>海堂がそっと毛布をかける。穏やかな表情で少年を見つめる。<br><em>夜の静けさ。虫の声。この世界で一番安全な場所。</em>"
+  data-en="After practice, Nagare has fallen asleep on the tatami.<br>Kaido gently drapes a blanket over him. He gazes at the boy with a gentle expression.<br><em>The stillness of night. Crickets. The safest place in the world.</em>"
+  data-pt="Depois do treino, Nagare adormeceu no tatame.<br>Kaido gentilmente joga um cobertor sobre ele. Ele olha para o garoto com uma expressão serena.<br><em>A quietude da noite. Grilos. O lugar mais seguro do mundo.</em>">練習の後、畳の上で眠ってしまった流。<br>海堂がそっと毛布をかける。穏やかな表情で少年を見つめる。<br><em>夜の静けさ。虫の声。この世界で一番安全な場所。</em></div></div>
+
+<!-- ── 現在へ ── -->
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_247_wake_transition.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="温かい記憶がガラスのように砕ける。<br><strong>向こうに見えるのは、冷たい現実のシャッター。</strong>"
+  data-en="The warm memory shatters like glass.<br><strong>On the other side — the cold, real shutter.</strong>"
+  data-pt="A memória quente estilhaça como vidro.<br><strong>Do outro lado — o portão frio e real.</strong>">温かい記憶がガラスのように砕ける。<br><strong>向こうに見えるのは、冷たい現実のシャッター。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_250_present_snap.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="クラクションが記憶を破る。右手がシャッターの冷たい金属に触れている。<br><em>あの頃には戻れない。先生はもういない。</em>"
+  data-en="A car horn shatters the memory. His right hand is touching the cold metal of the shutter.<br><em>There is no going back to those days. The teacher is no longer here.</em>"
+  data-pt="Uma buzina estilhaça a memória. A mão direita está tocando o metal frio do portão.<br><em>Não há como voltar àqueles dias. O professor não está mais aqui.</em>">クラクションが記憶を破る。右手がシャッターの冷たい金属に触れている。<br><em>あの頃には戻れない。先生はもういない。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_255_walk_away.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="流が道場の前を離れる。夕焼けが紫に変わっていく。<br>長い影が前へ伸びる。左腕がだらりと垂れたまま。"
+  data-en="Nagare leaves the dojo behind. The sunset shifts from orange to purple.<br>A long shadow stretches forward. Left arm still hanging limp."
+  data-pt="Nagare deixa o dojô para trás. O pôr do sol muda de laranja para roxo.<br>Uma sombra longa se estende à frente. Braço esquerdo ainda pendurado, sem vida.">流が道場の前を離れる。夕焼けが紫に変わっていく。<br>長い影が前へ伸びる。左腕がだらりと垂れたまま。</div></div>
+
+<!-- ── 夜：決意 ── -->
+<div class="ink"><span
+  data-ja="夜"
+  data-en="Night"
+  data-pt="Noite">夜</span></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_260_room_night.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="夜の自室。開かれていない教科書。壁の古いBJJポスター。<br>ノートパソコンの青白い光が、彼の顔を照らす。"
+  data-en="His room at night. Unopened textbooks. An old BJJ poster on the wall.<br>The pale blue light of a laptop illuminates his face."
+  data-pt="O quarto à noite. Livros didáticos fechados. Um antigo pôster de BJJ na parede.<br>A luz azul pálida do notebook ilumina seu rosto.">夜の自室。開かれていない教科書。壁の古いBJJポスター。<br>ノートパソコンの青白い光が、彼の顔を照らす。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_265_phone_zoom.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="海堂のスイープを拡大する。コマ送り。<br>畳の上に、<strong>水の波紋が見える。</strong>"
+  data-en="He zooms in on Kaido's sweep. Frame by frame.<br>On the tatami, <strong>ripples of water are visible.</strong>"
+  data-pt="Ele amplia a raspagem de Kaido. Quadro por quadro.<br>No tatame, <strong>ondas de água são visíveis.</strong>">海堂のスイープを拡大する。コマ送り。<br>畳の上に、<strong>水の波紋が見える。</strong></div>
+<div class="dl"><div class="sp"
+  data-ja="流" data-en="Nagare" data-pt="Nagare">流</div><div class="ln"
+  data-ja="先生……これ、何やったんだよ……"
+  data-en="Sensei… what the hell did you do here…"
+  data-pt="Professor… o que diabos você fez aqui…">先生……これ、何やったんだよ……</div></div></div>
+
+<!-- B-part ACTION: Nagare moves -->
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_262_nagare_mimics.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="流が立ち上がる。Tシャツに短パン。裸足。<br>床の上で、海堂のスタンスを真似しようとする。右腕を伸ばし、重心を探る。<br><em>だが体は硬い。海堂の「水」には程遠い。</em>"
+  data-en="Nagare stands up. T-shirt and shorts. Bare feet.<br>On the floor, he tries to imitate Kaido's stance. Right arm extended, searching for his center.<br><em>But his body is stiff. Far from Kaido's \"water.\"</em>"
+  data-pt="Nagare se levanta. Camiseta e shorts. Pés descalços.<br>No chão, ele tenta imitar a postura de Kaido. Braço direito estendido, procurando seu centro.<br><em>Mas seu corpo está rígido. Longe da \"água\" de Kaido.</em>">流が立ち上がる。Tシャツに短パン。裸足。<br>床の上で、海堂のスタンスを真似しようとする。右腕を伸ばし、重心を探る。<br><em>だが体は硬い。海堂の「水」には程遠い。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_264_nagare_fails.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="スイープの動きを試みて、よろめく。<br><strong>左腕が振れて、バランスが崩れる。</strong>壁に右手をついて体を支える。<br><em>棚から本が落ちる。この体では、あの動きはできない。</em>"
+  data-en="He attempts the sweep motion and staggers.<br><strong>His left arm swings out and he loses balance.</strong> He plants his right hand on the wall to steady himself.<br><em>A book falls from the shelf. With this body, that movement is impossible.</em>"
+  data-pt="Ele tenta o movimento de raspagem e tropeça.<br><strong>O braço esquerdo balança e ele perde o equilíbrio.</strong> Ele apoia a mão direita na parede para se estabilizar.<br><em>Um livro cai da prateleira. Com esse corpo, aquele movimento é impossível.</em>">スイープの動きを試みて、よろめく。<br><strong>左腕が振れて、バランスが崩れる。</strong>壁に右手をついて体を支える。<br><em>棚から本が落ちる。この体では、あの動きはできない。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_266_nagare_floor.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="壁にもたれて座り込む。息が荒い。<br>左手が膝の上で力なく丸まっている。右手が髪を掴む。<br><strong>だが目は死んでいない。目は、考えている。</strong>"
+  data-en="He slumps against the wall, breathing hard.<br>His left hand curls lifelessly on his knee. His right hand grips his hair.<br><strong>But his eyes are not dead. His eyes are thinking.</strong>"
+  data-pt="Ele desce pela parede, respirando pesado.<br>A mão esquerda se encolhe sem vida sobre o joelho. A mão direita agarra o cabelo.<br><strong>Mas seus olhos não estão mortos. Seus olhos estão pensando.</strong>">壁にもたれて座り込む。息が荒い。<br>左手が膝の上で力なく丸まっている。右手が髪を掴む。<br><strong>だが目は死んでいない。目は、考えている。</strong></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_268_laptop_search.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="流がデスクに向かう。右手でキーボードを叩き始める。<br><strong>「東京 柔術 道場」</strong>。検索結果が画面を埋める。<br><em>悲しむのをやめた。動き始めた。</em>"
+  data-en="Nagare turns to his desk. He begins typing with his right hand.<br><strong>\"Tokyo jiu-jitsu dojo.\"</strong> Search results fill the screen.<br><em>He stopped grieving. He started moving.</em>"
+  data-pt="Nagare se vira para a mesa. Começa a digitar com a mão direita.<br><strong>\"Dojo jiu-jitsu Tóquio.\"</strong> Os resultados da busca preenchem a tela.<br><em>Ele parou de sofrer. Começou a se mover.</em>">流がデスクに向かう。右手でキーボードを叩き始める。<br><strong>「東京 柔術 道場」</strong>。検索結果が画面を埋める。<br><em>悲しむのをやめた。動き始めた。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_272_luciano_found.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="画面にシンプルな古いウェブサイト。「ARTE SUAVE DOJO — 下北沢」。<br>写真の中の男 — 白髪混じりの55歳、珊瑚帯。AIスクリーンのない小さな地下道場。<br><em>流の目が見開かれる。海堂の師匠。</em>"
+  data-en="On the screen, a simple old website. \"ARTE SUAVE DOJO — Shimokitazawa.\"<br>The man in the photo — fifty-five with salt-and-pepper hair, coral belt. A small underground dojo with no AI screens.<br><em>Nagare's eyes widen. Kaido's master.</em>"
+  data-pt="Na tela, um site antigo e simples. \"ARTE SUAVE DOJO — Shimokitazawa.\"<br>O homem na foto — cinquenta e cinco anos, cabelo misto de branco e preto, faixa coral. Um pequeno dojô subterrâneo sem telas de IA.<br><em>Os olhos de Nagare se arregalem. O mestre de Kaido.</em>">画面にシンプルな古いウェブサイト。「ARTE SUAVE DOJO — 下北沢」。<br>写真の中の男 — 白髪混じりの55歳、珊瑚帯。AIスクリーンのない小さな地下道場。<br><em>流の目が見開かれる。海堂の師匠。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_270_nagare_whisper.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="スマホの画面に映る海堂の姿。瞳に焼きつく。<br><em>言葉にならない想いが、唇を震わせる。</em>"
+  data-en="Kaido's image reflected on the phone screen. It burns into his eyes.<br><em>A feeling that cannot be put into words makes his lips tremble.</em>"
+  data-pt="A imagem de Kaido refletida na tela do celular. Ela se grava nos olhos dele.<br><em>Um sentimento que não pode ser colocado em palavras faz seus lábios tremerem.</em>">スマホの画面に映る海堂の姿。瞳に焼きつく。<br><em>言葉にならない想いが、唇を震わせる。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_275_tv_news.png" loading="lazy"></div>
+<div class="dl sage"><div class="sp"
+  data-ja="TVニュース" data-en="TV News" data-pt="Notícias TV">TVニュース</div><div class="ln"
+  data-ja="SAGE、格闘技AI解析精度99.8%を達成。予測できない試合は存在しない——"
+  data-en="SAGE achieves 99.8% AI analysis accuracy in combat sports. There are no longer unpredictable matches——"
+  data-pt="SAGE atinge 99.8% de precisão na análise de IA em esportes de combate. Não existem mais lutas imprevisíveis——">SAGE、格闘技AI解析精度99.8%を達成。予測できない試合は存在しない——</div></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_280_tv_off.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="右手がリモコンを握り、テレビを消す。<em>パチン。</em><br>部屋がスマホの光だけになる。"
+  data-en="His right hand grips the remote and turns the TV off. <em>Click.</em><br>The room is lit only by the phone."
+  data-pt="A mão direita agarra o controle e desliga a TV. <em>Clique.</em><br>O quarto fica iluminado apenas pelo celular.">右手がリモコンを握り、テレビを消す。<em>パチン。</em><br>部屋がスマホの光だけになる。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_285_left_hand_tremble.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="左手を見る。動かない指。握りしめようとする。<br><strong>微かに、震える。</strong><br><em>まだ何かが残っている。</em>"
+  data-en="He looks at his left hand. Fingers that will not move. He tries to clench them.<br><strong>A faint trembling.</strong><br><em>Something still remains.</em>"
+  data-pt="Ele olha para a mão esquerda. Dedos que não se movem. Ele tenta fechá-los.<br><strong>Um tremor sutil.</strong><br><em>Algo ainda resta.</em>">左手を見る。動かない指。握りしめようとする。<br><strong>微かに、震える。</strong><br><em>まだ何かが残っている。</em></div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_290_resolve_eyes.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="瞳に炎が灯る。怒りではない。<strong>決意。</strong><br>スマホに映る海堂の姿が、暗い瞳の中で光っている。"
+  data-en="A flame ignites in his eyes. Not anger. <strong>Resolve.</strong><br>Kaido's image on the phone shines within those dark pupils."
+  data-pt="Uma chama se acende em seus olhos. Não é raiva. <strong>Determinação.</strong><br>A imagem de Kaido no celular brilha dentro dessas pupilas escuras.">瞳に炎が灯る。怒りではない。<strong>決意。</strong><br>スマホに映る海堂の姿が、暗い瞳の中で光っている。</div></div>
+
+<div class="panel"><div class="pi"><img src="/images/ep1/frames/b_274_nagare_stands_up.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="椅子を蹴って立ち上がる。ローアングル。<br>窓の向こうに夜明けの最初の光。<strong>夜は終わった。</strong>"
+  data-en="He kicks the chair aside and stands. Low angle shot.<br>Beyond the window, the first light of dawn. <strong>The night is over.</strong>"
+  data-pt="Ele chuta a cadeira de lado e se levanta. Ângulo baixo.<br>Além da janela, a primeira luz do amanhecer. <strong>A noite acabou.</strong>">椅子を蹴って立ち上がる。ローアングル。<br>窓の向こうに夜明けの最初の光。<strong>夜は終わった。</strong></div>
+<div class="ml"
+  data-ja="俺もあんな風に動きたい。<br>答えを出すためじゃない ——<br>畳の上で、<strong>生きる</strong>ために。"
+  data-en="I want to move like that too.<br>Not to produce an answer ——<br>But to truly <strong>live</strong> on the mat."
+  data-pt="Eu também quero me mover assim.<br>Não para produzir uma resposta ——<br>Mas para verdadeiramente <strong>viver</strong> no tatame.">俺もあんな風に動きたい。<br>答えを出すためじゃない ——<br>畳の上で、<strong>生きる</strong>ために。</div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_300_final_monologue.png" loading="lazy"></div>
+<div class="nr"
+  data-ja="東京の夜景。窓ガラスに映る自分の姿。<br><em>明日、下北沢に行く。あの道場に行く。</em>"
+  data-en="Tokyo's night skyline. His own reflection in the window glass.<br><em>Tomorrow, I go to Shimokitazawa. I go to that dojo.</em>"
+  data-pt="O horizonte noturno de Tóquio. Seu próprio reflexo no vidro da janela.<br><em>Amanhã, vou a Shimokitazawa. Vou àquele dojô.</em>">東京の夜景。窓ガラスに映る自分の姿。<br><em>明日、下北沢に行く。あの道場に行く。</em></div></div>
+
+<div class="panel"><div class="pi wide"><img src="/images/ep1/frames/b_305_end_card.png" loading="lazy"></div>
+<div class="nr" style="text-align:center;font-size:1rem;padding:1.5rem 0"
+  data-ja="<strong>「海堂柔術」</strong>のシャッター。月光。錆。<br>だが右から、小さな温かい光が差し込んでいる。<br><br>カメラが引いていく。シャッターの下部、ほんの数ミリだけ。<br><em>誰かが内側から、そっとシャッターを押し上げようとした痕跡。</em><br>最近のもの。今夜のもの。<br><br><strong>——海堂は、まだ近くにいるかもしれない。</strong><br><br><em>次回、第2話「珊瑚帯の男」—— 流、ルシアーノの道場へ。</em>"
+  data-en="The shutter of <strong>\"Kaido Jiu-Jitsu.\"</strong> Moonlight. Rust.<br>But from the right, a small warm light seeps in.<br><br>The camera pulls back. The bottom of the shutter — just a few millimeters.<br><em>A mark where someone, from the inside, gently pushed upward against the shutter.</em><br>Recent. Tonight's.<br><br><strong>— Kaido might still be nearby.</strong><br><br><em>Next episode: Episode 2, \"The Man with the Coral Belt\" — Nagare goes to Luciano's dojo.</em>"
+  data-pt="O portão do <strong>\"Kaido Jiu-Jitsu.\"</strong> Luar. Ferrugem.<br>Mas pela direita, uma pequena luz quente se infiltra.<br><br>A câmera recua. A parte inferior do portão — apenas alguns milímetros.<br><em>Uma marca onde alguém, por dentro, gentilmente empurrou o portão para cima.</em><br>Recente. De hoje à noite.<br><br><strong>— Kaido pode ainda estar por perto.</strong><br><br><em>No próximo episódio: Episódio 2, \"O Homem da Faixa Coral\" — Nagare vai ao dojô de Luciano.</em>"><strong>「海堂柔術」</strong>のシャッター。月光。錆。<br>だが右から、小さな温かい光が差し込んでいる。<br><br>カメラが引いていく。シャッターの下部、ほんの数ミリだけ。<br><em>誰かが内側から、そっとシャッターを押し上げようとした痕跡。</em><br>最近のもの。今夜のもの。<br><br><strong>——海堂は、まだ近くにいるかもしれない。</strong><br><br><em>次回、第2話「珊瑚帯の男」—— 流、ルシアーノの道場へ。</em></div></div>
+
+<!-- ▸▸▸ END ▸▸▸ -->
+<div class="part"><span class="lbl"
+  data-ja="End"
+  data-en="End"
+  data-pt="Fim">End<span class="ttl"
+  data-ja="第1話「残像」— 了"
+  data-en="Episode 1 \"Afterimage\" — End"
+  data-pt="Episódio 1 \"Pós-Imagem\" — Fim">第1話「残像」— 了</span></span></div>
+</div>
+
+<footer class="ep-footer">
+  <a href="/"
+    data-ja="FLOW トップへ"
+    data-en="Back to FLOW Top"
+    data-pt="Voltar ao Início">FLOW トップへ</a>
+</footer>
+
+<!-- ========== ED ========== -->
+<audio id="eda" preload="auto"><source src="/music/ed_new.mp3" type="audio/mpeg"></audio>
+<div id="ed" style="display:none;position:fixed;inset:0;z-index:100;background:#000;overflow:hidden">
+  <div style="position:absolute;inset:0;opacity:.15"><img src="/images/keyvisual/kv_themat.png" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.6) blur(2px)"></div>
+  <canvas id="edfx" style="position:absolute;inset:0;z-index:5;pointer-events:none"></canvas>
+  <div style="position:absolute;inset:0;display:flex;justify-content:center;z-index:3;overflow:hidden"><div id="edCr" style="padding-top:100vh;text-align:center"></div></div>
+  <div id="ed-lyrics" style="position:absolute;bottom:8%;left:0;right:0;text-align:center;z-index:10;pointer-events:none"><p id="edlrc" style="font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;font-size:clamp(1rem,2.5vw,1.4rem);color:rgba(255,255,255,.85);text-shadow:0 2px 30px rgba(0,0,0,.9);opacity:0;transition:all .5s;letter-spacing:.1em;transform:translateY(6px)"></p></div>
+</div>
+<style>
+#edlrc.on{opacity:1!important;transform:translateY(0)!important}
+#edCr p{font-size:.85rem;color:#555;line-height:3;letter-spacing:.1em}
+#edCr p.h{color:#fff;font-size:1.1rem;font-weight:700}
+#edCr p.big{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;font-size:2rem;letter-spacing:.3em;color:#fff;font-weight:900}
+#edCr p.final{font-size:1.3rem;color:#aaa;margin-top:2rem}
+#edCr p.tiny{font-size:.6rem;color:#333}
+.vbtn-ep1{padding:.6rem 1.2rem;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#aaa;font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.vbtn-ep1:hover{border-color:#3af5d8;color:#fff}
+.vbtn-ep1.sel{background:rgba(58,245,216,.15);border-color:#3af5d8;color:#3af5d8;font-weight:700}
+.cbtn-ep1{padding:.4rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#888;font-size:.78rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.cbtn-ep1:hover{border-color:var(--c);color:var(--c)}
+.cbtn-ep1.sel{background:color-mix(in srgb,var(--c) 15%,transparent);border-color:var(--c);color:var(--c);font-weight:700}
+.sbtn-ep1{padding:.4rem 1rem;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#888;font-size:.78rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.sbtn-ep1:hover{border-color:#3af5d8;color:#fff}
+.sbtn-ep1.sel{background:rgba(58,245,216,.15);border-color:#3af5d8;color:#3af5d8;font-weight:700}
+</style>
+
+<!-- ED Trigger -->
+<div style="text-align:center;padding:4rem 2rem;background:#05050a;border-top:1px solid #1a1a2a">
+  <div style="font-size:.7rem;letter-spacing:.4em;color:#666;margin-bottom:1.5rem">ENDING</div>
+  <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;align-items:center">
+    <button onclick="setEdLang('ja');startED()" style="padding:1rem 2.5rem;border-radius:100px;border:2px solid rgba(58,245,216,.3);background:transparent;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.1em;transition:all .3s" onmouseover="this.style.borderColor='#3af5d8';this.style.background='rgba(58,245,216,.1)'" onmouseout="this.style.borderColor='rgba(58,245,216,.3)';this.style.background='transparent'">ENDING 日本語</button>
+    <button onclick="setEdLang('en');startED()" style="padding:1rem 2.5rem;border-radius:100px;border:2px solid rgba(58,245,216,.2);background:transparent;color:rgba(58,245,216,.7);font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.1em;transition:all .3s" onmouseover="this.style.borderColor='#3af5d8'" onmouseout="this.style.borderColor='rgba(58,245,216,.2)'">English</button>
+    <button onclick="setEdLang('pt');startED()" style="padding:1rem 2.5rem;border-radius:100px;border:2px solid rgba(34,204,136,.2);background:transparent;color:rgba(34,204,136,.7);font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.1em;transition:all .3s" onmouseover="this.style.borderColor='#22cc88'" onmouseout="this.style.borderColor='rgba(34,204,136,.2)'">Português</button>
+  </div>
+</div>
+
+<!-- ========== FEEDBACK ========== -->
+<div id="feedback-ep1" style="background:#05050a;border-top:1px solid #1a1a2a">
+  <div style="max-width:700px;margin:0 auto;padding:4rem 1.5rem">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div style="font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;background:linear-gradient(135deg,#fff,#3af5d8);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ありがとうございました</div>
+      <p style="color:#666;font-size:.85rem;margin-top:.8rem;line-height:1.8">第1話をお読みいただきありがとうございます。<br>この作品を実現するために、あなたの声を聞かせてください。</p>
+    </div>
+    <!-- Quick vote -->
+    <div style="background:#0c0c14;border-radius:16px;padding:2rem;margin-bottom:2rem;border:1px solid #1a1a2a">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:1.2rem">この話、どう思いましたか？</div>
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap">
+        <button onclick="voteEp1(this,'amazing')" class="vbtn-ep1">最高！続きが読みたい</button>
+        <button onclick="voteEp1(this,'good')" class="vbtn-ep1">面白い</button>
+        <button onclick="voteEp1(this,'ok')" class="vbtn-ep1">悪くない</button>
+        <button onclick="voteEp1(this,'meh')" class="vbtn-ep1">あまり刺さらなかった</button>
+      </div>
+      <div id="voteResult-ep1" style="display:none;margin-top:1rem;color:#3af5d8;font-size:.85rem"></div>
+    </div>
+    <!-- Detail -->
+    <div style="background:#0c0c14;border-radius:16px;padding:2rem;margin-bottom:2rem;border:1px solid #1a1a2a">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:1.2rem">もう少し聞かせてください</div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:.8rem;color:#666;display:block;margin-bottom:.4rem">好きなキャラクターは？</label>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button onclick="this.classList.toggle('sel')" class="cbtn-ep1" style="--c:#3366cc">流</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn-ep1" style="--c:#c8a96e">海堂</button>
+          <button onclick="this.classList.toggle('sel')" class="cbtn-ep1" style="--c:#3af5d8">SAGE</button>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:.8rem;color:#666;display:block;margin-bottom:.4rem">一番見たいシーズンは？</label>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button onclick="selSeasonEp1(this)" class="sbtn-ep1">S1 白帯篇</button>
+          <button onclick="selSeasonEp1(this)" class="sbtn-ep1">S2 青帯篇</button>
+          <button onclick="selSeasonEp1(this)" class="sbtn-ep1">S3 紫帯篇</button>
+          <button onclick="selSeasonEp1(this)" class="sbtn-ep1">S4 茶帯篇</button>
+          <button onclick="selSeasonEp1(this)" class="sbtn-ep1">S5 黒帯篇</button>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:.8rem;color:#666;display:block;margin-bottom:.4rem">自由コメント</label>
+        <textarea id="freeComment-ep1" rows="3" placeholder="感想、改善点、柔術の技で気になった点など..."
+          style="width:100%;background:#05050a;border:1px solid #1a1a2a;border-radius:10px;color:#e0dcd0;
+          padding:.8rem;font-family:inherit;font-size:.85rem;resize:vertical;outline:none"></textarea>
+      </div>
+      <button onclick="submitFeedbackEp1()" style="width:100%;padding:.8rem;border-radius:100px;border:none;
+        background:linear-gradient(135deg,#3af5d8,#c8a96e);color:#05050a;font-weight:700;font-size:.9rem;
+        cursor:pointer;font-family:inherit;transition:all .2s">送信する</button>
+      <div id="submitResult-ep1" style="display:none;margin-top:1rem;text-align:center;color:#3af5d8;font-size:.85rem"></div>
+    </div>
+    <!-- Email -->
+    <div style="background:#0c0c14;border-radius:16px;padding:2rem;margin-bottom:2rem;text-align:center;border:1px solid #1a1a2a">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem">アニメ化の進捗を受け取る</div>
+      <p style="color:#666;font-size:.75rem;margin-bottom:1rem">メールアドレスを登録すると、制作の進捗をお知らせします</p>
+      <div style="display:flex;gap:.5rem;max-width:400px;margin:0 auto">
+        <input id="emailInput-ep1" type="email" placeholder="your@email.com" style="flex:1;padding:.6rem 1rem;border-radius:100px;
+          border:1px solid #1a1a2a;background:#05050a;color:#e0dcd0;font-size:.85rem;outline:none;font-family:inherit">
+        <button onclick="registerEmailEp1()" style="padding:.6rem 1.5rem;border-radius:100px;border:none;
+          background:linear-gradient(135deg,#3af5d8,#c8a96e);color:#05050a;font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit;white-space:nowrap">登録</button>
+      </div>
+      <div id="emailResult-ep1" style="display:none;margin-top:.8rem;font-size:.8rem;color:#3af5d8"></div>
+    </div>
+    <!-- Share -->
+    <div style="background:#0c0c14;border-radius:16px;padding:2rem;margin-bottom:2rem;text-align:center;border:1px solid #1a1a2a">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:1rem">この作品を広める</div>
+      <p style="color:#666;font-size:.8rem;margin-bottom:1.2rem">柔術仲間にシェアしてください。反響が大きければ本当にアニメ化します。</p>
+      <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+        <a href="https://twitter.com/intent/tweet?text=%E6%9F%94%E8%A1%93%C3%97AI%E3%82%A2%E3%83%8B%E3%83%AEFLOW%E7%AC%AC1%E8%A9%B1%E3%81%8C%E3%82%84%E3%81%B0%E3%81%84%E3%80%82%0Ahttps%3A%2F%2Fflow-anime.com%2Fepisode1.html%0A%23FLOW%20%23%E6%9F%94%E8%A1%93%20%23BJJ" target="_blank"
+          style="padding:.6rem 1.5rem;border-radius:100px;background:#000;border:1px solid #333;color:#fff;font-size:.8rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X でシェア</a>
+        <button onclick="navigator.clipboard.writeText('https://flow-anime.com/episode1.html');this.textContent='Copied!';setTimeout(()=>this.textContent='URLをコピー',2000)"
+          style="padding:.6rem 1.5rem;border-radius:100px;background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">URLをコピー</button>
+      </div>
+    </div>
+    <div style="text-align:center;color:#333;font-size:.55rem;padding:2rem 0">制作: 濱田優貴</div>
+  </div>
+</div>
+
+<script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = 'ja';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-ja]').forEach(el => {
+    const text = el.getAttribute('data-' + lang) || el.getAttribute('data-ja');
+    el.innerHTML = text;
+  });
+  document.querySelectorAll('.lbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang)?.classList.add('active');
+  document.documentElement.lang = lang;
+  localStorage.setItem('flow_lang', lang);
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('flow_lang');
+  if (saved && saved !== 'ja') setLang(saved);
+});
+
+// Progress bar
+const prog=document.getElementById('prog');
+const panels=document.querySelectorAll('.panel');
+const counter=document.getElementById('sceneCount');
+const total=panels.length;
+
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';
+  // Count visible panels
+  let vis=0;
+  panels.forEach(p=>{if(p.classList.contains('visible'))vis++});
+  counter.textContent=vis+' / '+total;
+});
+
+// Intersection Observer
+const io=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target)}});
+},{threshold:0.1});
+panels.forEach(p=>io.observe(p));
+
+// Audio
+const bgm=document.getElementById('bgm');
+const audioBtn=document.getElementById('audioBtn');
+const audioIcon=document.getElementById('audioIcon');
+let playing=false;
+bgm.volume=0.3;
+
+function toggleAudio(){
+  if(playing){bgm.pause();audioIcon.style.opacity='.4'}
+  else{bgm.play().catch(()=>{});audioIcon.style.opacity='1'}
+  playing=!playing;
+}
+
+// Auto-suggest audio on first scroll
+let prompted=false;
+window.addEventListener('scroll',()=>{
+  if(!prompted&&window.scrollY>200){
+    prompted=true;
+    audioBtn.style.animation='pulse 1s 3';
+  }
+},{once:false});
+
+// Analytics
+fetch('/api/event',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({path:'/episode1',event:'pageview'})}).catch(()=>{});
+
+// ===== ED =====
+const eda=document.getElementById('eda');
+let edLang='ja';
+function setEdLang(l){edLang=l;const src=l==='en'?'/music/ed_en.mp3':l==='pt'?'/music/ed_pt.mp3':'/music/ed_new.mp3';eda.querySelector('source').src=src;eda.load()}
+function startED(){
+  if(window.flowTrack)flowTrack('ed_start');
+  document.getElementById('ed').style.display='block';
+  const ec=document.getElementById('edfx'),ex=ec.getContext('2d');
+  ec.width=innerWidth;ec.height=innerHeight;
+  addEventListener('resize',()=>{ec.width=innerWidth;ec.height=innerHeight});
+  let ep=[];
+  class Snow{constructor(){this.x=Math.random()*ec.width;this.y=-5;this.s=Math.random()*1.5+.5;this.sp=Math.random()*.6+.2;this.a=Math.random()*.2+.05;this.dx=(Math.random()-.5)*.3}up(){this.y+=this.sp;this.x+=this.dx;return this.y<ec.height+10}dr(c){c.beginPath();c.globalAlpha=this.a;c.fillStyle='#fff';c.arc(this.x,this.y,this.s,0,Math.PI*2);c.fill();c.globalAlpha=1}}
+  function ea(){ex.clearRect(0,0,ec.width,ec.height);ep=ep.filter(p=>{p.dr(ex);return p.up()});requestAnimationFrame(ea)}ea();
+  setInterval(()=>{if(!eda.paused)ep.push(new Snow())},120);
+  const cr=document.getElementById('edCr');
+  cr.innerHTML='<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p class="big">FLOW</p><p>&nbsp;</p><p class="h">「もう一回」</p><p>Ending Theme</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">CAST</p><p>流 — 主人公</p><p>理央 — ライバル</p><p>ルシアーノ・サントス — 師匠</p><p>凛 — 同志</p><p>SAGE — AI</p><p>海堂陽一 — 消えた師匠</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">STAFF</p><p>制作 — 濱田優貴</p><p>制作協力 — Enabler DAO</p><p>&nbsp;</p><p>キャラクターデザイン — Gemini AI</p><p>音楽制作 — Suno AI</p><p>脚本・演出 — Claude</p><p>&nbsp;</p><p>&nbsp;</p><p class="h">SPECIAL THANKS</p><p>Brazilian Jiu-Jitsu Community</p><p>All Martial Artists</p><p>&nbsp;</p><p>&nbsp;</p><p class="final">流れる水は、終わらない。</p><p>&nbsp;</p><p>&nbsp;</p><p class="tiny">Produced with Claude Code + Gemini + Suno — 2026</p>';
+  let sy=innerHeight;function sc(){if(!eda.paused){sy-=.7;cr.style.transform=`translateY(${sy}px)`;requestAnimationFrame(sc)}}
+  const ED_EN={'汗ばんだ道着が 夕風に揺れる':'My sweaty gi sways in the evening breeze','長く伸びた影を なぞって歩く坂道':'Walking up the hill, tracing my long shadow','上手く動かない左手は ポケットの奥へ':"My left hand that won't move, hidden deep in my pocket",'もどかしさも一緒に ぎゅっと握りしめた':'I squeeze tight, along with all my frustration','明日もまた、あの場所へ行こう':"Tomorrow, I'll go back to that place again",'近道なんてない 泥臭い毎日':'There are no shortcuts, just muddy grinding days','だけど、この痛みが 僕の証明だから':'But this pain is the proof that I exist','帰り道はいつもと同じ':'The walk home is the same as always','でも、昨日の僕とは確かに違うんだ':"But I'm definitely different from yesterday",'エビひとつ まだ不格好だけど':'Even a basic shrimp is still awkward','耳の奥で鳴る 先生の「もう一回」':'Deep in my ears: the Professor\'s "One more time"','その声が、僕をまた前へ押し出す':'That voice pushes me forward once again','「またね」と凛が笑って 手を振った':'"See ya," Rin smiled and waved her hand','ルシアーノの背中が シャッターを降ろす音':'The sound of Luciano pulling down the shutters','カビと汗の匂いがする 古い地下室':'The old basement smelling of mold and sweat','世界で一番小さくて、世界で一番広い海だ':'The smallest place in the world, and the widest ocean','誰かが弾き出した 完璧な正解より':'Rather than a perfect answer calculated by AI','転んで見つける答えが愛おしい':'I cherish the move I find by stumbling','でも、昨日より少しだけ強いんだ':"But I'm just a little bit stronger than yesterday",'手首に巻いた 黒帯のブレスレット':'The black belt bracelet wrapped around my wrist','指先でなぞって 空を見上げる':'I trace it with my fingertips and look up at the sky','明日もまた、僕はここに立つよ':'Tomorrow, I will stand on the mats again','完璧じゃなくていい 欠けたままでいい':"I don't need to be perfect, it's fine to be incomplete",'右手一本で掴む 今日があるから':'Because I have a "today" grabbed with just my right hand','不器用なステップも、いつか繋がって':'Even clumsy steps will connect someday','僕だけの流れ（フロウ）になる':'And become my very own flow','笑って言うよ「あぁ、もう一回」':'I smile and say, "Yeah, one more time."','夕日に溶けていく 帰り道':'The walk home melting into the setting sun','ポケットの中の左手':'My left hand inside my pocket','明日もまた、畳の上に……':'Tomorrow again, on the tatami mats...'};
+  function tEdLrc(t){return edLang==='en'?(ED_EN[t]||t):t}
+  const EL=[{t:9.6,x:'汗ばんだ道着が 夕風に揺れる'},{t:14,x:'長く伸びた影を なぞって歩く坂道'},{t:17.6,x:'上手く動かない左手は ポケットの奥へ'},{t:21.2,x:'もどかしさも一緒に ぎゅっと握りしめた'},{t:25.7,x:'明日もまた、あの場所へ行こう'},{t:32.5,x:''},{t:33.3,x:'近道なんてない 泥臭い毎日'},{t:38,x:'だけど、この痛みが 僕の証明だから'},{t:42.6,x:'帰り道はいつもと同じ'},{t:47.7,x:'でも、昨日の僕とは確かに違うんだ'},{t:52.6,x:'エビひとつ まだ不格好だけど'},{t:56.2,x:'耳の奥で鳴る 先生の「もう一回」'},{t:61.6,x:'その声が、僕をまた前へ押し出す'},{t:65.8,x:''},{t:66.9,x:'「またね」と凛が笑って 手を振った'},{t:71.3,x:'ルシアーノの背中が シャッターを降ろす音'},{t:76.4,x:'カビと汗の匂いがする 古い地下室'},{t:81.2,x:'世界で一番小さくて、世界で一番広い海だ'},{t:87,x:''},{t:88.4,x:'誰かが弾き出した 完璧な正解より'},{t:93.4,x:'転んで見つける答えが愛おしい'},{t:98.1,x:'帰り道はいつもと同じ'},{t:102.1,x:'でも、昨日より少しだけ強いんだ'},{t:107.6,x:'手首に巻いた 黒帯のブレスレット'},{t:112.4,x:'指先でなぞって 空を見上げる'},{t:115.9,x:'明日もまた、僕はここに立つよ'},{t:120.6,x:'完璧じゃなくていい 欠けたままでいい'},{t:125.4,x:'右手一本で掴む 今日があるから'},{t:129.2,x:'不器用なステップも、いつか繋がって'},{t:134.4,x:'僕だけの流れ（フロウ）になる'},{t:138.6,x:'帰り道はいつもと同じ'},{t:143.2,x:'でも、昨日の僕とは確かに違うんだ'},{t:148.4,x:'エビひとつ まだ不格好だけど'},{t:152,x:'耳の奥で鳴る 先生の「もう一回」'},{t:157,x:'笑って言うよ「あぁ、もう一回」'},{t:161.6,x:''},{t:162.8,x:'夕日に溶けていく 帰り道'},{t:168,x:'ポケットの中の左手'},{t:172.2,x:'明日もまた、畳の上に……'},{t:178,x:''}];
+  const el=document.getElementById('edlrc');
+  EL.forEach(l=>setTimeout(()=>{el.classList.remove('on');void el.offsetWidth;var txt=tEdLrc(l.x);el.textContent=txt;if(txt)el.classList.add('on')},l.t*1000));
+  eda.currentTime=0;eda.play();sc();
+  eda.onended=()=>{setTimeout(()=>{document.getElementById('ed').style.display='none';document.getElementById('feedback-ep1').scrollIntoView({behavior:'smooth'})},2000)};
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!eda.paused){eda.pause();document.getElementById('ed').style.display='none'}});
+
+// ===== FEEDBACK =====
+function voteEp1(btn,val){document.querySelectorAll('.vbtn-ep1').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
+  const fb=JSON.parse(localStorage.getItem('flow-fb-ep1')||'{}');fb.vote=val;fb.ts=Date.now();localStorage.setItem('flow-fb-ep1',JSON.stringify(fb));
+  document.getElementById('voteResult-ep1').style.display='block';document.getElementById('voteResult-ep1').textContent='回答ありがとうございます！';
+  if(window.flowTrack)flowTrack('ep1_vote',{vote:val})}
+function selSeasonEp1(btn){document.querySelectorAll('.sbtn-ep1').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
+function submitFeedbackEp1(){
+  const fb=JSON.parse(localStorage.getItem('flow-fb-ep1')||'{}');
+  fb.chars=[...document.querySelectorAll('.cbtn-ep1.sel')].map(b=>b.textContent);
+  fb.season=document.querySelector('.sbtn-ep1.sel')?.textContent||'';
+  fb.comment=document.getElementById('freeComment-ep1').value;
+  fb.ts=Date.now();localStorage.setItem('flow-fb-ep1',JSON.stringify(fb));
+  if(window.flowTrack)flowTrack('ep1_feedback',fb);
+  document.getElementById('submitResult-ep1').style.display='block';
+  document.getElementById('submitResult-ep1').textContent='フィードバックを保存しました！ありがとうございます。';
+}
+function registerEmailEp1(){
+  const email=document.getElementById('emailInput-ep1').value.trim();
+  if(!email||!email.includes('@')){alert('有効なメールアドレスを入力してください');return}
+  const res=document.getElementById('emailResult-ep1');
+  res.style.display='block';res.style.color='#666';res.textContent='送信中...';
+  fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email,lang:document.documentElement.lang||'ja',source:'episode1'})})
+  .then(r=>r.json()).then(d=>{
+    if(d.ok){res.style.color='#3af5d8';res.textContent='✓ 登録しました！クラファン開始時にお知らせします（登録者数: '+d.count+'人）'}
+    else{res.style.color='#e8453c';res.textContent='エラー: '+d.error}
+  }).catch(()=>{res.style.color='#3af5d8';res.textContent='✓ 登録しました！'});
+  document.getElementById('emailInput-ep1').value='';
+}
+</script>
+</body>
+</html>

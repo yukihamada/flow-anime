@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLOW PV — Veo 3 カットレビュー</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080d;color:#e8e8f0;font-family:-apple-system,'Noto Sans JP',sans-serif;padding:20px}
+h1{font-size:1.5em;font-weight:800;background:linear-gradient(135deg,#fff,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.sub{color:#555;font-size:.85em;text-align:center;margin-bottom:24px}
+
+/* Full PV */
+.full-pv{max-width:900px;margin:0 auto 32px;background:#111;border-radius:16px;overflow:hidden;border:1px solid #222}
+.full-pv video{width:100%;display:block}
+.full-pv-label{padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.full-pv-label h2{font-size:1em;color:#4a9eff}
+.full-pv-label span{font-size:.8em;color:#555}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:16px;max-width:1400px;margin:0 auto}
+
+/* Card */
+.card{background:#111119;border-radius:14px;overflow:hidden;border:1px solid #1a1a2a}
+.card-top{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000}
+.card-top video,.card-top img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.card-body{padding:14px}
+.card-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#4a9eff;color:#fff;font-size:.75em;font-weight:800;margin-right:8px}
+.card-title{font-size:.95em;font-weight:700;color:#fff;display:inline}
+.card-section{font-size:.65em;color:#4a9eff;background:rgba(74,158,255,.1);padding:2px 8px;border-radius:6px;margin-left:8px}
+.card-dialogue{margin-top:10px;padding:10px 12px;background:#0a0a12;border-radius:8px;border-left:3px solid #22cc88;font-size:.85em;color:#bbb;line-height:1.6}
+.card-dialogue .speaker{font-size:.7em;color:#22cc88;font-weight:600;margin-bottom:2px}
+.card-meta{display:flex;gap:12px;margin-top:10px;font-size:.75em;color:#555}
+.card-actions{display:flex;gap:8px;margin-top:10px}
+.btn{padding:6px 14px;border-radius:8px;border:1px solid #2a2a3a;background:transparent;color:#888;font-size:.8em;cursor:pointer;transition:all .15s}
+.btn:hover{border-color:#4a9eff;color:#fff}
+.rate{display:flex;gap:4px;margin-top:8px}
+.star{font-size:1.4em;cursor:pointer;opacity:.3;transition:all .15s}
+.star:hover,.star.active{opacity:1}
+.notes{width:100%;margin-top:8px;background:#0a0a12;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;padding:8px 10px;font-size:.82em;font-family:inherit;resize:vertical;min-height:40px}
+.notes::placeholder{color:#333}
+.badge-ok{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.7em;font-weight:600;background:rgba(34,204,136,.15);color:#22cc88}
+.badge-ng{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.7em;font-weight:600;background:rgba(255,68,102,.15);color:#ff4466}
+.badge-redo{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.7em;font-weight:600;background:rgba(255,170,51,.15);color:#ffaa33}
+
+/* Summary */
+.summary{max-width:1400px;margin:32px auto;padding:16px;background:#111119;border-radius:14px;border:1px solid #1a1a2a}
+.summary h3{font-size:.9em;color:#888;margin-bottom:10px}
+.summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center}
+.summary-card{background:#0a0a12;border-radius:10px;padding:12px}
+.summary-card .val{font-size:1.8em;font-weight:800}
+.summary-card .lbl{font-size:.7em;color:#555;margin-top:2px}
+
+@media(max-width:860px){.grid{grid-template-columns:1fr}.card-top{grid-template-columns:1fr}}
+</style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
+</head>
+<body>
+
+<h1>FLOW PV — Veo 3 カットレビュー</h1>
+<div class="sub">各カットを比較レビュー。左=元画像 / 右=Veo 3動画。評価してPV構成を決めてください。</div>
+
+<div class="full-pv">
+  <video controls preload="metadata">
+    <source src="flow_pv_veo3.mp4" type="video/mp4">
+  </video>
+  <div class="full-pv-label">
+    <h2>完成版PV（Veo 3 + OP曲）</h2>
+    <span>1:03 / 1920x1080 / 10カット</span>
+  </div>
+</div>
+
+<div class="summary" id="summary"></div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const CUTS = [
+  {
+    id: "02_dojo_dawn", num: 1, section: "INTRO", time: "0-5s",
+    speaker: "", dialogue: "（環境音のみ — 鳥の声、風）",
+    prompt: "道場の夜明け。朝日が木製シャッターから差し込む。壁に黒帯が揺れる。"
+  },
+  {
+    id: "04_nagare_bandage", num: 2, section: "VERSE1", time: "5-11s",
+    speaker: "流", dialogue: "「この左手にはまだ熱があるんだ」",
+    prompt: "流が黒い包帯の左腕を掲げる。ティールのエネルギーが包帯を走る。"
+  },
+  {
+    id: "05_nagare_tatami", num: 3, section: "VERSE1", time: "11-17s",
+    speaker: "流", dialogue: "「畳の上に立つ理由がある」",
+    prompt: "流が白い道着で畳に一人立つ。背後から撮影。振り返る。"
+  },
+  {
+    id: "10_breathe", num: 4, section: "VERSE1", time: "17-22s",
+    speaker: "", dialogue: "（深呼吸と水滴の音）",
+    prompt: "正座で瞑想する流。足元から水の波紋が広がる。"
+  },
+  {
+    id: "13_face_off", num: 5, section: "PRE-CHORUS", time: "22-29s",
+    speaker: "理央", dialogue: "「感覚？ そんな曖昧なものに命を預けるのか」",
+    prompt: "スプリットスクリーン。左=流（白道着）、右=理央（黒AIスーツ）。対峙。"
+  },
+  {
+    id: "15_flow_activate", num: 6, section: "CHORUS", time: "29-35s",
+    speaker: "流", dialogue: "「流れろ！」",
+    prompt: "フロウ覚醒。目がティールに光り、水エネルギーが爆発。ERROR画面が砕ける。"
+  },
+  {
+    id: "18_error_screens", num: 7, section: "CHORUS", time: "35-40s",
+    speaker: "SAGE AI", dialogue: "\"PREDICTION FAILURE. ALL MODELS OFFLINE.\"",
+    prompt: "ホログラフィックスクリーンが全てERR表示。AIシステムクラッシュ。"
+  },
+  {
+    id: "20_submission", num: 8, section: "CHORUS", time: "40-48s",
+    speaker: "流", dialogue: "「これが俺の柔術だ」",
+    prompt: "腕十字。流が相手の腕をコントロール。水のエネルギーが腕を包む。"
+  },
+  {
+    id: "23_rin_walk", num: 9, section: "VERSE2", time: "48-55s",
+    speaker: "凛", dialogue: "「足を取ったら終わり。つまらないから、AIなんて使わない」",
+    prompt: "赤髪の凛がネオンの街を歩く。レザージャケット。蜘蛛のタトゥー。"
+  },
+  {
+    id: "29_back_shot", num: 10, section: "OUTRO", time: "55-63s",
+    speaker: "ナレーション", dialogue: "「流れる水は、もう誰にも止められない」",
+    prompt: "流が道場の廊下を光に向かって歩く。師匠のシルエット。フェードアウト。"
+  }
+];
+
+// State
+const reviews = CUTS.map(c => ({id: c.id, rating: 0, status: '', notes: ''}));
+
+function render() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = CUTS.map((c, i) => {
+    const r = reviews[i];
+    const statusBadge = r.status === 'ok' ? '<span class="badge-ok">OK</span>' :
+                        r.status === 'ng' ? '<span class="badge-ng">NG</span>' :
+                        r.status === 'redo' ? '<span class="badge-redo">再生成</span>' : '';
+    return `
+    <div class="card" id="card-${i}">
+      <div class="card-top">
+        <img src="images/pv_shots/${c.id}.png" alt="Original">
+        <video controls muted preload="metadata" playsinline>
+          <source src="videos/pv_veo3/${c.id}.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <span class="card-num">${c.num}</span>
+        <span class="card-title">${c.id}</span>
+        <span class="card-section">${c.section}</span>
+        ${statusBadge}
+
+        <div class="card-dialogue">
+          ${c.speaker ? `<div class="speaker">${c.speaker}</div>` : ''}
+          ${c.dialogue}
+        </div>
+
+        <div class="card-meta">
+          <span>${c.time}</span>
+          <span>${c.prompt}</span>
+        </div>
+
+        <div class="rate" id="rate-${i}">
+          ${[1,2,3,4,5].map(s => `<span class="star ${r.rating >= s ? 'active' : ''}" onclick="setRating(${i},${s})">${r.rating >= s ? '★' : '☆'}</span>`).join('')}
+        </div>
+
+        <div class="card-actions">
+          <button class="btn" onclick="setStatus(${i},'ok')" style="${r.status==='ok'?'border-color:#22cc88;color:#22cc88':''}">✓ OK</button>
+          <button class="btn" onclick="setStatus(${i},'redo')" style="${r.status==='redo'?'border-color:#ffaa33;color:#ffaa33':''}">↻ 再生成</button>
+          <button class="btn" onclick="setStatus(${i},'ng')" style="${r.status==='ng'?'border-color:#ff4466;color:#ff4466':''}">✕ NG</button>
+        </div>
+
+        <textarea class="notes" placeholder="メモ..." oninput="setNotes(${i},this.value)">${r.notes}</textarea>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateSummary();
+}
+
+function setRating(i, val) {
+  reviews[i].rating = reviews[i].rating === val ? 0 : val;
+  render();
+}
+
+function setStatus(i, status) {
+  reviews[i].status = reviews[i].status === status ? '' : status;
+  render();
+}
+
+function setNotes(i, val) {
+  reviews[i].notes = val;
+}
+
+function updateSummary() {
+  const ok = reviews.filter(r => r.status === 'ok').length;
+  const ng = reviews.filter(r => r.status === 'ng').length;
+  const redo = reviews.filter(r => r.status === 'redo').length;
+  const unreviewed = reviews.filter(r => !r.status).length;
+  const avgRating = reviews.filter(r => r.rating > 0).length > 0
+    ? (reviews.reduce((a, r) => a + r.rating, 0) / reviews.filter(r => r.rating > 0).length).toFixed(1)
+    : '-';
+
+  document.getElementById('summary').innerHTML = `
+    <h3>レビューサマリー</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="val" style="color:#22cc88">${ok}</div><div class="lbl">OK</div></div>
+      <div class="summary-card"><div class="val" style="color:#ffaa33">${redo}</div><div class="lbl">再生成</div></div>
+      <div class="summary-card"><div class="val" style="color:#ff4466">${ng}</div><div class="lbl">NG</div></div>
+      <div class="summary-card"><div class="val" style="color:#555">${unreviewed}</div><div class="lbl">未レビュー</div></div>
+      <div class="summary-card"><div class="val" style="color:#ffd700">${avgRating}</div><div class="lbl">平均評価</div></div>
+    </div>`;
+}
+
+render();
+</script>
+</body>
+</html>

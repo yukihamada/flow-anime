@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — FLOW</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080d;--ac:#4a9eff;--ac2:#00d4ff;--ac3:#7c5cff}
+html,body{height:100%;background:var(--bg);color:#e8e8f0;font-family:'Noto Sans JP',sans-serif;overflow:hidden}
+
+canvas{position:fixed;inset:0;z-index:0}
+
+.page{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+
+.glitch{font-family:'Dela Gothic One',sans-serif;font-size:clamp(6rem,22vw,16rem);letter-spacing:.1em;
+  position:relative;user-select:none;line-height:1}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;inset:0;
+  background:var(--bg);-webkit-background-clip:unset}
+.glitch::before{
+  left:3px;text-shadow:-3px 0 #ff4466;
+  clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%);
+  animation:glitch1 3s infinite linear}
+.glitch::after{
+  left:-3px;text-shadow:3px 0 var(--ac2);
+  clip-path:polygon(0 65%,100% 65%,100% 75%,0 75%);
+  animation:glitch2 3s infinite linear}
+
+@keyframes glitch1{
+  0%,90%{clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%);opacity:.8}
+  92%{clip-path:polygon(0 55%,100% 55%,100% 60%,0 60%);opacity:1}
+  94%{clip-path:polygon(0 5%,100% 5%,100% 15%,0 15%);opacity:.6}
+  96%{clip-path:polygon(0 80%,100% 80%,100% 90%,0 90%);opacity:1}
+  100%{clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%);opacity:.8}}
+@keyframes glitch2{
+  0%,88%{clip-path:polygon(0 65%,100% 65%,100% 75%,0 75%);opacity:.8}
+  90%{clip-path:polygon(0 40%,100% 40%,100% 45%,0 45%);opacity:1}
+  92%{clip-path:polygon(0 70%,100% 70%,100% 80%,0 80%);opacity:.5}
+  95%{clip-path:polygon(0 10%,100% 10%,100% 25%,0 25%);opacity:1}
+  100%{clip-path:polygon(0 65%,100% 65%,100% 75%,0 75%);opacity:.8}}
+
+.num-glow{
+  background:linear-gradient(135deg,#fff,var(--ac2) 40%,var(--ac3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 40px rgba(0,212,255,.5)) drop-shadow(0 0 80px rgba(124,92,255,.3));
+  animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{filter:drop-shadow(0 0 40px rgba(0,212,255,.5)) drop-shadow(0 0 80px rgba(124,92,255,.3))}
+  50%{filter:drop-shadow(0 0 60px rgba(0,212,255,.8)) drop-shadow(0 0 120px rgba(124,92,255,.5))}}
+
+.sage-text{
+  font-size:.75rem;letter-spacing:.35em;color:var(--ac2);text-transform:uppercase;
+  margin:12px 0 4px;opacity:.7;font-weight:300}
+.title{font-size:clamp(1rem,3vw,1.5rem);font-weight:700;margin-bottom:8px;
+  background:linear-gradient(90deg,#fff,#aaa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:.88rem;color:#555;margin-bottom:40px;line-height:1.7;max-width:340px}
+.sub em{color:#777;font-style:normal}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;border-radius:12px;
+  font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;border:none;
+  background:linear-gradient(135deg,var(--ac),var(--ac3));color:#fff;
+  transition:all .3s;letter-spacing:.04em;text-decoration:none}
+.btn:hover{opacity:.85;transform:translateY(-3px);box-shadow:0 12px 40px rgba(74,158,255,.3)}
+.btn:active{transform:translateY(0)}
+
+.scan-line{position:fixed;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--ac2),transparent);
+  animation:scan 6s linear infinite;opacity:.15;pointer-events:none;z-index:2}
+@keyframes scan{0%{top:-2px}100%{top:100%}}
+
+.coords{position:fixed;bottom:20px;right:20px;font-size:.65rem;color:#222;
+  font-family:monospace;letter-spacing:.05em;z-index:1}
+</style>
+<script src="https://enabler-analytics.fly.dev/t.js" defer></script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="scan-line"></div>
+
+<div class="page">
+  <div class="sage-text">SAGE AI — PREDICTION FAILURE</div>
+  <div class="glitch num-glow" data-text="404">404</div>
+  <div class="title">PAGE NOT FOUND</div>
+  <p class="sub">このページはAIに<em>読めない</em>場所にある。<br>
+  または、まだ存在していない。</p>
+  <a href="/" class="btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    道場に戻る
+  </a>
+</div>
+
+<div class="coords" id="coords">x:0000 y:0000</div>
+
+<script>
+// Particle / rain canvas
+const canvas = document.getElementById('c')
+const ctx = canvas.getContext('2d')
+let W, H, particles=[], mouse={x:0,y:0}
+
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;init()}
+function init(){
+  particles=[]
+  const n=Math.floor(W*H/12000)
+  for(let i=0;i<n;i++) particles.push({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.4, vy:Math.random()*.6+.2,
+    a:Math.random()*.5+.1, r:Math.random()*1.5+.3,
+    c:Math.random()<.7?'#4a9eff':'#00d4ff'
+  })
+}
+window.addEventListener('resize',resize)
+resize()
+
+function draw(){
+  ctx.clearRect(0,0,W,H)
+  ctx.fillStyle='rgba(8,8,13,.25)'
+  ctx.fillRect(0,0,W,H)
+
+  for(const p of particles){
+    // Mouse repel
+    const dx=p.x-mouse.x, dy=p.y-mouse.y
+    const d=Math.sqrt(dx*dx+dy*dy)
+    if(d<120){const f=(1-d/120)*.8;p.vx+=dx/d*f;p.vy+=dy/d*f}
+    p.vx*=.97;p.vy*=.97
+    p.x+=p.vx;p.y+=p.vy
+    if(p.x<-5)p.x=W+5
+    if(p.x>W+5)p.x=-5
+    if(p.y<-5)p.y=H+5
+    if(p.y>H+5)p.y=-5
+
+    // Draw line from particle to nearest
+    ctx.globalAlpha=p.a*.4
+    ctx.strokeStyle=p.c
+    ctx.lineWidth=.4
+    for(const q of particles){
+      const dx2=p.x-q.x,dy2=p.y-q.y
+      const d2=Math.sqrt(dx2*dx2+dy2*dy2)
+      if(d2<80&&d2>0){
+        ctx.globalAlpha=p.a*(1-d2/80)*.15
+        ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()
+      }
+    }
+    ctx.globalAlpha=p.a
+    ctx.fillStyle=p.c
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()
+  }
+  ctx.globalAlpha=1
+  requestAnimationFrame(draw)
+}
+draw()
+
+window.addEventListener('mousemove',e=>{
+  mouse.x=e.clientX;mouse.y=e.clientY
+  document.getElementById('coords').textContent=
+    'x:'+String(e.clientX).padStart(4,'0')+' y:'+String(e.clientY).padStart(4,'0')
+})
+
+// Random glitch flash
+setInterval(()=>{
+  const g=document.querySelector('.glitch')
+  g.style.transform=`skewX(${(Math.random()-.5)*4}deg)`
+  setTimeout(()=>g.style.transform='',80)
+},2000+Math.random()*3000)
+</script>
+</body>
+</html>
