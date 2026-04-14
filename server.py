@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 """FLOW Server — static files + analytics + X auto-poster with cron."""
-import json, os, sqlite3, time, hashlib, uuid, threading
+import json, os, sqlite3, time, hashlib, uuid, threading, gzip, mimetypes
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from datetime import datetime, timezone, timedelta
+
+# Mime types for compression eligibility
+_COMPRESSIBLE = {'text/html', 'text/css', 'text/javascript', 'application/javascript',
+                 'application/json', 'image/svg+xml', 'text/plain', 'text/xml'}
+# Cache TTLs
+_CACHE_MEDIA = 'public, max-age=86400, immutable'   # 1 day: images/fonts/mp4
+_CACHE_HTML  = 'public, max-age=300, must-revalidate'  # 5 min: HTML pages
+_CACHE_STATIC = 'public, max-age=3600'               # 1 hr: JS/CSS
 
 DB_PATH = "/data/analytics.db" if os.path.exists("/data") else "analytics.db"
 PORT = int(os.environ.get("PORT", 8080))
@@ -356,7 +364,10 @@ class Handler(SimpleHTTPRequestHandler):
                     elif action == "reject":
                         p["status"] = "rejected"
                     elif action == "post_now":
-                        tweet_id, err = post_to_x(p["text"])
+                        img_path = p.get("image")
+                        if img_path and not os.path.isabs(img_path):
+                            img_path = os.path.join(os.environ.get("STATIC_DIR", "/app"), img_path)
+                        tweet_id, err = post_to_x(p["text"], img_path)
                         log = load_post_log()
                         if tweet_id:
                             log[post_id] = {"tweet_id": str(tweet_id), "ts": datetime.now(timezone.utc).isoformat()}
@@ -469,14 +480,94 @@ class Handler(SimpleHTTPRequestHandler):
         elif parsed.path == "/api/health":
             self._json_response({"status": "ok", "ts": datetime.now(timezone.utc).isoformat()})
         else:
+            # Slug routing: /community → /community.html, /pitch → /pitch.html, etc.
+            clean = parsed.path.rstrip('/')
+            if clean and '.' not in clean.split('/')[-1]:
+                html_path = os.path.join(STATIC_DIR, clean.lstrip('/') + '.html')
+                if os.path.exists(html_path):
+                    self.path = clean + '.html'
+            self._serve_with_cache()
+
+    def send_error(self, code, message=None, explain=None):
+        if code == 404:
+            try:
+                path_404 = os.path.join(STATIC_DIR, '404.html')
+                with open(path_404, 'rb') as f:
+                    content = f.read()
+                self.send_response(404)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(len(content)))
+                self.end_headers()
+                self.wfile.write(content)
+                return
+            except Exception:
+                pass
+        super().send_error(code, message, explain)
+
+    def _serve_with_cache(self):
+        """Serve a static file with gzip compression and cache headers."""
+        try:
+            path = self.translate_path(self.path)
+            # Directory → try index.html
+            if os.path.isdir(path):
+                index = os.path.join(path, 'index.html')
+                if os.path.exists(index):
+                    path = index
+                else:
+                    super().do_GET(); return
+            if not os.path.exists(path):
+                self.send_error(404); return
+
+            ctype = self.guess_type(path)
+            ext = os.path.splitext(path)[1].lower()
+
+            # Cache policy
+            if ext in ('.png','.jpg','.jpeg','.gif','.webp','.ico','.mp4','.mp3','.woff','.woff2','.svg'):
+                cache = _CACHE_MEDIA
+            elif ext == '.html':
+                cache = _CACHE_HTML
+            else:
+                cache = _CACHE_STATIC
+
+            with open(path, 'rb') as f:
+                content = f.read()
+
+            # gzip compression for text types
+            accept_enc = self.headers.get('Accept-Encoding', '')
+            use_gzip = 'gzip' in accept_enc and ctype.split(';')[0].strip() in _COMPRESSIBLE
+            if use_gzip:
+                content = gzip.compress(content, compresslevel=6)
+
+            self.send_response(200)
+            self.send_header('Content-Type', ctype)
+            self.send_header('Content-Length', str(len(content)))
+            self.send_header('Cache-Control', cache)
+            self.send_header('Vary', 'Accept-Encoding')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            if use_gzip:
+                self.send_header('Content-Encoding', 'gzip')
+            self.end_headers()
+            if self.command != 'HEAD':
+                self.wfile.write(content)
+        except BrokenPipeError:
+            pass
+        except Exception:
             super().do_GET()
 
     def _json_response(self, data, code=200):
+        body = json.dumps(data).encode()
+        accept_enc = self.headers.get('Accept-Encoding', '')
+        use_gzip = 'gzip' in accept_enc
+        if use_gzip:
+            body = gzip.compress(body, compresslevel=6)
         self.send_response(code)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
         self.send_header("Access-Control-Allow-Origin", "*")
+        if use_gzip:
+            self.send_header("Content-Encoding", "gzip")
         self.end_headers()
-        self.wfile.write(json.dumps(data).encode())
+        self.wfile.write(body)
 
     def do_OPTIONS(self):
         self.send_response(200)
